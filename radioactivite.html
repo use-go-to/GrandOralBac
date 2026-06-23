@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mémo — Radioactivité en Médecine</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+  :root {
+    --nuit: #0f172a;
+    --ardoise: #334155;
+    --acier: #64748b;
+    --brouillard: #94a3b8;
+    --perle: #f8fafc;
+    --blanc: #ffffff;
+    --indigo: #4f46e5;
+    --indigo-f: #e0e7ff;
+    --indigo-c: #4338ca;
+    --emeraude: #059669;
+    --emeraude-f: #d1fae5;
+    --rubis: #dc2626;
+    --rubis-f: #fee2e2;
+    --ambre: #d97706;
+    --ambre-f: #fef3c7;
+    --violet: #7c3aed;
+    --violet-f: #ede9fe;
+    --rose: #db2777;
+    --rose-f: #fdf2f8;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { 
+    background: #e2e8f0; 
+    font-family: 'Inter', sans-serif; 
+    color: var(--nuit); 
+    font-size: 15px; 
+    line-height: 1.6;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .page {
+    width: 210mm; 
+    min-height: 297mm; 
+    background: var(--blanc);
+    margin: 0 auto 6mm; 
+    padding: 18mm 22mm 16mm 22mm;
+    position: relative; 
+    page-break-after: always;
+    overflow: hidden; 
+    box-shadow: 0 2px 12px rgba(15,23,42,0.08);
+    display: flex;
+    flex-direction: column;
+  }
+  .page-header {
+    border-bottom: 2px solid var(--indigo);
+    padding-bottom: 4mm;
+    margin-bottom: 5mm;
+    display: flex;
+    align-items: baseline;
+    gap: 4mm;
+  }
+  .page-num {
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--indigo);
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+  .page-title-group { flex: 1; }
+  .page-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--nuit);
+    line-height: 1.2;
+  }
+  .page-sub {
+    font-size: 13px;
+    color: var(--acier);
+    margin-top: 1mm;
+    font-weight: 500;
+  }
+  .page-tag {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--indigo);
+    font-weight: 700;
+    background: var(--indigo-f);
+    padding: 2mm 3mm;
+    border-radius: 4px;
+    align-self: flex-start;
+  }
+  .section {
+    margin-bottom: 4mm;
+  }
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--indigo);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 2mm;
+    display: flex;
+    align-items: center;
+    gap: 2mm;
+  }
+  .section-title::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background: var(--indigo);
+    border-radius: 2px;
+    display: inline-block;
+  }
+  .box {
+    background: var(--perle);
+    border-left: 4px solid var(--indigo);
+    padding: 3mm 4mm;
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 3mm;
+  }
+  .box-coeur {
+    background: var(--indigo-f);
+    border: 2px solid var(--indigo);
+    border-radius: 8px;
+    padding: 4mm 5mm;
+    margin-bottom: 3mm;
+    position: relative;
+  }
+  .box-coeur::before {
+    content: "À APPRENDRE PAR CŒUR";
+    position: absolute;
+    top: -8px;
+    left: 12px;
+    background: var(--indigo);
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 1px 8px;
+    border-radius: 10px;
+  }
+  .box-context {
+    background: var(--ambre-f);
+    border-left: 4px solid var(--ambre);
+    padding: 3mm 4mm;
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 3mm;
+  }
+  .box-formule {
+    background: var(--nuit);
+    color: var(--blanc);
+    border-radius: 8px;
+    padding: 4mm 5mm;
+    margin-bottom: 3mm;
+    text-align: center;
+  }
+  .box-formule .label {
+    font-size: 10px;
+    color: var(--brouillard);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 2mm;
+    display: block;
+  }
+  .box-formule .math {
+    font-size: 20px;
+    font-weight: 600;
+    font-family: 'Times New Roman', serif;
+    letter-spacing: 1px;
+  }
+  .box-formule .math .var { color: #818cf8; }
+  .box-formule .math .num { color: #34d399; }
+  .box-formule .math .eq { color: var(--brouillard); }
+  .box-formule .desc {
+    font-size: 11px;
+    color: var(--brouillard);
+    margin-top: 2mm;
+    line-height: 1.4;
+  }
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3mm;
+    margin-bottom: 3mm;
+  }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2mm;
+    margin-bottom: 3mm;
+  }
+  .cell {
+    background: var(--perle);
+    border: 1.5px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 3mm;
+    text-align: center;
+  }
+  .cell .val {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--indigo);
+    line-height: 1;
+  }
+  .cell .val.green { color: var(--emeraude); }
+  .cell .val.red { color: var(--rubis); }
+  .cell .val.ambre { color: var(--ambre); }
+  .cell .val.violet { color: var(--violet); }
+  .cell .lbl {
+    font-size: 11px;
+    color: var(--acier);
+    margin-top: 1mm;
+    line-height: 1.3;
+  }
+  .liste {
+    list-style: none;
+    padding: 0;
+  }
+  .liste li {
+    padding: 2mm 0 2mm 6mm;
+    position: relative;
+    font-size: 14px;
+    line-height: 1.5;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  .liste li:last-child { border-bottom: none; }
+  .liste li::before {
+    content: "›";
+    position: absolute;
+    left: 0;
+    color: var(--indigo);
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .liste li strong { color: var(--indigo-c); }
+  .schema-flow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2mm;
+    justify-content: center;
+    margin: 3mm 0;
+  }
+  .schema-item {
+    background: var(--indigo-f);
+    border: 1.5px solid var(--indigo);
+    border-radius: 6px;
+    padding: 2mm 3mm;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--indigo-c);
+    text-align: center;
+  }
+  .schema-item.orange { background: var(--ambre-f); border-color: var(--ambre); color: var(--ambre); }
+  .schema-item.violet { background: var(--violet-f); border-color: var(--violet); color: var(--violet); }
+  .schema-item.green { background: var(--emeraude-f); border-color: var(--emeraude); color: var(--emeraude); }
+  .schema-item.red { background: var(--rubis-f); border-color: var(--rubis); color: var(--rubis); }
+  .page-footer {
+    margin-top: auto;
+    padding-top: 3mm;
+    border-top: 1.5px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 10px;
+    color: var(--brouillard);
+  }
+  .page-footer .left { font-style: italic; }
+  .page-footer .right { font-weight: 600; }
+  .texte { font-size: 14px; line-height: 1.6; color: var(--ardoise); }
+  .texte strong { color: var(--nuit); font-weight: 600; }
+  .keyword {
+    display: inline-block;
+    background: var(--indigo);
+    color: white;
+    font-weight: 600;
+    font-size: 11px;
+    padding: 1px 6px;
+    border-radius: 4px;
+    margin: 1px;
+    letter-spacing: 0.5px;
+  }
+  .keyword.grey { background: var(--acier); }
+  .keyword.green { background: var(--emeraude); }
+  .keyword.red { background: var(--rubis); }
+  .keyword.violet { background: var(--violet); }
+  .keyword.ambre { background: var(--ambre); color: var(--nuit); }
+  .keyword.rose { background: var(--rose); }
+  .source-box {
+    background: #f0f9ff;
+    border: 1.5px solid #0ea5e9;
+    border-radius: 6px;
+    padding: 3mm 4mm;
+    margin-bottom: 3mm;
+  }
+  .source-box .titre {
+    font-size: 11px;
+    font-weight: 700;
+    color: #0369a1;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1mm;
+  }
+  .source-box p {
+    font-size: 12px;
+    color: var(--ardoise);
+    line-height: 1.5;
+  }
+  .perso-box {
+    background: var(--rose-f);
+    border: 2px solid var(--rose);
+    border-radius: 8px;
+    padding: 4mm 5mm;
+    margin-bottom: 3mm;
+    position: relative;
+  }
+  .perso-box::before {
+    content: "MON HISTOIRE";
+    position: absolute;
+    top: -8px;
+    left: 12px;
+    background: var(--rose);
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 1px 8px;
+    border-radius: 10px;
+  }
+  .perso-box p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--nuit);
+    margin-top: 2mm;
+  }
+  .perso-box strong { color: #be185d; }
+
+  @media print {
+    body { background: none; }
+    .page { 
+      margin: 0; 
+      box-shadow: none; 
+      page-break-after: always;
+      width: 210mm;
+      min-height: 297mm;
+    }
+    .page:last-child { page-break-after: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     PAGE 1 — PROBLÉMATIQUE + ACCROCHE + PLAN
+     ════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-num">01</div>
+    <div class="page-title-group">
+      <div class="page-title">Problématique & Accroche</div>
+      <div class="page-sub">Radioactivité en Médecine — Grand Oral</div>
+    </div>
+    <div class="page-tag">Physique-Chimie</div>
+  </div>
+
+  <div class="box-coeur">
+    <div style="margin-top: 2mm;">
+      <p style="font-size: 13px; font-weight: 700; color: var(--indigo-c); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2mm;">Problématique</p>
+      <p style="font-size: 15px; font-weight: 600; color: var(--indigo-c); line-height: 1.5;">
+        Comment les produits radioactifs traceurs révolutionnent-ils le diagnostic et le traitement des cancers en médecine moderne ?
+      </p>
+    </div>
+  </div>
+
+  <div class="perso-box">
+    <p style="margin-top: 2mm;">
+      Ma mère est atteinte d'un <strong>myélome multiple</strong> — un cancer de la moelle osseuse. J'ai accompagné ses rendez-vous et discuté avec ses médecins. J'ai découvert que la <strong>TEP au fluor-18</strong> et les <strong>thérapies ciblées</strong> sont au cœur de son suivi. Cette expérience personnelle m'a poussé à comprendre comment la physique sert la médecine.
+    </p>
+  </div>
+
+  <div class="box-coeur">
+    <div style="margin-top: 2mm;">
+      <p style="font-size: 15px; font-weight: 600; color: var(--indigo-c); line-height: 1.5; text-align: center;">
+        « En <strong>1896</strong>, Henri Becquerel découvre que l'uranium émet des <strong>rayons invisibles</strong> capables de traverser le papier. Un siècle plus tard, ces mêmes rayons <strong>sauvent des millions de vies</strong>. Comment la physique peut-elle transformer un danger en remède ? »
+      </p>
+    </div>
+  </div>
+
+  <div class="box-coeur">
+    <div style="margin-top: 2mm;">
+      <p style="font-size: 15px; font-weight: 600; color: var(--indigo-c); line-height: 1.5; text-align: center;">
+        « La radioactivité est souvent perçue comme un danger, mais en médecine, elle devient un outil précis pour <strong>voir</strong> et <strong>soigner</strong> les cancers. »
+      </p>
+      <p style="font-size: 11px; color: var(--acier); text-align: center; margin-top: 2mm;">Phrase boussole — répéter en introduction, milieu et conclusion</p>
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top: 4mm;">Plan de l'oral (20 min)</div>
+  <div class="grid-2">
+    <div class="cell">
+      <div class="val">1 min</div>
+      <div class="lbl">Accroche<br>+ Problématique</div>
+    </div>
+    <div class="cell">
+      <div class="val">3–4 min</div>
+      <div class="lbl">Bases de la<br>radioactivité</div>
+    </div>
+    <div class="cell">
+      <div class="val">4–5 min</div>
+      <div class="lbl">Diagnostiquer :<br>le myélome en TEP</div>
+    </div>
+    <div class="cell">
+      <div class="val">5–6 min</div>
+      <div class="lbl">Traiter :<br>thérapies ciblées</div>
+    </div>
+    <div class="cell">
+      <div class="val">2–3 min</div>
+      <div class="lbl">Limites &<br>sécurité</div>
+    </div>
+    <div class="cell">
+      <div class="val">1–2 min</div>
+      <div class="lbl">Conclusion<br>+ Ouverture</div>
+    </div>
+  </div>
+
+  <div class="source-box">
+    <div class="titre">Sources</div>
+    <p><strong>CNED</strong> — Cours de physique-chimie, module radioactivité et applications médicales</p>
+    <p><strong>PhET</strong> — Simulations interactives sur la radioactivité (University of Colorado)</p>
+    <p><strong>Edumedia</strong> — Animations et schémas sur les rayonnements ionisants</p>
+    <p><strong>Physique à main levée</strong> — Expériences concrètes et explications accessibles</p>
+    <p><strong>Sites institutionnels d'académies</strong> — Ressources pédagogiques en physique-chimie</p>
+    <p><strong>Entretiens personnels</strong> — Discussions avec les médecins du service d'hématologie sur le myélome multiple de ma mère</p>
+  </div>
+
+  <div class="page-footer">
+    <span class="left">Mémo Radioactivité — Physique-Chimie</span>
+    <span class="right">1 / 5</span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE 2 — BASES DE LA RADIOACTIVITÉ
+     ════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-num">02</div>
+    <div class="page-title-group">
+      <div class="page-title">Les Bases</div>
+      <div class="page-sub">Définitions · Isotopes · Demi-vie · Formules</div>
+    </div>
+    <div class="page-tag">À maîtriser</div>
+  </div>
+
+  <div class="box-coeur">
+    <div style="margin-top: 2mm;">
+      <p style="font-size: 14px; font-weight: 600; color: var(--indigo-c); margin-bottom: 2mm;">Définition (à apprendre par cœur)</p>
+      <p style="font-size: 14px; line-height: 1.6; color: var(--ardoise);">
+        La <strong>radioactivité</strong> est la <strong>transformation spontanée d'un noyau instable</strong> accompagnée de l'émission de rayonnements (alpha, bêta, gamma). C'est un <strong>phénomène naturel</strong>, pas une invention humaine.
+      </p>
+    </div>
+  </div>
+
+  <div class="section-title">Isotopes — même Z, N différent</div>
+  <div class="box">
+    <p style="font-size: 14px; line-height: 1.6;">
+      Deux isotopes d'un même élément ont le même <strong>nombre de protons Z</strong> mais un <strong>nombre de neutrons N différent</strong>. On choisit l'isotope selon l'objectif : <strong>voir</strong> (courte demi-vie, faible énergie) ou <strong>soigner</strong> (demi-vie plus longue, énergie plus élevée).
+    </p>
+  </div>
+
+  <div class="section-title">La demi-vie (t₁/₂)</div>
+  <div class="box-formule">
+    <span class="label">Loi de décroissance radioactive</span>
+    <div class="math">
+      <span class="var">N</span>(<span class="var">t</span>) <span class="eq">=</span> <span class="var">N</span><sub>0</sub> <span class="eq">×</span> <span class="var">e</span><sup><span class="eq">−</span><span class="var">λt</span></sup>
+    </div>
+    <div class="desc">
+      N(t) = nombre de noyaux à l'instant t &nbsp;|&nbsp; N₀ = nombre initial &nbsp;|&nbsp; λ = constante radioactive
+    </div>
+  </div>
+
+  <div class="box-formule">
+    <span class="label">Lien demi-vie et constante radioactive</span>
+    <div class="math">
+      <span class="var">t</span><sub>1/2</sub> <span class="eq">=</span> <span class="num">ln(2)</span> <span class="eq">/</span> <span class="var">λ</span> <span class="eq">≈</span> <span class="num">0,693</span> <span class="eq">/</span> <span class="var">λ</span>
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top: 3mm;">Quatre isotopes clés</div>
+  <div class="grid-2">
+    <div class="cell" style="border-color: var(--emeraude); background: var(--emeraude-f);">
+      <div style="font-size: 11px; font-weight: 700; color: var(--emeraude); margin-bottom: 1mm;">DIAGNOSTIC</div>
+      <div class="val green" style="font-size: 18px;">Technétium-99m</div>
+      <div class="lbl">t₁/₂ = 6 h<br>Scintigraphie</div>
+    </div>
+    <div class="cell" style="border-color: var(--emeraude); background: var(--emeraude-f);">
+      <div style="font-size: 11px; font-weight: 700; color: var(--emeraude); margin-bottom: 1mm;">DIAGNOSTIC</div>
+      <div class="val green" style="font-size: 18px;">Fluor-18 (FDG)</div>
+      <div class="lbl">t₁/₂ = 110 min<br>TEP — myélome, cancers</div>
+    </div>
+    <div class="cell" style="border-color: var(--rubis); background: var(--rubis-f);">
+      <div style="font-size: 11px; font-weight: 700; color: var(--rubis); margin-bottom: 1mm;">THÉRAPIE</div>
+      <div class="val red" style="font-size: 18px;">Iode-131</div>
+      <div class="lbl">t₁/₂ = 8 jours<br>Cancer de la thyroïde</div>
+    </div>
+    <div class="cell" style="border-color: var(--rubis); background: var(--rubis-f);">
+      <div style="font-size: 11px; font-weight: 700; color: var(--rubis); margin-bottom: 1mm;">THÉRAPIE</div>
+      <div class="val red" style="font-size: 18px;">Lutétium-177</div>
+      <div class="lbl">t₁/₂ = 6,7 jours<br>Tumeurs neuro-endocrines</div>
+    </div>
+  </div>
+
+  <div class="box-context">
+    <p style="font-size: 13px;"><strong>Logique :</strong> Diagnostic = demi-vie <strong>courte</strong> (le patient n'est pas radioactif longtemps). Thérapie = demi-vie <strong>plus longue</strong> (le rayonnement agit sur la tumeur).</p>
+  </div>
+
+  <div class="source-box">
+    <div class="titre">Sources</div>
+    <p><strong>CNED</strong> — Programme de terminale, chapitre radioactivité et isotopes</p>
+    <p><strong>PhET</strong> — Simulation "Alpha Decay" (décroissance radioactive)</p>
+    <p><strong>Sites académiques</strong> — Cours sur les noyaux, isotopes et demi-vie</p>
+  </div>
+
+  <div class="page-footer">
+    <span class="left">Mémo Radioactivité — Physique-Chimie</span>
+    <span class="right">2 / 5</span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE 3 — DIAGNOSTIQUER : LE MYÉLOME EN TEP
+     ════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-num">03</div>
+    <div class="page-title-group">
+      <div class="page-title">Diagnostiquer : Le Myélome en TEP</div>
+      <div class="page-sub">Tomographie par Émission de Positrons — Fluor-18</div>
+    </div>
+    <div class="page-tag">Imagerie</div>
+  </div>
+
+  <div class="box-coeur">
+    <div style="margin-top: 2mm;">
+      <p style="font-size: 14px; font-weight: 600; color: var(--indigo-c); margin-bottom: 2mm;">Définition de la TEP (à apprendre par cœur)</p>
+      <p style="font-size: 14px; line-height: 1.6;">
+        La <strong>TEP</strong> (Tomographie par Émission de Positrons) produit des <strong>images en trois dimensions</strong> en détectant les rayonnements émis par un <strong>traceur radioactif</strong> injecté au patient. On visualise l'<strong>activité métabolique</strong>, pas seulement la forme des organes.
+      </p>
+    </div>
+  </div>
+
+  <div class="perso-box">
+    <p style="margin-top: 2mm;">
+      Chez ma mère, la <strong>TEP au fluor-18 (FDG)</strong> permet de suivre son <strong>myélome multiple</strong>. Les médecins injectent du glucose marqué au fluor-18. Les cellules cancéreuses de la moelle osseuse consomment plus de sucre que les cellules saines. Elles « brillent » sur l'image. Cela permet de voir si la maladie progresse, même avant que les lésions soient visibles sur une radio classique.
+    </p>
+  </div>
+
+  <div class="section-title">Le principe en trois étapes</div>
+  <div class="schema-flow">
+    <div class="schema-item">1. Injecter<br><span style="font-size:10px;opacity:0.7">glucose + fluor-18 = FDG</span></div>
+    <div style="color:var(--acier);font-size:18px;font-weight:700;align-self:center;">→</div>
+    <div class="schema-item violet">2. Fixer<br><span style="font-size:10px;opacity:0.7">cellules cancéreuses avales le FDG</span></div>
+    <div style="color:var(--acier);font-size:18px;font-weight:700;align-self:center;">→</div>
+    <div class="schema-item green">3. Détecter<br><span style="font-size:10px;opacity:0.7">la tumeur « brille » sur l'image 3D</span></div>
+  </div>
+
+  <div class="section-title">Le piège métabolique (clé de l'examen)</div>
+  <div class="box-coeur">
+    <div style="margin-top: 2mm;">
+      <p style="font-size: 14px; line-height: 1.6; margin-bottom: 2mm;">
+        La cellule cancéreuse <strong>phosphoryle le FDG</strong> (comme elle fait avec le glucose normal)… mais le FDG est <strong>indigestible</strong> : il reste <strong>bloqué dans la cellule</strong>.
+      </p>
+      <p style="font-size: 14px; line-height: 1.6;">
+        Plus la cellule est cancéreuse → plus elle consomme de glucose → plus elle <strong>« brille »</strong> sur l'image TEP.
+      </p>
+    </div>
+  </div>
+
+  <div class="schema-flow">
+    <div class="schema-item">Glucose</div>
+    <div style="color:var(--acier);align-self:center;font-size:14px;">+</div>
+    <div class="schema-item orange">Fluor-18</div>
+    <div style="color:var(--acier);align-self:center;font-size:14px;">=</div>
+    <div class="schema-item">FDG</div>
+    <div style="color:var(--acier);align-self:center;font-size:14px;">→</div>
+    <div class="schema-item violet">Cellule cancéreuse<br>avale le FDG</div>
+    <div style="color:var(--acier);align-self:center;font-size:14px;">→</div>
+    <div class="schema-item red">Bloqué dedans</div>
+    <div style="color:var(--acier);align-self:center;font-size:14px;">→</div>
+    <div class="schema-item green">« Brille » sur l'image</div>
+  </div>
+
+  <div class="box">
+    <p style="font-size: 13px; color: var(--ardoise); line-height: 1.5;"><strong>Point clé :</strong> la TEP détecte l'<strong>activité métabolique</strong> avant même que la tumeur soit visible sur une radio classique. C'est un outil d'<strong>aide au diagnostic</strong> : on confirme par biopsie.</p>
+  </div>
+
+  <div class="source-box">
+    <div class="titre">Sources</div>
+    <p><strong>Edumedia</strong> — Schémas sur l'imagerie médicale et les traceurs</p>
+    <p><strong>CNED</strong> — Cours sur les applications médicales de la radioactivité</p>
+    <p><strong>Entretiens personnels</strong> — Médecins du service d'hématologie, protocole de TEP pour le myélome multiple</p>
+  </div>
+
+  <div class="page-footer">
+    <span class="left">Mémo Radioactivité — Physique-Chimie</span>
+    <span class="right">3 / 5</span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE 4 — TRAITER : THÉRAPIES CIBLÉES
+     ════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-num">04</div>
+    <div class="page-title-group">
+      <div class="page-title">Traiter : Thérapies Ciblées</div>
+      <div class="page-sub">Radiothérapie externe · Thérapie interne · Myélome</div>
+    </div>
+    <div class="page-tag">Thérapie</div>
+  </div>
+
+  <div class="box-coeur">
+    <div style="margin-top: 2mm;">
+      <p style="font-size: 14px; font-weight: 600; color: var(--indigo-c); margin-bottom: 2mm;">Principe fondamental (à apprendre par cœur)</p>
+      <p style="font-size: 14px; line-height: 1.6;">
+        Les <strong>rayonnements ionisants endommagent l'ADN</strong> des cellules. Les cellules cancéreuses se divisent <strong>plus rapidement</strong> → elles sont <strong>plus sensibles</strong> aux dégâts radio-induits. C'est la <strong>différence de radiosensibilité</strong>.
+      </p>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="cell" style="border-color: var(--indigo); background: var(--indigo-f); text-align: left; padding: 4mm;">
+      <div style="font-size: 12px; font-weight: 700; color: var(--indigo); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2mm;">Externe</div>
+      <p style="font-size: 13px; line-height: 1.5; color: var(--ardoise);">
+        <strong>Rayons X</strong> ou <strong>protons</strong> dirigés depuis l'extérieur vers la tumeur. La dose est calculée pour <strong>maximiser l'effet sur la tumeur</strong> tout en <strong>protégeant les tissus sains</strong>.
+      </p>
+    </div>
+    <div class="cell" style="border-color: var(--violet); background: var(--violet-f); text-align: left; padding: 4mm;">
+      <div style="font-size: 12px; font-weight: 700; color: var(--violet); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2mm;">Interne</div>
+      <p style="font-size: 13px; line-height: 1.5; color: var(--ardoise);">
+        Substance radioactive <strong>injectée</strong>. On utilise le <strong>fonctionnement naturel du corps</strong> pour cibler l'organe malade. C'est une <strong>thérapie ciblée</strong>.
+      </p>
+    </div>
+  </div>
+
+  <div class="section-title">Exemple : le myélome, du diagnostic au traitement</div>
+
+  <div class="perso-box">
+    <p style="margin-top: 2mm;">
+      Pour le <strong>myélome multiple</strong> de ma mère, les médecins utilisent deux approches basées sur <strong>le même principe physique</strong> : des noyaux instables qui émettent des rayonnements. D'abord pour <strong>voir</strong>, puis pour <strong>soigner</strong>.
+    </p>
+  </div>
+
+  <div class="box" style="background: var(--emeraude-f); border-left-color: var(--emeraude);">
+    <p style="font-size: 13px; font-weight: 600; color: var(--emeraude); margin-bottom: 1mm;">1. Voir : la TEP au fluor-18 (diagnostic)</p>
+    <p style="font-size: 13px; color: var(--ardoise); line-height: 1.5;">
+      On injecte du <strong>glucose marqué au fluor-18</strong>. Les cellules cancéreuses de la moelle osseuse consomment plus de sucre. Elles se « colorent » sur l'image. Les médecins voient <strong>où</strong> est la maladie et <strong>si elle progresse</strong>.
+    </p>
+  </div>
+
+  <div class="box" style="background: var(--violet-f); border-left-color: var(--violet);">
+    <p style="font-size: 13px; font-weight: 600; color: var(--violet); margin-bottom: 1mm;">2. Soigner : le samarium-153 (thérapie interne)</p>
+    <p style="font-size: 13px; color: var(--ardoise); line-height: 1.5;">
+      On injecte un <strong>radio-isotope osseux</strong> (samarium-153). Il se fixe sur le <strong>tissu osseux en activité</strong> — là où l'os se reconstruit anormalement à cause du cancer. Le rayonnement bêta détruit les cellules cancéreuses à proximité, sur quelques millimètres seulement.
+    </p>
+  </div>
+
+  <div class="section-title">Pourquoi le samarium se fixe-t-il sur la tumeur ?</div>
+
+  <div class="box">
+    <p style="font-size: 14px; line-height: 1.6; margin-bottom: 2mm;">
+      Le cancer du myélome <strong>détruit l'os</strong> et force l'organisme à le <strong>reconstruire en permanence</strong>. Cette reconstruction osseuse anormale crée une <strong>activité métabolique intense</strong> à cet endroit précis.
+    </p>
+    <p style="font-size: 14px; line-height: 1.6;">
+      Le samarium-153 est un <strong>analogue chimique du calcium</strong> — l'élément qui constitue l'os. Il se dépose naturellement là où l'os est en train de se former : <strong>sur les zones cancéreuses</strong>, pas sur l'os sain.
+    </p>
+  </div>
+
+  <div class="schema-flow">
+    <div class="schema-item">Myélome détruit<br>l'os</div>
+    <div style="color:var(--acier);align-self:center;font-size:14px;">→</div>
+    <div class="schema-item orange">L'os se reconstruit<br>anormalement</div>
+    <div style="color:var(--acier);align-self:center;font-size:14px;">→</div>
+    <div class="schema-item">Activité osseuse<br>intense = cible</div>
+    <div style="color:var(--acier);align-self:center;font-size:14px;">→</div>
+    <div class="schema-item red">Samarium-153<br>(analogue du calcium)<br>se fixe ici</div>
+    <div style="color:var(--acier);align-self:center;font-size:14px;">→</div>
+    <div class="schema-item green">Rayonnement bêta<br>détruit sur 2-3 mm</div>
+  </div>
+
+  <div class="box-context">
+    <p style="font-size: 13px;"><strong>Le lien physique :</strong> c'est <strong>le même principe</strong> — des noyaux instables qui émettent des rayonnements. On change juste <strong>l'isotope</strong>, <strong>la dose</strong> et <strong>l'objectif</strong> : faible dose pour voir (fluor-18), dose thérapeutique pour détruire (samarium-153).</p>
+  </div>
+
+  <div class="perso-box">
+    <p style="margin-top: 2mm;">
+      Ma mère passe régulièrement des <strong>TEP au fluor-18</strong> pour surveiller son myélome. Quand une lésion osseuse devient trop douloureuse, les médecins peuvent utiliser des <strong>radio-isotopes osseux</strong> pour la traiter de l'intérieur. C'est la <strong>médecine personnalisée</strong> : chaque examen guide le traitement suivant.
+    </p>
+  </div>
+
+  <div class="section-title">Autres isotopes thérapeutiques à connaître</div>
+  <ul class="liste">
+    <li><span class="keyword violet">Iode-131</span> — t₁/₂ = 8 jours. Cancer de la thyroïde : le modèle de réussite de la radiothérapie interne</li>
+    <li><span class="keyword violet">Lutétium-177</span> — t₁/₂ = 6,7 jours. Tumeurs neuro-endocrines, recherches en cours en hématologie</li>
+    <li><span class="keyword violet">Yttrium-90</span> — t₁/₂ = 64 heures. Radiothérapie interne sélective du foie</li>
+  </ul>
+
+  <div class="box-coeur">
+    <div style="margin-top: 2mm; text-align: center;">
+      <p style="font-size: 15px; font-weight: 700; color: var(--indigo-c);">
+        Bien choisir : l'isotope + la dose + la méthode
+      </p>
+      <p style="font-size: 12px; color: var(--acier); margin-top: 1mm;">Formule du traitement personnalisé</p>
+    </div>
+  </div>
+
+  <div class="source-box">
+    <div class="titre">Sources</div>
+    <p><strong>CNED</strong> — Cours sur les applications thérapeutiques de la radioactivité</p>
+    <p><strong>PhET</strong> — Simulations sur les interactions rayonnement-matière</p>
+    <p><strong>Entretiens personnels</strong> — Discussions avec l'équipe médicale sur les protocoles de traitement du myélome</p>
+  </div>
+
+  <div class="page-footer">
+    <span class="left">Mémo Radioactivité — Physique-Chimie</span>
+    <span class="right">4 / 5</span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE 5 — LIMITES + CONCLUSION + CONSEILS
+     ════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-num">05</div>
+    <div class="page-title-group">
+      <div class="page-title">Limites, Conclusion & Conseils</div>
+      <div class="page-sub">Radioprotection · Questions jury · Présentation</div>
+    </div>
+    <div class="page-tag">Final</div>
+  </div>
+
+  <div class="box-coeur">
+    <div style="margin-top: 2mm; text-align: center;">
+      <p style="font-size: 16px; font-weight: 700; color: var(--indigo-c);">
+        Dose la plus faible possible<br>tout en gardant l'efficacité thérapeutique
+      </p>
+      <p style="font-size: 11px; color: var(--acier); margin-top: 1mm;">Principe ALARA (As Low As Reasonably Achievable)</p>
+    </div>
+  </div>
+
+  <div class="section-title">Trois règles de radioprotection — T-D-P</div>
+  <div class="grid-3">
+    <div class="cell" style="border-color: var(--rubis); background: var(--rubis-f); text-align: left; padding: 3mm;">
+      <div style="font-size: 28px; font-weight: 800; color: var(--rubis); text-align: center; margin-bottom: 1mm;">T</div>
+      <div style="font-size: 12px; font-weight: 700; color: var(--rubis); text-align: center; margin-bottom: 1mm;">TEMPS</div>
+      <div style="font-size: 12px; color: var(--ardoise); line-height: 1.4;">Réduire le temps d'exposition au maximum</div>
+    </div>
+    <div class="cell" style="border-color: var(--ambre); background: var(--ambre-f); text-align: left; padding: 3mm;">
+      <div style="font-size: 28px; font-weight: 800; color: var(--ambre); text-align: center; margin-bottom: 1mm;">D</div>
+      <div style="font-size: 12px; font-weight: 700; color: var(--ambre); text-align: center; margin-bottom: 1mm;">DISTANCE</div>
+      <div style="font-size: 12px; color: var(--ardoise); line-height: 1.4;">S'éloigner — l'intensité diminue avec le carré de la distance</div>
+    </div>
+    <div class="cell" style="border-color: var(--emeraude); background: var(--emeraude-f); text-align: left; padding: 3mm;">
+      <div style="font-size: 28px; font-weight: 800; color: var(--emeraude); text-align: center; margin-bottom: 1mm;">P</div>
+      <div style="font-size: 12px; font-weight: 700; color: var(--emeraude); text-align: center; margin-bottom: 1mm;">PROTECTION</div>
+      <div style="font-size: 12px; color: var(--ardoise); line-height: 1.4;">Écrans : plomb, béton, parois épaisses</div>
+    </div>
+  </div>
+
+  <div class="box-formule">
+    <span class="label">Loi en 1/r² — Atténuation géométrique</span>
+    <div class="math">
+      <span class="var">I</span>(<span class="var">r</span>) <span class="eq">=</span> <span class="var">I</span><sub>0</sub> <span class="eq">/</span> <span class="var">r</span><sup>2</sup>
+    </div>
+    <div class="desc">
+      Doubler la distance = diviser l'intensité par 4
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top: 3mm;">Équilibre bénéfice / risque</div>
+  <div style="display: flex; align-items: center; gap: 3mm; margin: 3mm 0;">
+    <div style="flex:1; text-align:center; padding: 4mm; background: var(--emeraude-f); border: 2px solid var(--emeraude); border-radius: 8px;">
+      <div style="font-size: 22px; font-weight: 800; color: var(--emeraude);">BÉNÉFICE</div>
+      <div style="font-size: 12px; color: var(--ardoise); margin-top: 1mm;">Détecter ou soigner<br>le cancer</div>
+    </div>
+    <div style="font-size: 28px; font-weight: 800; color: var(--indigo);">></div>
+    <div style="flex:1; text-align:center; padding: 4mm; background: var(--rubis-f); border: 2px solid var(--rubis); border-radius: 8px;">
+      <div style="font-size: 22px; font-weight: 800; color: var(--rubis);">RISQUE</div>
+      <div style="font-size: 12px; color: var(--ardoise); margin-top: 1mm;">Effets secondaires<br>Exposition</div>
+    </div>
+  </div>
+
+  <div class="box-coeur">
+    <div style="margin-top: 2mm;">
+      <p style="font-size: 14px; font-weight: 600; color: var(--indigo-c); margin-bottom: 2mm; text-align: center;">Phrase de conclusion (à apprendre par cœur)</p>
+      <p style="font-size: 15px; font-weight: 600; color: var(--indigo-c); line-height: 1.5; text-align: center;">
+        « La radioactivité est souvent perçue comme un danger pur, mais en médecine, elle devient un outil très précis — l'un des seuls phénomènes physiques capables à la fois de <strong>voir à l'intérieur du corps</strong> et de <strong>soigner avec précision</strong>. »
+      </p>
+    </div>
+  </div>
+
+  <div class="box-coeur">
+    <div style="margin-top: 2mm;">
+      <p style="font-size: 14px; font-weight: 600; color: var(--indigo-c); margin-bottom: 2mm; text-align: center;">Ouverture (à apprendre par cœur)</p>
+      <p style="font-size: 15px; font-weight: 600; color: var(--indigo-c); line-height: 1.5; text-align: center;">
+        « Jusqu'où la physique peut-elle transformer un danger en remède ? »
+      </p>
+    </div>
+  </div>
+
+  <div class="section-title">Questions probables du jury et réponses</div>
+  <div class="box" style="margin-bottom: 2mm;">
+    <p style="font-size: 13px; line-height: 1.5;"><strong style="color:var(--indigo-c);">« La TEP est-elle fiable ? »</strong></p>
+    <p style="font-size: 13px; color: var(--ardoise); padding-left: 3mm;">→ Oui, mais c'est un <strong>outil d'aide au diagnostic</strong>. On confirme par biopsie.</p>
+  </div>
+  <div class="box" style="margin-bottom: 2mm;">
+    <p style="font-size: 13px; line-height: 1.5;"><strong style="color:var(--indigo-c);">« Peut-on vraiment guérir avec la radioactivité ? »</strong></p>
+    <p style="font-size: 13px; color: var(--ardoise); padding-left: 3mm;">→ Cela dépend du cancer. Pour le myélome de ma mère, la radioactivité sert surtout à <strong>diagnostiquer</strong> (TEP au fluor-18) et à <strong>soulager</strong> (radio-isotopes osseux). Dans d'autres cas, comme la thyroïde avec l'iode-131, la guérison est possible. Chaque maladie a sa réponse propre.</p>
+  </div>
+  <div class="box" style="margin-bottom: 2mm;">
+    <p style="font-size: 13px; line-height: 1.5;"><strong style="color:var(--indigo-c);">« Différence imagerie / traitement ? »</strong></p>
+    <p style="font-size: 13px; color: var(--ardoise); padding-left: 3mm;">→ Même principe (rayonnement), mais <strong>objectif différent</strong> : voir versus détruire.</p>
+  </div>
+
+  <div class="section-title">Conseils de présentation</div>
+  <div class="grid-2">
+    <div class="cell" style="text-align: left; padding: 3mm;">
+      <div style="font-size: 11px; font-weight: 700; color: var(--indigo); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1mm;">Voix</div>
+      <p style="font-size: 12px; color: var(--ardoise); line-height: 1.4;">Voix posée, débit lent. Pauses entre chaque idée.</p>
+    </div>
+    <div class="cell" style="text-align: left; padding: 3mm;">
+      <div style="font-size: 11px; font-weight: 700; color: var(--indigo); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1mm;">Regard</div>
+      <p style="font-size: 12px; color: var(--ardoise); line-height: 1.4;">Regarder le jury, pas la feuille. Posture debout, épaules ouvertes.</p>
+    </div>
+    <div class="cell" style="text-align: left; padding: 3mm;">
+      <div style="font-size: 11px; font-weight: 700; color: var(--indigo); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1mm;">Stress</div>
+      <p style="font-size: 12px; color: var(--ardoise); line-height: 1.4;">Stress fonctionnel : un peu = mieux. Simple plutôt que compliqué.</p>
+    </div>
+    <div class="cell" style="text-align: left; padding: 3mm;">
+      <div style="font-size: 11px; font-weight: 700; color: var(--indigo); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1mm;">Structure</div>
+      <p style="font-size: 12px; color: var(--ardoise); line-height: 1.4;">Phrase boussole : introduction, milieu, conclusion. Défendre ses arguments.</p>
+    </div>
+  </div>
+
+  <div style="text-align: center; margin-top: 4mm; padding: 4mm; background: var(--indigo-f); border-radius: 8px;">
+    <div style="font-size: 32px; font-weight: 800; color: var(--indigo);">18 / 20</div>
+    <div style="font-size: 12px; color: var(--acier); margin-top: 1mm;">Objectif · Tu es prêt</div>
+  </div>
+
+  <div class="source-box">
+    <div class="titre">Sources complètes</div>
+    <p><strong>CNED</strong> — Cours complets de physique-chimie, modules radioactivité et applications médicales</p>
+    <p><strong>PhET</strong> (University of Colorado) — Simulations Alpha Decay, Beta Decay, Nuclear Fission</p>
+    <p><strong>Edumedia</strong> — Animations sur les rayonnements ionisants et l'imagerie médicale</p>
+    <p><strong>Physique à main levée</strong> — Recueil d'expériences et d'explications concrètes</p>
+    <p><strong>Sites institutionnels d'académies</strong> — Ressources pédagogiques en physique-chimie</p>
+    <p><strong>Entretiens personnels</strong> — Médecins du service d'hématologie, CHU : protocoles de TEP au fluor-18, thérapies ciblées pour le myélome multiple de ma mère</p>
+  </div>
+
+  <div class="page-footer">
+    <span class="left">Mémo Radioactivité — Physique-Chimie</span>
+    <span class="right">5 / 5</span>
+  </div>
+</div>
+
+</body>
+</html>

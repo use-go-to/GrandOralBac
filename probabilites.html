@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mémo — Probabilités & Blackjack</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+  :root {
+    --nuit: #0f172a;
+    --ardoise: #334155;
+    --acier: #64748b;
+    --brouillard: #94a3b8;
+    --perle: #f8fafc;
+    --blanc: #ffffff;
+    --indigo: #4f46e5;
+    --indigo-f: #e0e7ff;
+    --indigo-c: #4338ca;
+    --emeraude: #059669;
+    --emeraude-f: #d1fae5;
+    --rubis: #dc2626;
+    --rubis-f: #fee2e2;
+    --ambre: #d97706;
+    --ambre-f: #fef3c7;
+    --violet: #7c3aed;
+    --violet-f: #ede9fe;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { 
+    background: #e2e8f0; 
+    font-family: 'Inter', sans-serif; 
+    color: var(--nuit); 
+    font-size: 15px; 
+    line-height: 1.6;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .page {
+    width: 210mm; 
+    min-height: 297mm; 
+    background: var(--blanc);
+    margin: 0 auto 6mm; 
+    padding: 18mm 22mm 16mm 22mm;
+    position: relative; 
+    page-break-after: always;
+    overflow: hidden; 
+    box-shadow: 0 2px 12px rgba(15,23,42,0.08);
+    display: flex;
+    flex-direction: column;
+  }
+  .page-header {
+    border-bottom: 2px solid var(--indigo);
+    padding-bottom: 4mm;
+    margin-bottom: 5mm;
+    display: flex;
+    align-items: baseline;
+    gap: 4mm;
+  }
+  .page-num {
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--indigo);
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+  .page-title-group { flex: 1; }
+  .page-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--nuit);
+    line-height: 1.2;
+  }
+  .page-sub {
+    font-size: 13px;
+    color: var(--acier);
+    margin-top: 1mm;
+    font-weight: 500;
+  }
+  .page-tag {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--indigo);
+    font-weight: 700;
+    background: var(--indigo-f);
+    padding: 2mm 3mm;
+    border-radius: 4px;
+    align-self: flex-start;
+  }
+  .section {
+    margin-bottom: 4mm;
+  }
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--indigo);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 2mm;
+    display: flex;
+    align-items: center;
+    gap: 2mm;
+  }
+  .section-title::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background: var(--indigo);
+    border-radius: 2px;
+    display: inline-block;
+  }
+  .box {
+    background: var(--perle);
+    border-left: 4px solid var(--indigo);
+    padding: 3mm 4mm;
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 3mm;
+  }
+  .box-coeur {
+    background: var(--indigo-f);
+    border: 2px solid var(--indigo);
+    border-radius: 8px;
+    padding: 4mm 5mm;
+    margin-bottom: 3mm;
+    position: relative;
+  }
+  .box-coeur::before {
+    content: "À APPRENDRE PAR CŒUR";
+    position: absolute;
+    top: -8px;
+    left: 12px;
+    background: var(--indigo);
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 1px 8px;
+    border-radius: 10px;
+  }
+  .box-context {
+    background: var(--ambre-f);
+    border-left: 4px solid var(--ambre);
+    padding: 3mm 4mm;
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 3mm;
+  }
+  .box-formule {
+    background: var(--nuit);
+    color: var(--blanc);
+    border-radius: 8px;
+    padding: 4mm 5mm;
+    margin-bottom: 3mm;
+    text-align: center;
+  }
+  .box-formule .label {
+    font-size: 10px;
+    color: var(--brouillard);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 2mm;
+    display: block;
+  }
+  .box-formule .math {
+    font-size: 20px;
+    font-weight: 600;
+    font-family: 'Times New Roman', serif;
+    letter-spacing: 1px;
+  }
+  .box-formule .math .var { color: #818cf8; }
+  .box-formule .math .num { color: #34d399; }
+  .box-formule .math .eq { color: var(--brouillard); }
+  .box-formule .desc {
+    font-size: 11px;
+    color: var(--brouillard);
+    margin-top: 2mm;
+    line-height: 1.4;
+  }
+  .chrono {
+    display: flex;
+    gap: 0;
+    margin: 3mm 0;
+    position: relative;
+  }
+  .chrono-item {
+    flex: 1;
+    text-align: center;
+    padding: 3mm 2mm;
+    position: relative;
+  }
+  .chrono-item:not(:last-child)::after {
+    content: "→";
+    position: absolute;
+    right: -2mm;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--acier);
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .chrono-item .date {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--indigo);
+    background: var(--indigo-f);
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 10px;
+    margin-bottom: 1mm;
+  }
+  .chrono-item .event {
+    font-size: 12px;
+    color: var(--ardoise);
+    line-height: 1.4;
+  }
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3mm;
+    margin-bottom: 3mm;
+  }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2mm;
+    margin-bottom: 3mm;
+  }
+  .cell {
+    background: var(--perle);
+    border: 1.5px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 3mm;
+    text-align: center;
+  }
+  .cell .val {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--indigo);
+    line-height: 1;
+  }
+  .cell .val.green { color: var(--emeraude); }
+  .cell .val.red { color: var(--rubis); }
+  .cell .val.ambre { color: var(--ambre); }
+  .cell .val.violet { color: var(--violet); }
+  .cell .lbl {
+    font-size: 11px;
+    color: var(--acier);
+    margin-top: 1mm;
+    line-height: 1.3;
+  }
+  .liste {
+    list-style: none;
+    padding: 0;
+  }
+  .liste li {
+    padding: 2mm 0 2mm 6mm;
+    position: relative;
+    font-size: 14px;
+    line-height: 1.5;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  .liste li:last-child { border-bottom: none; }
+  .liste li::before {
+    content: "›";
+    position: absolute;
+    left: 0;
+    color: var(--indigo);
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .liste li strong { color: var(--indigo-c); }
+  .barre {
+    display: flex;
+    align-items: center;
+    gap: 3mm;
+    margin: 2mm 0;
+  }
+  .barre-l {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ardoise);
+    width: 35mm;
+    flex-shrink: 0;
+  }
+  .barre-bg {
+    flex: 1;
+    height: 10px;
+    background: #e2e8f0;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .barre-fill {
+    height: 100%;
+    border-radius: 5px;
+    background: var(--indigo);
+  }
+  .barre-fill.red { background: var(--rubis); }
+  .barre-fill.green { background: var(--emeraude); }
+  .barre-fill.ambre { background: var(--ambre); }
+  .barre-pct {
+    font-size: 12px;
+    color: var(--indigo);
+    font-weight: 700;
+    width: 12mm;
+    text-align: right;
+  }
+  .schema-flow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2mm;
+    justify-content: center;
+    margin: 3mm 0;
+  }
+  .schema-item {
+    background: var(--indigo-f);
+    border: 1.5px solid var(--indigo);
+    border-radius: 6px;
+    padding: 2mm 3mm;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--indigo-c);
+    text-align: center;
+  }
+  .schema-item.orange { background: var(--ambre-f); border-color: var(--ambre); color: var(--ambre); }
+  .schema-item.violet { background: var(--violet-f); border-color: var(--violet); color: var(--violet); }
+  .schema-item.green { background: var(--emeraude-f); border-color: var(--emeraude); color: var(--emeraude); }
+  .schema-item.red { background: var(--rubis-f); border-color: var(--rubis); color: var(--rubis); }
+  .page-footer {
+    margin-top: auto;
+    padding-top: 3mm;
+    border-top: 1.5px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 10px;
+    color: var(--brouillard);
+  }
+  .page-footer .left { font-style: italic; }
+  .page-footer .right { font-weight: 600; }
+  .texte { font-size: 14px; line-height: 1.6; color: var(--ardoise); }
+  .texte strong { color: var(--nuit); font-weight: 600; }
+  .highlight { background: #fef08a; padding: 1px 4px; border-radius: 3px; font-weight: 600; }
+  .keyword {
+    display: inline-block;
+    background: var(--indigo);
+    color: white;
+    font-weight: 600;
+    font-size: 11px;
+    padding: 1px 6px;
+    border-radius: 4px;
+    margin: 1px;
+    letter-spacing: 0.5px;
+  }
+  .keyword.grey { background: var(--acier); }
+  .keyword.green { background: var(--emeraude); }
+  .keyword.red { background: var(--rubis); }
+  .keyword.violet { background: var(--violet); }
+  .keyword.ambre { background: var(--ambre); color: var(--nuit); }
+  .source-box {
+    background: #f0f9ff;
+    border: 1.5px solid #0ea5e9;
+    border-radius: 6px;
+    padding: 3mm 4mm;
+    margin-bottom: 3mm;
+  }
+  .source-box .titre {
+    font-size: 11px;
+    font-weight: 700;
+    color: #0369a1;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1mm;
+  }
+  .source-box p {
+    font-size: 12px;
+    color: var(--ardoise);
+    line-height: 1.5;
+  }
+  .source-box a {
+    color: #0369a1;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .exemple-box {
+    background: #ecfdf5;
+    border: 2px solid var(--emeraude);
+    border-radius: 8px;
+    padding: 4mm 5mm;
+    margin-bottom: 3mm;
+    position: relative;
+  }
+  .exemple-box::before {
+    content: "EXEMPLE CHIFFRÉ (20 SECONDES)";
+    position: absolute;
+    top: -8px;
+    left: 12px;
+    background: var(--emeraude);
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 1px 8px;
+    border-radius: 10px;
+  }
+  .exemple-box p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--nuit);
+    margin-top: 2mm;
+  }
+  .exemple-box strong { color: var(--emeraude); }
+
+  @media print {
+    body { background: none; }
+    .page { 
+      margin: 0; 
+      box-shadow: none; 
+      page-break-after: always;
+      width: 210mm;
+      min-height: 297mm;
+    }
+    .page:last-child { page-break-after: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     PAGE 1 — PROBLÉMATIQUE + ACCROCHE + CHRONO + PLAN
+     ════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-num">01</div>
+    <div class="page-title-group">
+      <div class="page-title">Problématique & Accroche</div>
+      <div class="page-sub">Probabilités & Blackjack — Grand Oral</div>
+    </div>
+    <div class="page-tag">Mathématiques</div>
+  </div>
+
+  <div class="box-coeur">
+    <div style="margin-top: 2mm;">
+      <p style="font-size: 13px; font-weight: 700; color: var(--indigo-c); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2mm;">Problématique</p>
+      <p style="font-size: 15px; font-weight: 600; color: var(--indigo-c); line-height: 1.5;">
+        En quoi les probabilités permettent-elles de compter les points au blackjack ?
+      </p>
+    </div>
+  </div>
+
+  <div class="section-title">Chronologie historique</div>
+  <div class="chrono">
+    <div class="chrono-item">
+      <div class="date">XVIIe siècle</div>
+      <div class="event">Pascal et Fermat : naissance des probabilités</div>
+    </div>
+    <div class="chrono-item">
+      <div class="date">XVIIIe siècle</div>
+      <div class="event">Bernoulli : loi des grands nombres</div>
+    </div>
+    <div class="chrono-item">
+      <div class="date">1962</div>
+      <div class="event">Thorp publie <em>Battre le Croupier</em></div>
+    </div>
+    <div class="chrono-item">
+      <div class="date">1963+</div>
+      <div class="event">Les casinos modifient les règles</div>
+    </div>
+  </div>
+
+  <div class="box-coeur">
+    <div style="margin-top: 2mm;">
+      <p style="font-size: 15px; font-weight: 600; color: var(--indigo-c); line-height: 1.5; text-align: center;">
+        « En <strong>1962</strong>, Edward Thorp publie <strong>Battre le Croupier</strong>. Il révèle qu'on peut avoir un <strong>avantage statistique sur le casino</strong> au blackjack. Comment un mathématicien peut-il battre un casino ? »
+      </p>
+    </div>
+  </div>
+
+  <div class="box-coeur">
+    <div style="margin-top: 2mm;">
+      <p style="font-size: 15px; font-weight: 600; color: var(--indigo-c); line-height: 1.5; text-align: center;">
+        « Le blackjack est mathématiquement un jeu de hasard, mais les probabilités en font aussi un jeu de stratégie où un joueur averti peut <strong>réduire l'avantage du casino</strong>. »
+      </p>
+      <p style="font-size: 11px; color: var(--acier); text-align: center; margin-top: 2mm;">Phrase boussole — répéter en introduction, milieu et conclusion</p>
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top: 4mm;">Plan de l'oral (20 min)</div>
+  <div class="grid-2">
+    <div class="cell">
+      <div class="val">1 min</div>
+      <div class="lbl">Accroche<br>+ Problématique</div>
+    </div>
+    <div class="cell">
+      <div class="val">3–4 min</div>
+      <div class="lbl">Règles du jeu<br>+ Exemple concret</div>
+    </div>
+    <div class="cell">
+      <div class="val">4–5 min</div>
+      <div class="lbl">Probabilités<br>+ Formules du programme</div>
+    </div>
+    <div class="cell">
+      <div class="val">5–6 min</div>
+      <div class="lbl">Comptage Haut-Bas<br>+ Démonstration chiffrée</div>
+    </div>
+    <div class="cell">
+      <div class="val">1–2 min</div>
+      <div class="lbl">Conclusion<br>+ Ouverture</div>
+    </div>
+    <div class="cell" style="background: var(--indigo-f); border-color: var(--indigo);">
+      <div class="val" style="font-size: 20px;">15–18 min</div>
+      <div class="lbl">Temps de parole<br>Objectif</div>
+    </div>
+  </div>
+
+  <div class="box-context">
+    <p style="font-size: 13px; color: var(--ambre);"><strong>Contexte clé :</strong> Contrairement à la roulette, au blackjack <strong>les cartes jouées ne sont pas remises</strong> dans le sabot. Les probabilités changent à chaque carte distribuée. C'est ce qui rend le jeu mathématiquement analysable.</p>
+  </div>
+
+  <div class="source-box">
+    <div class="titre">Sources et ressources</div>
+    <p><strong>Maths et Tiques</strong> — Cours, vidéos et démonstrations sur les probabilités, l'espérance et les raisonnements (maths-et-tiques.fr)</p>
+    <p><strong>Khan Academy</strong> — Probabilités conditionnelles, espérance mathématique, calcul (fr.khanacademy.org)</p>
+    <p><strong>APMEP</strong> — Exercices et rappels de cours sur les probabilités (apmep.fr)</p>
+    <p><strong>Sesamath / Le Matou Matheux</strong> — Exercices progressifs et entraînements</p>
+    <p><strong>QCM de Math / KWYK / Maths-pdf</strong> — Exercices ciblés et corrigés pour s'entraîner rapidement</p>
+    <p><strong>Maths Mentales</strong> — Automatisation des réflexes de calcul et raisonnements rapides</p>
+  </div>
+
+  <div class="page-footer">
+    <span class="left">Mémo Probabilités — Mathématiques</span>
+    <span class="right">1 / 5</span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE 2 — RÈGLES DU JEU
+     ════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-num">02</div>
+    <div class="page-title-group">
+      <div class="page-title">Règles du Blackjack</div>
+      <div class="page-sub">But · Valeurs · Déroulement · Gains</div>
+    </div>
+    <div class="page-tag">À maîtriser</div>
+  </div>
+
+  <div class="box-coeur">
+    <div style="margin-top: 2mm;">
+      <p style="font-size: 14px; font-weight: 600; color: var(--indigo-c); margin-bottom: 2mm;">Point crucial (à apprendre par cœur)</p>
+      <p style="font-size: 14px; line-height: 1.6;">
+        Chaque joueur joue <strong>seul contre le croupier</strong>. Ce n'est pas du poker : on ne bat pas les autres joueurs, on bat le casino. Le croupier joue <strong>une seule fois</strong>, après tous les joueurs, et doit tirer jusqu'à atteindre <strong>17 minimum</strong>.
+      </p>
+    </div>
+  </div>
+
+  <div class="section-title">Valeur des cartes</div>
+  <div class="grid-3">
+    <div class="cell">
+      <div class="val" style="font-size: 20px;">2 à 10</div>
+      <div class="lbl">Valeur nominale<br>7 vaut 7 points</div>
+    </div>
+    <div class="cell">
+      <div class="val" style="font-size: 20px;">10</div>
+      <div class="lbl">Valet, Dame, Roi<br>V, D, R valent 10</div>
+    </div>
+    <div class="cell" style="border-color: var(--ambre); background: var(--ambre-f);">
+      <div class="val ambre" style="font-size: 20px;">1 ou 11</div>
+      <div class="lbl">As (magique)<br>Au choix du joueur</div>
+    </div>
+  </div>
+
+  <div class="section-title">Déroulement d'une manche (cinq étapes)</div>
+  <div class="schema-flow">
+    <div class="schema-item">1. Miser</div>
+    <div style="color:var(--acier);align-self:center;font-size:14px;">→</div>
+    <div class="schema-item">2. Distribuer<br><span style="font-size:9px;opacity:0.7">2 cartes joueur, 1 visible + 1 cachée croupier</span></div>
+    <div style="color:var(--acier);align-self:center;font-size:14px;">→</div>
+    <div class="schema-item">3. Jouer<br><span style="font-size:9px;opacity:0.7">tirer ou rester</span></div>
+    <div style="color:var(--acier);align-self:center;font-size:14px;">→</div>
+    <div class="schema-item">4. Croupier<br><span style="font-size:9px;opacity:0.7">tire jusqu'à 17</span></div>
+    <div style="color:var(--acier);align-self:center;font-size:14px;">→</div>
+    <div class="schema-item green">5. Payer</div>
+  </div>
+
+  <div class="section-title">Gains</div>
+  <div class="grid-2">
+    <div class="cell" style="text-align: left; padding: 3mm;">
+      <div style="font-size: 11px; font-weight: 700; color: var(--emeraude); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1mm;">Victoire normale</div>
+      <p style="font-size: 13px; color: var(--ardoise);">Le casino paie <strong>une fois</strong> la mise</p>
+    </div>
+    <div class="cell" style="text-align: left; padding: 3mm; border-color: var(--ambre); background: var(--ambre-f);">
+      <div style="font-size: 11px; font-weight: 700; color: var(--ambre); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1mm;">Blackjack (As + 10)</div>
+      <p style="font-size: 13px; color: var(--ardoise);">Le casino paie <strong>1,5 fois</strong> la mise</p>
+    </div>
+    <div class="cell" style="text-align: left; padding: 3mm;">
+      <div style="font-size: 11px; font-weight: 700; color: var(--rubis); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1mm;">Défaite</div>
+      <p style="font-size: 13px; color: var(--ardoise);">On perd sa mise</p>
+    </div>
+    <div class="cell" style="text-align: left; padding: 3mm;">
+      <div style="font-size: 11px; font-weight: 700; color: var(--acier); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1mm;">Égalité</div>
+      <p style="font-size: 13px; color: var(--ardoise);">On récupère sa mise</p>
+    </div>
+  </div>
+
+  <div class="box-context">
+    <p style="font-size: 13px;"><strong>Le croupier est contraint :</strong> il doit tirer jusqu'à atteindre <strong>17 minimum</strong>. Il ne peut pas choisir de s'arrêter avant. C'est cette contrainte qui crée l'avantage mathématique analysable.</p>
+  </div>
+
+  <div class="source-box">
+    <div class="titre">Sources</div>
+    <p><strong>Maths et Tiques</strong> — Vidéos sur les probabilités et les jeux de hasard</p>
+    <p><strong>Khan Academy</strong> — Cours sur les probabilités conditionnelles</p>
+  </div>
+
+  <div class="page-footer">
+    <span class="left">Mémo Probabilités — Mathématiques</span>
+    <span class="right">2 / 5</span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE 3 — PROBABILITÉS (FORMULES DU PROGRAMME)
+     ════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-num">03</div>
+    <div class="page-title-group">
+      <div class="page-title">Probabilités</div>
+      <div class="page-sub">Formules du programme · Espérance · Avantage casino</div>
+    </div>
+    <div class="page-tag">Formules</div>
+  </div>
+
+  <div class="box-coeur">
+    <div style="margin-top: 2mm;">
+      <p style="font-size: 14px; font-weight: 600; color: var(--indigo-c); margin-bottom: 2mm;">Différence fondamentale (à apprendre par cœur)</p>
+      <p style="font-size: 14px; line-height: 1.6;">
+        <strong>Roulette</strong> : chaque tour est <strong>indépendant</strong>, la probabilité est fixe.<br>
+        <strong>Blackjack</strong> : les cartes ne sont <strong>pas remises</strong> dans le sabot, la probabilité est <strong>évolutive</strong>.
+      </p>
+    </div>
+  </div>
+
+  <div class="section-title">Formules du programme de probabilités</div>
+
+  <div class="box-formule">
+    <span class="label">Probabilité conditionnelle — Probabilité de A sachant B</span>
+    <div class="math">
+      <span class="var">P</span><sub><span class="var">B</span></sub>(<span class="var">A</span>) <span class="eq">=</span> <span class="var">P</span>(<span class="var">A</span> <span class="eq">∩</span> <span class="var">B</span>) <span class="eq">/</span> <span class="var">P</span>(<span class="var">B</span>)
+    </div>
+    <div class="desc">
+      Avec P(B) ≠ 0. C'est la probabilité que l'événement A se réalise<br>
+      sachant que l'événement B s'est déjà réalisé.
+    </div>
+  </div>
+
+  <div class="box-formule">
+    <span class="label">Formule des probabilités composées</span>
+    <div class="math">
+      <span class="var">P</span>(<span class="var">A</span> <span class="eq">∩</span> <span class="var">B</span>) <span class="eq">=</span> <span class="var">P</span>(<span class="var">A</span>) <span class="eq">×</span> <span class="var">P</span><sub><span class="var">A</span></sub>(<span class="var">B</span>)
+    </div>
+    <div class="desc">
+      Probabilité que A ET B se réalisent = probabilité de A × probabilité de B sachant A
+    </div>
+  </div>
+
+  <div class="box-formule">
+    <span class="label">Espérance mathématique</span>
+    <div class="math">
+      <span class="var">E</span>(<span class="var">X</span>) <span class="eq">=</span> <span class="eq">Σ</span> <span class="var">x</span><sub><span class="var">i</span></sub> <span class="eq">×</span> <span class="var">P</span>(<span class="var">X</span> <span class="eq">=</span> <span class="var">x</span><sub><span class="var">i</span></sub>)
+    </div>
+    <div class="desc">
+      Gain moyen sur un très grand nombre de parties, pondéré par les probabilités.<br>
+      Si E(X) > 0 : avantage joueur. Si E(X) < 0 : avantage casino.
+    </div>
+  </div>
+
+  <div class="exemple-box">
+    <p style="margin-top: 2mm;">
+      <strong>Exemple chiffré à raconter en 20 secondes :</strong><br><br>
+      Vous avez <strong>16 points</strong> (As + 5, l'As vaut 11). Il reste <strong>50 cartes</strong> dans le sabot.<br>
+      Les cartes qui vous font brûler : 6, 7, 8, 9, 10, V, D, R → <strong>32 cartes sur 50</strong>.<br>
+      Probabilité de brûler si vous tirez : <strong>32/50 = 64 %</strong>.<br><br>
+      Rester à 16, c'est risqué aussi : le croupier tire jusqu'à 17.<br>
+      Le calcul probabiliste aide à <strong>comparer les risques</strong>, pas à gagner à coup sûr.
+    </p>
+  </div>
+
+  <div class="section-title" style="margin-top: 3mm;">Application au blackjack</div>
+  <div class="box">
+    <p style="font-size: 13px; line-height: 1.6; margin-bottom: 2mm;"><strong>Probabilité de tirer une carte de 10 :</strong> 10, V, D, R = 16 cartes sur 52</p>
+    <p style="font-size: 14px; font-weight: 600; color: var(--indigo-c); text-align: center; margin-bottom: 2mm;">P(10) = 16/52 = 4/13 ≈ 30,8 %</p>
+    <p style="font-size: 13px; line-height: 1.6; margin-bottom: 2mm;"><strong>Probabilité d'un Blackjack :</strong> (As + 10) dans n'importe quel ordre, avec deux cartes</p>
+    <p style="font-size: 14px; font-weight: 600; color: var(--indigo-c); text-align: center;">P(Blackjack) = (4/52) × (16/51) × 2 = 128/2652 ≈ 4,83 %</p>
+  </div>
+
+  <div class="section-title">Risque de brûler (dépasser 21)</div>
+  <div class="barre">
+    <span class="barre-l">Main à 12</span>
+    <div class="barre-bg"><div class="barre-fill" style="width:31%"></div></div>
+    <span class="barre-pct">31%</span>
+  </div>
+  <div class="barre">
+    <span class="barre-l">Main à 15</span>
+    <div class="barre-bg"><div class="barre-fill" style="width:58%"></div></div>
+    <span class="barre-pct">58%</span>
+  </div>
+  <div class="barre">
+    <span class="barre-l">Main à 17</span>
+    <div class="barre-bg"><div class="barre-fill red" style="width:69%"></div></div>
+    <span class="barre-pct">69%</span>
+  </div>
+  <div class="barre">
+    <span class="barre-l">Main à 20</span>
+    <div class="barre-bg"><div class="barre-fill red" style="width:92%"></div></div>
+    <span class="barre-pct">92%</span>
+  </div>
+
+  <div class="section-title" style="margin-top: 3mm;">Avantage du casino (House Edge)</div>
+  <div class="grid-3">
+    <div class="cell" style="border-color: var(--rubis); background: var(--rubis-f);">
+      <div class="val red" style="font-size: 18px;">2–5 %</div>
+      <div class="lbl">Sans stratégie<br>Avantage casino</div>
+    </div>
+    <div class="cell" style="border-color: var(--ambre); background: var(--ambre-f);">
+      <div class="val ambre" style="font-size: 18px;">≈ 0,5 %</div>
+      <div class="lbl">Stratégie de base<br>Avantage casino réduit</div>
+    </div>
+    <div class="cell" style="border-color: var(--emeraude); background: var(--emeraude-f);">
+      <div class="val green" style="font-size: 16px;">+0,5 à +1,5 %</div>
+      <div class="lbl">Comptage Haut-Bas<br>Léger avantage joueur<br><span style="font-size:9px;color:var(--rubis)">Sur le très long terme</span></div>
+    </div>
+  </div>
+
+  <div class="box" style="background: var(--rubis-f); border-left-color: var(--rubis);">
+    <p style="font-size: 13px; color: var(--rubis); font-weight: 600; margin-bottom: 1mm;">Précision importante</p>
+    <p style="font-size: 13px; color: var(--ardoise);">Le comptage de cartes ne garantit <strong>pas de gagner</strong>. Il donne un <strong>léger avantage statistique</strong> sur des milliers de manches. À court terme, le hasard domine toujours. Les casinos se défendent avec des mélangeurs automatiques et l'exclusion des joueurs.</p>
+  </div>
+
+  <div class="source-box">
+    <div class="titre">Sources</div>
+    <p><strong>Maths et Tiques</strong> — Probabilités conditionnelles, espérance, jeux de hasard</p>
+    <p><strong>Khan Academy</strong> — Probabilités et statistiques (fr.khanacademy.org)</p>
+    <p><strong>APMEP</strong> — Exercices sur les probabilités composées et conditionnelles</p>
+  </div>
+
+  <div class="page-footer">
+    <span class="left">Mémo Probabilités — Mathématiques</span>
+    <span class="right">3 / 5</span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE 4 — COMPTAGE HAUT-BAS
+     ════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-num">04</div>
+    <div class="page-title-group">
+      <div class="page-title">Comptage Haut-Bas</div>
+      <div class="page-sub">Hi-Lo · Compte réel · Stratégie de mise</div>
+    </div>
+    <div class="page-tag">Stratégie</div>
+  </div>
+
+  <div class="box-coeur">
+    <div style="margin-top: 2mm;">
+      <p style="font-size: 14px; font-weight: 600; color: var(--indigo-c); margin-bottom: 2mm;">Principe (à apprendre par cœur)</p>
+      <p style="font-size: 14px; line-height: 1.6;">
+        On compte les cartes sorties pour estimer si le reste du sabot est <strong>favorable au joueur</strong>. La symétrie du jeu (20 petites cartes, 20 grosses cartes, 12 neutres) permet cette estimation statistique.
+      </p>
+    </div>
+  </div>
+
+  <div class="section-title">Valeurs du comptage Haut-Bas (Hi-Lo)</div>
+  <div class="grid-3">
+    <div class="cell" style="border-color: var(--emeraude); background: var(--emeraude-f); text-align: left; padding: 3mm;">
+      <div style="font-size: 11px; font-weight: 700; color: var(--emeraude); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1mm;">+1</div>
+      <div style="font-size: 18px; font-weight: 700; color: var(--emeraude); margin-bottom: 1mm;">2 3 4 5 6</div>
+      <div style="font-size: 12px; color: var(--ardoise); line-height: 1.4;">Petites cartes sorties →<br>favorables au <strong>croupier</strong></div>
+    </div>
+    <div class="cell" style="border-color: var(--ambre); background: var(--ambre-f); text-align: left; padding: 3mm;">
+      <div style="font-size: 11px; font-weight: 700; color: var(--ambre); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1mm;">0</div>
+      <div style="font-size: 18px; font-weight: 700; color: var(--ambre); margin-bottom: 1mm;">7 8 9</div>
+      <div style="font-size: 12px; color: var(--ardoise); line-height: 1.4;">Cartes neutres →<br>ignorées</div>
+    </div>
+    <div class="cell" style="border-color: var(--rubis); background: var(--rubis-f); text-align: left; padding: 3mm;">
+      <div style="font-size: 11px; font-weight: 700; color: var(--rubis); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1mm;">−1</div>
+      <div style="font-size: 18px; font-weight: 700; color: var(--rubis); margin-bottom: 1mm;">10 V D R A</div>
+      <div style="font-size: 12px; color: var(--ardoise); line-height: 1.4;">Grosses cartes sorties →<br>favorables au <strong>joueur</strong></div>
+    </div>
+  </div>
+
+  <div class="box-formule">
+    <span class="label">Compteur courant (Running Count)</span>
+    <div class="math">
+      <span class="var">CC</span> <span class="eq">=</span> <span class="eq">Σ</span> <span class="var">valeurs</span> <span class="eq">des</span> <span class="var">cartes</span> <span class="eq">sorties</span>
+    </div>
+    <div class="desc">
+      Exemple : 3, 5, Roi, 2, As, 6 → (+1) + (+1) + (−1) + (+1) + (−1) + (+1) = <strong>+2</strong>
+    </div>
+  </div>
+
+  <div class="box-formule">
+    <span class="label">Compte réel (Vrai Compte) — Formule clé</span>
+    <div class="math">
+      <span class="var">CR</span> <span class="eq">=</span> <span class="var">CC</span> <span class="eq">÷</span> <span class="var">N</span><sub><span class="var">restants</span></sub>
+    </div>
+    <div class="desc">
+      CR = Compte réel &nbsp;|&nbsp; CC = Compteur courant &nbsp;|&nbsp; N<sub>restants</sub> = nombre de jeux restants dans le sabot<br>
+      Exemple : CC = +6, 2 jeux restants → CR = +6 ÷ 2 = <strong>+3</strong>
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top: 3mm;">Stratégie de mise selon le compte réel</div>
+  <div class="grid-3">
+    <div class="cell" style="border-color: var(--rubis); background: var(--rubis-f);">
+      <div class="val red" style="font-size: 18px;">CR ≤ 0</div>
+      <div class="lbl">Mise minimale<br>Le sabot est défavorable</div>
+    </div>
+    <div class="cell" style="border-color: var(--ambre); background: var(--ambre-f);">
+      <div class="val ambre" style="font-size: 18px;">CR = +2</div>
+      <div class="lbl">Augmenter la mise<br>Légèrement favorable</div>
+    </div>
+    <div class="cell" style="border-color: var(--emeraude); background: var(--emeraude-f);">
+      <div class="val green" style="font-size: 18px;">CR ≥ +4</div>
+      <div class="lbl">Mise maximale<br>Très favorable</div>
+    </div>
+  </div>
+
+  <div class="box" style="background: var(--emeraude-f); border-left-color: var(--emeraude);">
+    <p style="font-size: 13px; font-weight: 600; color: var(--emeraude); margin-bottom: 1mm;">Pourquoi le comptage fonctionne :</p>
+    <p style="font-size: 13px; color: var(--ardoise); line-height: 1.5;">1. Plus de grosses cartes restantes = plus de <strong>blackjacks</strong> (payés 1,5 fois la mise)<br>2. Le croupier <strong>brûle plus souvent</strong> quand il doit tirer sur des grosses cartes<br>3. <strong>Doubler</strong> et <strong>séparer</strong> deviennent plus rentables</p>
+  </div>
+
+  <div class="box" style="background: var(--rubis-f); border-left-color: var(--rubis);">
+    <p style="font-size: 13px; color: var(--rubis); font-weight: 600; margin-bottom: 1mm;">Précision</p>
+    <p style="font-size: 13px; color: var(--ardoise);">Le comptage de cartes est <strong>légal</strong> mais les casinos peuvent <strong>refuser l'accès</strong> aux joueurs suspectés. C'est un exercice mathématique, pas une méthode infaillible pour gagner de l'argent.</p>
+  </div>
+
+  <div class="source-box">
+    <div class="titre">Sources</div>
+    <p><strong>Maths et Tiques</strong> — Démonstrations sur les stratégies probabilistes</p>
+    <p><strong>Khan Academy</strong> — Statistiques et probabilités avancées</p>
+    <p><strong>Edward Thorp</strong> — <em>Battre le Croupier</em> (1962), ouvrage de référence sur le comptage de cartes</p>
+  </div>
+
+  <div class="page-footer">
+    <span class="left">Mémo Probabilités — Mathématiques</span>
+    <span class="right">4 / 5</span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE 5 — CONCLUSION + CONSEILS JURY
+     ════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-num">05</div>
+    <div class="page-title-group">
+      <div class="page-title">Conclusion & Conseils</div>
+      <div class="page-sub">Phrase de conclusion · Questions jury · Présentation</div>
+    </div>
+    <div class="page-tag">Final</div>
+  </div>
+
+  <div class="box-coeur">
+    <div style="margin-top: 2mm;">
+      <p style="font-size: 14px; font-weight: 600; color: var(--indigo-c); margin-bottom: 2mm; text-align: center;">Phrase de conclusion (à apprendre par cœur)</p>
+      <p style="font-size: 15px; font-weight: 600; color: var(--indigo-c); line-height: 1.5; text-align: center;">
+        « Le blackjack est un jeu de hasard dans sa structure, mais les mathématiques en font aussi un jeu de stratégie — l'un des seuls jeux de casino où un joueur peut, <strong>sur le très long terme et avec une méthode rigoureuse</strong>, réduire voire inverser l'avantage de la banque. »
+      </p>
+    </div>
+  </div>
+
+  <div class="box-coeur">
+    <div style="margin-top: 2mm;">
+      <p style="font-size: 14px; font-weight: 600; color: var(--indigo-c); margin-bottom: 2mm; text-align: center;">Ouverture (à apprendre par cœur)</p>
+      <p style="font-size: 15px; font-weight: 600; color: var(--indigo-c); line-height: 1.5; text-align: center;">
+        « Jusqu'où les mathématiques peuvent-elles <strong>prévoir le hasard</strong> ? »
+      </p>
+      <p style="font-size: 12px; color: var(--acier); text-align: center; margin-top: 1mm;">Finance, assurances, intelligence artificielle — même question du risque versus bénéfice</p>
+    </div>
+  </div>
+
+  <div class="section-title">Questions probables du jury et réponses</div>
+  <div class="box" style="margin-bottom: 2mm;">
+    <p style="font-size: 13px; line-height: 1.5;"><strong style="color:var(--indigo-c);">« Le comptage est-il efficace ? »</strong></p>
+    <p style="font-size: 13px; color: var(--ardoise); padding-left: 3mm;">→ Oui, mais sur des <strong>milliers de manches</strong>. À court terme, le hasard domine toujours. C'est un avantage statistique, pas une certitude.</p>
+  </div>
+  <div class="box" style="margin-bottom: 2mm;">
+    <p style="font-size: 13px; line-height: 1.5;"><strong style="color:var(--indigo-c);">« Peut-on vraiment gagner au casino ? »</strong></p>
+    <p style="font-size: 13px; color: var(--ardoise); padding-left: 3mm;">→ Mathématiquement, sur le long terme, oui. Mais les casinos se défendent avec des <strong>mélangeurs automatiques</strong> et l'<strong>exclusion des joueurs</strong> suspects.</p>
+  </div>
+  <div class="box" style="margin-bottom: 2mm;">
+    <p style="font-size: 13px; line-height: 1.5;"><strong style="color:var(--indigo-c);">« Différence avec la roulette ? »</strong></p>
+    <p style="font-size: 13px; color: var(--ardoise); padding-left: 3mm;">→ À la roulette, chaque tour est <strong>indépendant</strong>. Au blackjack, les cartes sorties <strong>changent les probabilités</strong> des tours suivants.</p>
+  </div>
+  <div class="box" style="margin-bottom: 2mm;">
+    <p style="font-size: 13px; line-height: 1.5;"><strong style="color:var(--indigo-c);">« C'est quoi l'espérance mathématique ? »</strong></p>
+    <p style="font-size: 13px; color: var(--ardoise); padding-left: 3mm;">→ C'est le <strong>gain moyen</strong> sur un très grand nombre de parties. Si l'espérance est positive, on gagne à long terme. Si elle est négative, on perd.</p>
+  </div>
+
+  <div class="section-title">Conseils de présentation</div>
+  <div class="grid-2">
+    <div class="cell" style="text-align: left; padding: 3mm;">
+      <div style="font-size: 11px; font-weight: 700; color: var(--indigo); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1mm;">Voix</div>
+      <p style="font-size: 12px; color: var(--ardoise); line-height: 1.4;">Voix posée, débit lent. Pauses entre chaque idée.</p>
+    </div>
+    <div class="cell" style="text-align: left; padding: 3mm;">
+      <div style="font-size: 11px; font-weight: 700; color: var(--indigo); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1mm;">Regard</div>
+      <p style="font-size: 12px; color: var(--ardoise); line-height: 1.4;">Regarder le jury, pas la feuille. Posture debout, épaules ouvertes.</p>
+    </div>
+    <div class="cell" style="text-align: left; padding: 3mm;">
+      <div style="font-size: 11px; font-weight: 700; color: var(--indigo); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1mm;">Stress</div>
+      <p style="font-size: 12px; color: var(--ardoise); line-height: 1.4;">Stress fonctionnel : un peu = mieux. Simple plutôt que compliqué.</p>
+    </div>
+    <div class="cell" style="text-align: left; padding: 3mm;">
+      <div style="font-size: 11px; font-weight: 700; color: var(--indigo); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1mm;">Structure</div>
+      <p style="font-size: 12px; color: var(--ardoise); line-height: 1.4;">Phrase boussole : introduction, milieu, conclusion. Défendre ses arguments avec conviction.</p>
+    </div>
+  </div>
+
+  <div style="text-align: center; margin-top: 4mm; padding: 4mm; background: var(--indigo-f); border-radius: 8px;">
+    <div style="font-size: 32px; font-weight: 800; color: var(--indigo);">18 / 20</div>
+    <div style="font-size: 12px; color: var(--acier); margin-top: 1mm;">Objectif · Tu es prêt</div>
+  </div>
+
+  <div class="source-box">
+    <div class="titre">Sources complètes</div>
+    <p><strong>Maths et Tiques</strong> (maths-et-tiques.fr) — Cours, vidéos, démonstrations sur les probabilités et l'espérance</p>
+    <p><strong>Khan Academy</strong> (fr.khanacademy.org) — Probabilités conditionnelles, espérance mathématique, statistiques</p>
+    <p><strong>APMEP</strong> (apmep.fr) — Exercices et rappels de cours sur les probabilités</p>
+    <p><strong>Sesamath / Le Matou Matheux</strong> — Exercices progressifs et entraînements</p>
+    <p><strong>QCM de Math / KWYK / Maths-pdf</strong> — Exercices ciblés et corrigés</p>
+    <p><strong>Maths Mentales</strong> — Automatisation des réflexes de calcul</p>
+    <p><strong>Edward Thorp</strong> — <em>Battre le Croupier</em> (1962), éditions récentes disponibles</p>
+  </div>
+
+  <div class="page-footer">
+    <span class="left">Mémo Probabilités — Mathématiques</span>
+    <span class="right">5 / 5</span>
+  </div>
+</div>
+
+</body>
+</html>
