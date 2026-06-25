@@ -1,750 +1,1362 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#0f172a">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Grand Oral — Révision</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Grand Oral — Révision</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-  :root {
-    --nuit: #0f172a;
-    --ardoise: #334155;
-    --acier: #64748b;
-    --brouillard: #94a3b8;
-    --perle: #f8fafc;
-    --blanc: #ffffff;
-    --indigo: #4f46e5;
-    --indigo-f: #e0e7ff;
-    --indigo-c: #4338ca;
-    --emeraude: #059669;
-    --emeraude-f: #d1fae5;
-    --rubis: #dc2626;
-    --rubis-f: #fee2e2;
-    --ambre: #d97706;
-    --ambre-f: #fef3c7;
-    --violet: #7c3aed;
-    --violet-f: #ede9fe;
-    --rose: #db2777;
-    --rose-f: #fdf2f8;
-  }
+        :root {
+            --nuit: #0f172a;
+            --ardoise: #334155;
+            --acier: #64748b;
+            --brouillard: #94a3b8;
+            --perle: #f8fafc;
+            --blanc: #ffffff;
+            --indigo: #4f46e5;
+            --indigo-f: #e0e7ff;
+            --indigo-c: #4338ca;
+            --emeraude: #059669;
+            --emeraude-f: #d1fae5;
+            --rubis: #dc2626;
+            --rubis-f: #fee2e2;
+            --ambre: #d97706;
+            --ambre-f: #fef3c7;
+            --violet: #7c3aed;
+            --violet-f: #ede9fe;
+            --rose: #db2777;
+            --rose-f: #fdf2f8;
+            --cyan: #06b6d4;
+            --cyan-f: #cffafe;
+        }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-  html, body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: var(--nuit);
-    color: var(--blanc);
-    min-height: 100dvh;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-  }
+        html,
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--nuit);
+            color: var(--blanc);
+            min-height: 100dvh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
 
-  #hub {
-    min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    position: relative;
-    overflow: hidden;
-  }
+        #hub {
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
 
-  #hub::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: 
-      radial-gradient(circle at 20% 30%, rgba(79,70,229,0.12) 0%, transparent 50%),
-      radial-gradient(circle at 80% 70%, rgba(5,150,105,0.08) 0%, transparent 50%),
-      radial-gradient(circle at 50% 50%, rgba(124,58,237,0.06) 0%, transparent 50%);
-    animation: float 20s ease-in-out infinite;
-    pointer-events: none;
-  }
+        #hub::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(79, 70, 229, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(5, 150, 105, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.06) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+            pointer-events: none;
+        }
 
-  @keyframes float {
-    0%, 100% { transform: translate(0, 0) rotate(0deg); }
-    33% { transform: translate(30px, -20px) rotate(2deg); }
-    66% { transform: translate(-20px, 30px) rotate(-2deg); }
-  }
+        @keyframes float {
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            33% {
+                transform: translate(30px, -20px) rotate(2deg);
+            }
+            66% {
+                transform: translate(-20px, 30px) rotate(-2deg);
+            }
+        }
 
-  .hub-header {
-    text-align: center;
-    margin-bottom: 48px;
-    position: relative;
-    z-index: 1;
-  }
+        .hub-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
 
-  .hub-badge {
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--indigo);
-    background: var(--indigo-f);
-    padding: 6px 16px;
-    border-radius: 20px;
-    margin-bottom: 20px;
-  }
+        .hub-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--indigo);
+            background: var(--indigo-f);
+            padding: 6px 16px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
 
-  .hub-title {
-    font-size: 32px;
-    font-weight: 800;
-    line-height: 1.1;
-    letter-spacing: -1px;
-    margin-bottom: 8px;
-  }
+        .hub-title {
+            font-size: 32px;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+        }
 
-  .hub-title span {
-    background: linear-gradient(135deg, var(--indigo), var(--violet));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
+        .hub-title span {
+            background: linear-gradient(135deg, var(--indigo), var(--violet));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
-  .hub-sub {
-    font-size: 15px;
-    color: var(--brouillard);
-    font-weight: 400;
-  }
+        .hub-sub {
+            font-size: 15px;
+            color: var(--brouillard);
+            font-weight: 400;
+        }
 
-  .hub-cards {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    width: 100%;
-    max-width: 380px;
-    position: relative;
-    z-index: 1;
-  }
+        .hub-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            width: 100%;
+            max-width: 380px;
+            position: relative;
+            z-index: 1;
+        }
 
-  .hub-card {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 24px;
-    border-radius: 20px;
-    border: 1.5px solid rgba(255,255,255,0.06);
-    background: rgba(255,255,255,0.03);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-    text-decoration: none;
-    color: inherit;
-  }
+        .hub-card {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 20px 22px;
+            border-radius: 20px;
+            border: 1.5px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+        }
 
-  .hub-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 20px;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
+        .hub-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
 
-  .hub-card.math::before {
-    background: linear-gradient(135deg, rgba(79,70,229,0.15), rgba(124,58,237,0.08));
-  }
+        .hub-card.math::before {
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.15), rgba(124, 58, 237, 0.08));
+        }
 
-  .hub-card.physique::before {
-    background: linear-gradient(135deg, rgba(5,150,105,0.15), rgba(217,119,6,0.08));
-  }
+        .hub-card.physique::before {
+            background: linear-gradient(135deg, rgba(5, 150, 105, 0.15), rgba(217, 119, 6, 0.08));
+        }
 
-  .hub-card:active { transform: scale(0.97); }
-  .hub-card:hover::before, .hub-card:active::before { opacity: 1; }
-  .hub-card:hover { border-color: rgba(255,255,255,0.12); transform: translateY(-2px); }
+        .hub-card.questions::before {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(79, 70, 229, 0.08));
+        }
 
-  .hub-card-icon {
-    width: 56px;
-    height: 56px;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    flex-shrink: 0;
-    position: relative;
-  }
+        .hub-card:active {
+            transform: scale(0.97);
+        }
 
-  .hub-card.math .hub-card-icon {
-    background: linear-gradient(135deg, var(--indigo), var(--violet));
-    box-shadow: 0 8px 24px rgba(79,70,229,0.3);
-  }
+        .hub-card:hover::before,
+        .hub-card:active::before {
+            opacity: 1;
+        }
 
-  .hub-card.physique .hub-card-icon {
-    background: linear-gradient(135deg, var(--emeraude), var(--ambre));
-    box-shadow: 0 8px 24px rgba(5,150,105,0.3);
-  }
+        .hub-card:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+            transform: translateY(-2px);
+        }
 
-  .hub-card-content { flex: 1; }
-  .hub-card-title { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
-  .hub-card-desc { font-size: 13px; color: var(--brouillard); line-height: 1.4; }
+        .hub-card-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+            position: relative;
+        }
 
-  .hub-card-arrow {
-    font-size: 20px;
-    color: var(--acier);
-    transition: transform 0.3s, color 0.3s;
-  }
-  .hub-card:hover .hub-card-arrow { transform: translateX(4px); color: var(--blanc); }
+        .hub-card.math .hub-card-icon {
+            background: linear-gradient(135deg, var(--indigo), var(--violet));
+            box-shadow: 0 8px 24px rgba(79, 70, 229, 0.3);
+        }
 
-  .hub-footer {
-    margin-top: auto;
-    padding-top: 32px;
-    text-align: center;
-    position: relative;
-    z-index: 1;
-  }
-  .hub-footer p { font-size: 12px; color: var(--acier); }
-  .hub-footer strong { color: var(--brouillard); }
+        .hub-card.physique .hub-card-icon {
+            background: linear-gradient(135deg, var(--emeraude), var(--ambre));
+            box-shadow: 0 8px 24px rgba(5, 150, 105, 0.3);
+        }
 
-  #reader {
-    display: none;
-    min-height: 100dvh;
-    flex-direction: column;
-    background: var(--blanc);
-  }
+        .hub-card.questions .hub-card-icon {
+            background: linear-gradient(135deg, var(--cyan), var(--indigo));
+            box-shadow: 0 8px 24px rgba(6, 182, 212, 0.3);
+        }
 
-  .reader-header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(255,255,255,0.92);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid #e2e8f0;
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
+        .hub-card-content {
+            flex: 1;
+            min-width: 0;
+        }
 
-  .reader-back {
-    width: 40px;
-    height: 40px;
-    border-radius: 12px;
-    border: none;
-    background: var(--perle);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 18px;
-    color: var(--ardoise);
-    transition: all 0.2s;
-    flex-shrink: 0;
-  }
-  .reader-back:active { transform: scale(0.92); background: var(--indigo-f); color: var(--indigo); }
+        .hub-card-title {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
 
-  .reader-title {
-    flex: 1;
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--nuit);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+        .hub-card-desc {
+            font-size: 12.5px;
+            color: var(--brouillard);
+            line-height: 1.4;
+        }
 
-  .reader-progress {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--acier);
-    background: var(--perle);
-    padding: 6px 12px;
-    border-radius: 20px;
-    white-space: nowrap;
-  }
+        .hub-card-arrow {
+            font-size: 20px;
+            color: var(--acier);
+            transition: transform 0.3s, color 0.3s;
+            flex-shrink: 0;
+        }
 
-  .reader-content {
-    flex: 1;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    padding: 0;
-    background: #e2e8f0;
-  }
+        .hub-card:hover .hub-card-arrow {
+            transform: translateX(4px);
+            color: var(--blanc);
+        }
 
-  .page-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(255,255,255,0.95);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-top: 1px solid #e2e8f0;
-    padding: 8px 16px 24px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    z-index: 101;
-    transform: translateY(100%);
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .page-nav.visible { transform: translateY(0); }
+        .hub-footer {
+            margin-top: auto;
+            padding-top: 32px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
 
-  .page-nav-btn {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    border: none;
-    background: var(--perle);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 18px;
-    color: var(--ardoise);
-    transition: all 0.2s;
-    flex-shrink: 0;
-  }
-  .page-nav-btn:active { transform: scale(0.92); background: var(--indigo-f); color: var(--indigo); }
-  .page-nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        .hub-footer p {
+            font-size: 12px;
+            color: var(--acier);
+        }
 
-  .page-nav-dots {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-  }
+        .hub-footer strong {
+            color: var(--brouillard);
+        }
 
-  .page-nav-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #cbd5e1;
-    border: none;
-    cursor: pointer;
-    transition: all 0.2s;
-    padding: 0;
-  }
-  .page-nav-dot.active { background: var(--indigo); width: 24px; border-radius: 4px; }
+        /* ===== READER OVERLAY ===== */
+        #reader {
+            display: none;
+            min-height: 100dvh;
+            flex-direction: column;
+            background: var(--blanc);
+        }
 
-  .page-nav-label {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--acier);
-    min-width: 50px;
-    text-align: center;
-  }
+        .reader-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid #e2e8f0;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .hub-card { animation: fadeIn 0.5s ease-out backwards; }
-  .hub-card:nth-child(1) { animation-delay: 0.1s; }
-  .hub-card:nth-child(2) { animation-delay: 0.2s; }
+        .reader-back {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            border: none;
+            background: var(--perle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            color: var(--ardoise);
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
 
-  @supports (padding-bottom: env(safe-area-inset-bottom)) {
-    .page-nav { padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
-    #hub { padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
-  }
-</style>
+        .reader-back:active {
+            transform: scale(0.92);
+            background: var(--indigo-f);
+            color: var(--indigo);
+        }
+
+        .reader-title {
+            flex: 1;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--nuit);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .reader-progress {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--acier);
+            background: var(--perle);
+            padding: 6px 12px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .reader-content {
+            flex: 1;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 0;
+            background: #e2e8f0;
+        }
+
+        .page-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid #e2e8f0;
+            padding: 8px 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 101;
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .page-nav.visible {
+            transform: translateY(0);
+        }
+
+        .page-nav-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            border: none;
+            background: var(--perle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            color: var(--ardoise);
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .page-nav-btn:active {
+            transform: scale(0.92);
+            background: var(--indigo-f);
+            color: var(--indigo);
+        }
+
+        .page-nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .page-nav-dots {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .page-nav-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #cbd5e1;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            padding: 0;
+        }
+
+        .page-nav-dot.active {
+            background: var(--indigo);
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        .page-nav-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--acier);
+            min-width: 50px;
+            text-align: center;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hub-card {
+            animation: fadeIn 0.5s ease-out backwards;
+        }
+
+        .hub-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+        .hub-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .hub-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        @supports (padding-bottom: env(safe-area-inset-bottom)) {
+            .page-nav {
+                padding-bottom: calc(24px + env(safe-area-inset-bottom));
+            }
+            #hub {
+                padding-bottom: calc(24px + env(safe-area-inset-bottom));
+            }
+        }
+
+        /* ===== SMALL SCREEN TWEAKS ===== */
+        @media (max-width: 380px) {
+            .hub-title {
+                font-size: 26px;
+            }
+            .hub-card {
+                padding: 16px 18px;
+                gap: 14px;
+            }
+            .hub-card-icon {
+                width: 44px;
+                height: 44px;
+                font-size: 18px;
+                border-radius: 12px;
+            }
+            .hub-card-title {
+                font-size: 15px;
+            }
+            .hub-card-desc {
+                font-size: 11px;
+            }
+            .hub-card-arrow {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 350px) {
+            .hub-card {
+                flex-wrap: wrap;
+                justify-content: center;
+                text-align: center;
+                gap: 10px;
+            }
+            .hub-card-content {
+                flex: 1 1 100%;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<div id="hub">
-  <div class="hub-header">
-    <div class="hub-badge">Grand Oral 2026</div>
-    <h1 class="hub-title">Revision<br><span>Grand Oral</span></h1>
-    <p class="hub-sub">Choisis ton sujet et revise partout</p>
-  </div>
+    <!-- ════════════════════════════════════════
+    HUB — ACCUEIL
+    ════════════════════════════════════════ -->
+    <div id="hub">
+        <div class="hub-header">
+            <div class="hub-badge">Grand Oral 2026</div>
+            <h1 class="hub-title">Révision<br><span>Grand Oral</span></h1>
+            <p class="hub-sub">Choisis ton sujet et révise partout</p>
+        </div>
 
-  <div class="hub-cards">
-    <a class="hub-card math" href="./probabilites.html" onclick="openSubject('maths'); return false;">
-      <div class="hub-card-icon">🎲</div>
-      <div class="hub-card-content">
-        <div class="hub-card-title">Mathematiques</div>
-        <div class="hub-card-desc">Probabilites & Blackjack · Comptage Haut-Bas · Esperance</div>
-      </div>
-      <div class="hub-card-arrow">›</div>
-    </a>
+        <div class="hub-cards">
+            <!-- CARD 1 : Mathématiques -->
+            <a class="hub-card math" href="./probabilites.html" onclick="openSubject('maths'); return false;">
+                <div class="hub-card-icon">🎲</div>
+                <div class="hub-card-content">
+                    <div class="hub-card-title">Mathématiques</div>
+                    <div class="hub-card-desc">Probabilités &amp; Blackjack · Comptage Haut-Bas · Espérance</div>
+                </div>
+                <div class="hub-card-arrow">›</div>
+            </a>
 
-    <a class="hub-card physique" href="./radioactivite.html" onclick="openSubject('physique'); return false;">
-      <div class="hub-card-icon">⚛️</div>
-      <div class="hub-card-content">
-        <div class="hub-card-title">Physique-Chimie</div>
-        <div class="hub-card-desc">Radioactivite en Medecine · TEP · Therapies ciblees</div>
-      </div>
-      <div class="hub-card-arrow">›</div>
-    </a>
-  </div>
+            <!-- CARD 2 : Physique-Chimie -->
+            <a class="hub-card physique" href="./radioactivite.html" onclick="openSubject('physique'); return false;">
+                <div class="hub-card-icon">⚛️</div>
+                <div class="hub-card-content">
+                    <div class="hub-card-title">Physique-Chimie</div>
+                    <div class="hub-card-desc">Radioactivité en Médecine · TEP · Thérapies ciblées</div>
+                </div>
+                <div class="hub-card-arrow">›</div>
+            </a>
 
-  <div class="hub-footer">
-    <p>Bon courage pour ton <strong>Grand Oral</strong> 🎯</p>
-  </div>
-</div>
+            <!-- CARD 3 : Questions Jury (Flashcards) -->
+            <a class="hub-card questions" href="./questions.html" onclick="openQuestions(); return false;">
+                <div class="hub-card-icon">❓</div>
+                <div class="hub-card-content">
+                    <div class="hub-card-title">Questions Jury</div>
+                    <div class="hub-card-desc">24 flashcards type bac · Blackjack &amp; Radioactivité</div>
+                </div>
+                <div class="hub-card-arrow">›</div>
+            </a>
+        </div>
 
-<div id="reader">
-  <div class="reader-header">
-    <button class="reader-back" onclick="closeReader()" aria-label="Retour">←</button>
-    <div class="reader-title" id="reader-title">Mathematiques</div>
-    <div class="reader-progress" id="reader-progress">1 / 5</div>
-  </div>
-  <div class="reader-content" id="reader-content"></div>
-</div>
-
-<div class="page-nav" id="page-nav">
-  <button class="page-nav-btn" id="btn-prev" onclick="prevPage()" aria-label="Page precedente">‹</button>
-  <div class="page-nav-dots" id="page-dots"></div>
-  <div class="page-nav-label" id="page-label">1 / 5</div>
-  <button class="page-nav-btn" id="btn-next" onclick="nextPage()" aria-label="Page suivante">›</button>
-</div>
-
-<script>
-
-      {
-        title: 'Diagnostiquer : TEP',
-        content: `
-<div style="padding:20px 16px;max-width:100%;font-family:'Inter',sans-serif;color:#0f172a;font-size:15px;line-height:1.6;">
-  <div style="background:#e0e7ff;border:2px solid #4f46e5;border-radius:12px;padding:16px;margin-bottom:16px;position:relative;">
-    <div style="position:absolute;top:-10px;left:12px;background:#4f46e5;color:white;font-size:9px;font-weight:700;letter-spacing:1px;padding:2px 10px;border-radius:10px;">A APPRENDRE PAR COEUR</div>
-    <div style="margin-top:8px;">
-      <p style="font-size:14px;font-weight:700;color:#4338ca;margin-bottom:6px;">Definition de la TEP</p>
-      <p style="font-size:14px;line-height:1.6;color:#334155;">La <strong>TEP</strong> (Tomographie par Emission de Positrons) produit des <strong>images en trois dimensions</strong> en detectant les rayonnements emis par un <strong>traceur radioactif</strong> injecte au patient. On visualise l'<strong>activite metabolique</strong>, pas seulement la forme des organes.</p>
+        <div class="hub-footer">
+            <p>Bon courage pour ton <strong>Grand Oral</strong> 🎯</p>
+        </div>
     </div>
-  </div>
 
-  <div style="background:#fdf2f8;border:2px solid #db2777;border-radius:12px;padding:16px;margin-bottom:16px;position:relative;">
-    <div style="position:absolute;top:-10px;left:12px;background:#db2777;color:white;font-size:9px;font-weight:700;letter-spacing:1px;padding:2px 10px;border-radius:10px;">MON HISTOIRE</div>
-    <p style="font-size:14px;line-height:1.6;color:#0f172a;margin-top:6px;">Chez ma mere, la <strong>TEP au fluor-18 (FDG)</strong> permet de suivre son <strong>myelome multiple</strong>. Les medecins injectent du glucose marque au fluor-18. Les cellules cancereuses de la moelle osseuse consomment plus de sucre que les cellules saines. Elles brillent sur l'image. Cela permet de voir si la maladie progresse, meme avant que les lesions soient visibles sur une radio classique.</p>
-  </div>
-
-  <p style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Le principe en trois etapes</p>
-  <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:16px;">
-    <div style="background:#e0e7ff;border:1.5px solid #4f46e5;border-radius:6px;padding:8px 12px;font-size:12px;font-weight:600;color:#4338ca;text-align:center;">1. Injecter<br><span style="font-size:10px;opacity:0.7">glucose + fluor-18 = FDG</span></div>
-    <div style="color:#64748b;align-self:center;font-size:18px;font-weight:700;">→</div>
-    <div style="background:#ede9fe;border:1.5px solid #7c3aed;border-radius:6px;padding:8px 12px;font-size:12px;font-weight:600;color:#7c3aed;text-align:center;">2. Fixer<br><span style="font-size:10px;opacity:0.7">cellules cancereuses avales le FDG</span></div>
-    <div style="color:#64748b;align-self:center;font-size:18px;font-weight:700;">→</div>
-    <div style="background:#d1fae5;border:1.5px solid #059669;border-radius:6px;padding:8px 12px;font-size:12px;font-weight:600;color:#059669;text-align:center;">3. Detecter<br><span style="font-size:10px;opacity:0.7">la tumeur brille sur l'image 3D</span></div>
-  </div>
-
-  <div style="background:#e0e7ff;border:2px solid #4f46e5;border-radius:12px;padding:16px;margin-bottom:16px;">
-    <p style="font-size:14px;line-height:1.6;color:#4338ca;margin-bottom:8px;">La cellule cancereuse <strong>phosphoryle le FDG</strong> (comme elle fait avec le glucose normal)... mais le FDG est <strong>indigestible</strong> : il reste <strong>bloque dans la cellule</strong>.</p>
-    <p style="font-size:14px;line-height:1.6;color:#4338ca;">Plus la cellule est cancereuse → plus elle consomme de glucose → plus elle <strong>brille</strong> sur l'image TEP.</p>
-  </div>
-
-  <div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-bottom:16px;">
-    <div style="background:#e0e7ff;border:1.5px solid #4f46e5;border-radius:6px;padding:6px 10px;font-size:11px;font-weight:600;color:#4338ca;text-align:center;">Glucose</div>
-    <div style="color:#64748b;align-self:center;font-size:14px;font-weight:700;">+</div>
-    <div style="background:#fef3c7;border:1.5px solid #d97706;border-radius:6px;padding:6px 10px;font-size:11px;font-weight:600;color:#d97706;text-align:center;">Fluor-18</div>
-    <div style="color:#64748b;align-self:center;font-size:14px;font-weight:700;">=</div>
-    <div style="background:#e0e7ff;border:1.5px solid #4f46e5;border-radius:6px;padding:6px 10px;font-size:11px;font-weight:600;color:#4338ca;text-align:center;">FDG</div>
-    <div style="color:#64748b;align-self:center;font-size:14px;font-weight:700;">→</div>
-    <div style="background:#ede9fe;border:1.5px solid #7c3aed;border-radius:6px;padding:6px 10px;font-size:11px;font-weight:600;color:#7c3aed;text-align:center;">Cellule cancereuse<br>avale le FDG</div>
-    <div style="color:#64748b;align-self:center;font-size:14px;font-weight:700;">→</div>
-    <div style="background:#fee2e2;border:1.5px solid #dc2626;border-radius:6px;padding:6px 10px;font-size:11px;font-weight:600;color:#dc2626;text-align:center;">Bloque dedans</div>
-    <div style="color:#64748b;align-self:center;font-size:14px;font-weight:700;">→</div>
-    <div style="background:#d1fae5;border:1.5px solid #059669;border-radius:6px;padding:6px 10px;font-size:11px;font-weight:600;color:#059669;text-align:center;">Brille sur l'image</div>
-  </div>
-
-  <div style="background:#f8fafc;border-left:4px solid #4f46e5;padding:12px 14px;border-radius:0 8px 8px 0;margin-bottom:16px;">
-    <p style="font-size:13px;color:#334155;"><strong>Point cle :</strong> la TEP detecte l'<strong>activite metabolique</strong> avant meme que la tumeur soit visible sur une radio classique. C'est un outil d'<strong>aide au diagnostic</strong> : on confirme par biopsie.</p>
-  </div>
-</div>`
-      },
-      {
-        title: 'Traiter : Therapies Ciblees',
-        content: `
-<div style="padding:20px 16px;max-width:100%;font-family:'Inter',sans-serif;color:#0f172a;font-size:15px;line-height:1.6;">
-  <div style="background:#e0e7ff;border:2px solid #4f46e5;border-radius:12px;padding:16px;margin-bottom:16px;position:relative;">
-    <div style="position:absolute;top:-10px;left:12px;background:#4f46e5;color:white;font-size:9px;font-weight:700;letter-spacing:1px;padding:2px 10px;border-radius:10px;">A APPRENDRE PAR COEUR</div>
-    <div style="margin-top:8px;">
-      <p style="font-size:14px;font-weight:700;color:#4338ca;margin-bottom:6px;">Principe fondamental</p>
-      <p style="font-size:14px;line-height:1.6;color:#334155;">Les <strong>rayonnements ionisants endommagent l'ADN</strong> des cellules. Les cellules cancereuses se divisent <strong>plus rapidement</strong> → elles sont <strong>plus sensibles</strong> aux degats radio-induits. C'est la <strong>différence de radiosensibilite</strong>.</p>
+    <!-- ════════════════════════════════════════
+    READER — OVERLAY POUR LES SUJETS (Maths / Physique)
+    ════════════════════════════════════════ -->
+    <div id="reader">
+        <div class="reader-header">
+            <button class="reader-back" onclick="closeReader()" aria-label="Retour">←</button>
+            <div class="reader-title" id="reader-title">Mathématiques</div>
+            <div class="reader-progress" id="reader-progress">1 / 5</div>
+        </div>
+        <div class="reader-content" id="reader-content"></div>
     </div>
-  </div>
 
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;">
-    <div style="background:#e0e7ff;border:1.5px solid #4f46e5;border-radius:8px;padding:12px;text-align:left;">
-      <div style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Externe</div>
-      <p style="font-size:13px;line-height:1.5;color:#334155;"><strong>Rayons X</strong> ou <strong>protons</strong> diriges depuis l'exterieur vers la tumeur. La dose est calculee pour <strong>maximiser l'effet sur la tumeur</strong> tout en <strong>protegeant les tissus sains</strong>.</p>
+    <!-- ════════════════════════════════════════
+    NAVIGATION PAGINÉE (Reader)
+    ════════════════════════════════════════ -->
+    <div class="page-nav" id="page-nav">
+        <button class="page-nav-btn" id="btn-prev" onclick="prevPage()" aria-label="Page précédente">‹</button>
+        <div class="page-nav-dots" id="page-dots"></div>
+        <div class="page-nav-label" id="page-label">1 / 5</div>
+        <button class="page-nav-btn" id="btn-next" onclick="nextPage()" aria-label="Page suivante">›</button>
     </div>
-    <div style="background:#ede9fe;border:1.5px solid #7c3aed;border-radius:8px;padding:12px;text-align:left;">
-      <div style="font-size:12px;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Interne</div>
-      <p style="font-size:13px;line-height:1.5;color:#334155;">Substance radioactive <strong>injectee</strong>. On utilise le <strong>fonctionnement naturel du corps</strong> pour cibler l'organe malade. C'est une <strong>therapie ciblee</strong>.</p>
-    </div>
-  </div>
 
-  <div style="background:#fdf2f8;border:2px solid #db2777;border-radius:12px;padding:16px;margin-bottom:16px;position:relative;">
-    <div style="position:absolute;top:-10px;left:12px;background:#db2777;color:white;font-size:9px;font-weight:700;letter-spacing:1px;padding:2px 10px;border-radius:10px;">MON HISTOIRE</div>
-    <p style="font-size:14px;line-height:1.6;color:#0f172a;margin-top:6px;">Pour le <strong>myelome multiple</strong> de ma mere, les medecins utilisent deux approches basees sur <strong>le meme principe physique</strong> : des noyaux instables qui emettent des rayonnements. D'abord pour <strong>voir</strong>, puis pour <strong>soigner</strong>.</p>
-  </div>
+    <!-- ════════════════════════════════════════
+    JAVASCRIPT
+    ════════════════════════════════════════ -->
+    <script>
+        // ════════════════════════════════════════
+        // DONNÉES DES SUJETS (Maths & Physique)
+        // ════════════════════════════════════════
+        const subjects = {
+            maths: {
+                title: 'Mathématiques — Probabilités & Blackjack',
+                pages: [{
+                    title: 'Problématique & Accroche',
+                    content: `
+                <div style="padding:20px 16px;max-width:100%;font-family:'Inter',sans-serif;color:#0f172a;font-size:15px;line-height:1.6;">
+                  <div style="background:#e0e7ff;border:2px solid #4f46e5;border-radius:12px;padding:16px;margin-bottom:16px;position:relative;">
+                    <div style="position:absolute;top:-10px;left:12px;background:#4f46e5;color:white;font-size:9px;font-weight:700;letter-spacing:1px;padding:2px 10px;border-radius:10px;">À APPRENDRE PAR CŒUR</div>
+                    <div style="margin-top:8px;">
+                      <p style="font-size:13px;font-weight:700;color:#4338ca;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Problématique</p>
+                      <p style="font-size:15px;font-weight:700;color:#4338ca;line-height:1.5;">En quoi les probabilités permettent-elles de compter les points au blackjack ?</p>
+                    </div>
+                  </div>
 
-  <div style="background:#d1fae5;border-left:4px solid #059669;padding:12px 14px;border-radius:0 8px 8px 0;margin-bottom:12px;">
-    <p style="font-size:13px;font-weight:700;color:#059669;margin-bottom:4px;">1. Voir : la TEP au fluor-18 (diagnostic)</p>
-    <p style="font-size:13px;color:#334155;line-height:1.5;">On injecte du <strong>glucose marque au fluor-18</strong>. Les cellules cancereuses de la moelle osseuse consomment plus de sucre. Elles se colorent sur l'image. Les medecins voient <strong>ou</strong> est la maladie et <strong>si elle progresse</strong>.</p>
-  </div>
+                  <div style="background:#e0e7ff;border:2px solid #4f46e5;border-radius:12px;padding:16px;margin-bottom:16px;text-align:center;">
+                    <p style="font-size:15px;font-weight:600;color:#4338ca;line-height:1.5;">« En <strong>1962</strong>, Edward Thorp publie <strong>Battre le Croupier</strong>. Il révèle qu'on peut avoir un <strong>avantage statistique sur le casino</strong> au blackjack. »</p>
+                  </div>
 
-  <div style="background:#ede9fe;border-left:4px solid #7c3aed;padding:12px 14px;border-radius:0 8px 8px 0;margin-bottom:12px;">
-    <p style="font-size:13px;font-weight:700;color:#7c3aed;margin-bottom:4px;">2. Soigner : le samarium-153 (therapie interne)</p>
-    <p style="font-size:13px;color:#334155;line-height:1.5;">On injecte un <strong>radio-isotope osseux</strong> (samarium-153). Il se fixe sur le <strong>tissu osseux en activite</strong> — la ou l'os se reconstruit anormalement a cause du cancer. Le rayonnement beta detruit les cellules cancereuses a proximite, sur quelques millimetres seulement.</p>
-  </div>
+                  <div style="background:#e0e7ff;border:2px solid #4f46e5;border-radius:12px;padding:16px;margin-bottom:16px;text-align:center;">
+                    <p style="font-size:15px;font-weight:600;color:#4338ca;line-height:1.5;">« Le blackjack est mathématiquement un jeu de hasard, mais les probabilités en font aussi un jeu de stratégie où un joueur averti peut <strong>réduire l'avantage du casino</strong>. »</p>
+                    <p style="font-size:11px;color:#64748b;margin-top:6px;">Phrase boussole — répéter en introduction, milieu et conclusion</p>
+                  </div>
 
-  <p style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Pourquoi le samarium se fixe-t-il sur la tumeur ?</p>
-  <div style="background:#f8fafc;border-left:4px solid #4f46e5;padding:12px 14px;border-radius:0 8px 8px 0;margin-bottom:16px;">
-    <p style="font-size:14px;line-height:1.6;color:#334155;margin-bottom:8px;">Le cancer du myelome <strong>detruit l'os</strong> et force l'organisme a le <strong>reconstruire en permanence</strong>. Cette reconstruction osseuse anormale cree une <strong>activite metabolique intense</strong> a cet endroit precis.</p>
-    <p style="font-size:14px;line-height:1.6;color:#334155;">Le samarium-153 est un <strong>analogue chimique du calcium</strong> — l'element qui constitue l'os. Il se depose naturellement la ou l'os est en train de se former : <strong>sur les zones cancereuses</strong>, pas sur l'os sain.</p>
-  </div>
+                  <p style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Chronologie historique</p>
+                  <div style="display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;justify-content:center;">
+                    <div style="flex:1;min-width:60px;text-align:center;padding:8px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;">
+                      <div style="font-size:10px;font-weight:700;color:#4f46e5;background:#e0e7ff;display:inline-block;padding:1px 8px;border-radius:10px;">XVIIe</div>
+                      <div style="font-size:11px;color:#334155;margin-top:2px;">Pascal &amp; Fermat</div>
+                    </div>
+                    <div style="color:#64748b;align-self:center;font-size:18px;font-weight:700;">→</div>
+                    <div style="flex:1;min-width:60px;text-align:center;padding:8px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;">
+                      <div style="font-size:10px;font-weight:700;color:#4f46e5;background:#e0e7ff;display:inline-block;padding:1px 8px;border-radius:10px;">XVIIIe</div>
+                      <div style="font-size:11px;color:#334155;margin-top:2px;">Bernoulli</div>
+                    </div>
+                    <div style="color:#64748b;align-self:center;font-size:18px;font-weight:700;">→</div>
+                    <div style="flex:1;min-width:60px;text-align:center;padding:8px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;">
+                      <div style="font-size:10px;font-weight:700;color:#4f46e5;background:#e0e7ff;display:inline-block;padding:1px 8px;border-radius:10px;">1962</div>
+                      <div style="font-size:11px;color:#334155;margin-top:2px;">Thorp</div>
+                    </div>
+                    <div style="color:#64748b;align-self:center;font-size:18px;font-weight:700;">→</div>
+                    <div style="flex:1;min-width:60px;text-align:center;padding:8px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;">
+                      <div style="font-size:10px;font-weight:700;color:#4f46e5;background:#e0e7ff;display:inline-block;padding:1px 8px;border-radius:10px;">1963+</div>
+                      <div style="font-size:11px;color:#334155;margin-top:2px;">Casinos réagissent</div>
+                    </div>
+                  </div>
 
-  <div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-bottom:16px;">
-    <div style="background:#e0e7ff;border:1.5px solid #4f46e5;border-radius:6px;padding:6px 10px;font-size:11px;font-weight:600;color:#4338ca;text-align:center;">Myelome detruit<br>l'os</div>
-    <div style="color:#64748b;align-self:center;font-size:14px;font-weight:700;">→</div>
-    <div style="background:#fef3c7;border:1.5px solid #d97706;border-radius:6px;padding:6px 10px;font-size:11px;font-weight:600;color:#d97706;text-align:center;">L'os se reconstruit<br>anormalement</div>
-    <div style="color:#64748b;align-self:center;font-size:14px;font-weight:700;">→</div>
-    <div style="background:#e0e7ff;border:1.5px solid #4f46e5;border-radius:6px;padding:6px 10px;font-size:11px;font-weight:600;color:#4338ca;text-align:center;">Activite osseuse<br>intense = cible</div>
-    <div style="color:#64748b;align-self:center;font-size:14px;font-weight:700;">→</div>
-    <div style="background:#fee2e2;border:1.5px solid #dc2626;border-radius:6px;padding:6px 10px;font-size:11px;font-weight:600;color:#dc2626;text-align:center;">Samarium-153<br>(analogue du calcium)<br>se fixe ici</div>
-    <div style="color:#64748b;align-self:center;font-size:14px;font-weight:700;">→</div>
-    <div style="background:#d1fae5;border:1.5px solid #059669;border-radius:6px;padding:6px 10px;font-size:11px;font-weight:600;color:#059669;text-align:center;">Rayonnement beta<br>detruit sur 2-3 mm</div>
-  </div>
+                  <p style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Plan de l'oral (20 min)</p>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:16px;">
+                    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px;text-align:center;">
+                      <div style="font-size:18px;font-weight:800;color:#4f46e5;">1 min</div>
+                      <div style="font-size:11px;color:#64748b;line-height:1.3;">Accroche + Problématique</div>
+                    </div>
+                    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px;text-align:center;">
+                      <div style="font-size:18px;font-weight:800;color:#4f46e5;">3–4 min</div>
+                      <div style="font-size:11px;color:#64748b;line-height:1.3;">Règles + Exemple</div>
+                    </div>
+                    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px;text-align:center;">
+                      <div style="font-size:18px;font-weight:800;color:#4f46e5;">4–5 min</div>
+                      <div style="font-size:11px;color:#64748b;line-height:1.3;">Probabilités + Formules</div>
+                    </div>
+                    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px;text-align:center;">
+                      <div style="font-size:18px;font-weight:800;color:#4f46e5;">5–6 min</div>
+                      <div style="font-size:11px;color:#64748b;line-height:1.3;">Comptage + Démo chiffrée</div>
+                    </div>
+                    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px;text-align:center;">
+                      <div style="font-size:18px;font-weight:800;color:#4f46e5;">1–2 min</div>
+                      <div style="font-size:11px;color:#64748b;line-height:1.3;">Conclusion + Ouverture</div>
+                    </div>
+                    <div style="background:#e0e7ff;border:1.5px solid #4f46e5;border-radius:8px;padding:10px;text-align:center;">
+                      <div style="font-size:18px;font-weight:800;color:#4f46e5;">15–18 min</div>
+                      <div style="font-size:11px;color:#64748b;line-height:1.3;">Temps de parole</div>
+                    </div>
+                  </div>
 
-  <div style="background:#fef3c7;border-left:4px solid #d97706;padding:12px 14px;border-radius:0 8px 8px 0;margin-bottom:16px;">
-    <p style="font-size:13px;color:#334155;"><strong>Le lien physique :</strong> c'est <strong>le meme principe</strong> — des noyaux instables qui emettent des rayonnements. On change juste <strong>l'isotope</strong>, <strong>la dose</strong> et <strong>l'objectif</strong> : faible dose pour voir (fluor-18), dose therapeutique pour detruire (samarium-153).</p>
-  </div>
+                  <div style="background:#fef3c7;border-left:4px solid #d97706;padding:12px 14px;border-radius:0 8px 8px 0;margin-bottom:16px;">
+                    <p style="font-size:13px;color:#334155;"><strong>Contexte clé :</strong> Contrairement à la roulette, au blackjack <strong>les cartes jouées ne sont pas remises</strong> dans le sabot. Les probabilités changent à chaque carte distribuée. C'est ce qui rend le jeu mathématiquement analysable.</p>
+                  </div>
+                </div>`
+                }, {
+                    title: 'Règles du Blackjack',
+                    content: `
+                <div style="padding:20px 16px;max-width:100%;font-family:'Inter',sans-serif;color:#0f172a;font-size:15px;line-height:1.6;">
+                  <div style="background:#e0e7ff;border:2px solid #4f46e5;border-radius:12px;padding:16px;margin-bottom:16px;position:relative;">
+                    <div style="position:absolute;top:-10px;left:12px;background:#4f46e5;color:white;font-size:9px;font-weight:700;letter-spacing:1px;padding:2px 10px;border-radius:10px;">À APPRENDRE PAR CŒUR</div>
+                    <div style="margin-top:8px;">
+                      <p style="font-size:14px;font-weight:700;color:#4338ca;margin-bottom:6px;">Point crucial</p>
+                      <p style="font-size:14px;line-height:1.6;color:#334155;">Chaque joueur joue <strong>seul contre le croupier</strong>. Ce n'est pas du poker : on ne bat pas les autres joueurs, on bat le casino. Le croupier joue <strong>une seule fois</strong>, après tous les joueurs, et doit tirer jusqu'à atteindre <strong>17 minimum</strong>.</p>
+                    </div>
+                  </div>
 
-  <p style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Autres isotopes therapeutiques</p>
-  <ul style="list-style:none;padding:0;margin-bottom:16px;">
-    <li style="padding:8px 0 8px 20px;position:relative;font-size:14px;line-height:1.5;border-bottom:1px solid #f1f5f9;"><span style="position:absolute;left:0;color:#4f46e5;font-weight:700;font-size:16px;">›</span> <span style="display:inline-block;background:#7c3aed;color:white;font-weight:600;font-size:11px;padding:1px 6px;border-radius:4px;margin-right:4px;">Iode-131</span> — t₁/₂ = 8 jours. Cancer de la thyroide : le modele de reussite de la radiotherapie interne</li>
-    <li style="padding:8px 0 8px 20px;position:relative;font-size:14px;line-height:1.5;border-bottom:1px solid #f1f5f9;"><span style="position:absolute;left:0;color:#4f46e5;font-weight:700;font-size:16px;">›</span> <span style="display:inline-block;background:#7c3aed;color:white;font-weight:600;font-size:11px;padding:1px 6px;border-radius:4px;margin-right:4px;">Lutetium-177</span> — t₁/₂ = 6,7 jours. Tumeurs neuro-endocrines, recherches en cours en hematologie</li>
-    <li style="padding:8px 0 8px 20px;position:relative;font-size:14px;line-height:1.5;"><span style="position:absolute;left:0;color:#4f46e5;font-weight:700;font-size:16px;">›</span> <span style="display:inline-block;background:#7c3aed;color:white;font-weight:600;font-size:11px;padding:1px 6px;border-radius:4px;margin-right:4px;">Yttrium-90</span> — t₁/₂ = 64 heures. Radiotherapie interne selective du foie</li>
-  </ul>
+                  <p style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Valeur des cartes</p>
+                  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:16px;">
+                    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px;text-align:center;">
+                      <div style="font-size:18px;font-weight:800;color:#4f46e5;">2 à 10</div>
+                      <div style="font-size:11px;color:#64748b;">Valeur nominale</div>
+                    </div>
+                    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px;text-align:center;">
+                      <div style="font-size:18px;font-weight:800;color:#4f46e5;">10</div>
+                      <div style="font-size:11px;color:#64748b;">Valet, Dame, Roi</div>
+                    </div>
+                    <div style="background:#fef3c7;border:1.5px solid #d97706;border-radius:8px;padding:10px;text-align:center;">
+                      <div style="font-size:18px;font-weight:800;color:#d97706;">1 ou 11</div>
+                      <div style="font-size:11px;color:#64748b;">As (magique)</div>
+                    </div>
+                  </div>
 
-  <div style="background:#e0e7ff;border:2px solid #4f46e5;border-radius:12px;padding:16px;margin-bottom:16px;text-align:center;">
-    <p style="font-size:15px;font-weight:700;color:#4338ca;">Bien choisir : l'isotope + la dose + la methode</p>
-    <p style="font-size:12px;color:#64748b;margin-top:4px;">Formule du traitement personnalise</p>
-  </div>
-</div>`
-      },
-      {
-        title: 'Limites, Conclusion & Conseils',
-        content: `
-<div style="padding:20px 16px;max-width:100%;font-family:'Inter',sans-serif;color:#0f172a;font-size:15px;line-height:1.6;">
-  <div style="background:#e0e7ff;border:2px solid #4f46e5;border-radius:12px;padding:16px;margin-bottom:16px;text-align:center;">
-    <p style="font-size:16px;font-weight:700;color:#4338ca;">Dose la plus faible possible<br>tout en gardant l'efficacite therapeutique</p>
-    <p style="font-size:11px;color:#64748b;margin-top:4px;">Principe ALARA (As Low As Reasonably Achievable)</p>
-  </div>
+                  <p style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Déroulement d'une manche</p>
+                  <div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-bottom:16px;">
+                    <div style="background:#e0e7ff;border:1.5px solid #4f46e5;border-radius:6px;padding:6px 10px;font-size:11px;font-weight:600;color:#4338ca;text-align:center;">1. Miser</div>
+                    <div style="color:#64748b;align-self:center;font-size:14px;font-weight:700;">→</div>
+                    <div style="background:#e0e7ff;border:1.5px solid #4f46e5;border-radius:6px;padding:6px 10px;font-size:11px;font-weight:600;color:#4338ca;text-align:center;">2. Distribuer</div>
+                    <div style="color:#64748b;align-self:center;font-size:14px;font-weight:700;">→</div>
+                    <div style="background:#e0e7ff;border:1.5px solid #4f46e5;border-radius:6px;padding:6px 10px;font-size:11px;font-weight:600;color:#4338ca;text-align:center;">3. Jouer</div>
+                    <div style="color:#64748b;align-self:center;font-size:14px;font-weight:700;">→</div>
+                    <div style="background:#e0e7ff;border:1.5px solid #4f46e5;border-radius:6px;padding:6px 10px;font-size:11px;font-weight:600;color:#4338ca;text-align:center;">4. Croupier</div>
+                    <div style="color:#64748b;align-self:center;font-size:14px;font-weight:700;">→</div>
+                    <div style="background:#d1fae5;border:1.5px solid #059669;border-radius:6px;padding:6px 10px;font-size:11px;font-weight:600;color:#059669;text-align:center;">5. Payer</div>
+                  </div>
 
-  <p style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Trois regles de radioprotection — T-D-P</p>
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:16px;">
-    <div style="background:#fee2e2;border:1.5px solid #dc2626;border-radius:8px;padding:10px;text-align:center;">
-      <div style="font-size:28px;font-weight:800;color:#dc2626;margin-bottom:2px;">T</div>
-      <div style="font-size:12px;font-weight:700;color:#dc2626;text-transform:uppercase;margin-bottom:2px;">TEMPS</div>
-      <div style="font-size:11px;color:#334155;line-height:1.3;">Reduire le temps d'exposition au maximum</div>
-    </div>
-    <div style="background:#fef3c7;border:1.5px solid #d97706;border-radius:8px;padding:10px;text-align:center;">
-      <div style="font-size:28px;font-weight:800;color:#d97706;margin-bottom:2px;">D</div>
-      <div style="font-size:12px;font-weight:700;color:#d97706;text-transform:uppercase;margin-bottom:2px;">DISTANCE</div>
-      <div style="font-size:11px;color:#334155;line-height:1.3;">S'eloigner — l'intensite diminue avec le carre de la distance</div>
-    </div>
-    <div style="background:#d1fae5;border:1.5px solid #059669;border-radius:8px;padding:10px;text-align:center;">
-      <div style="font-size:28px;font-weight:800;color:#059669;margin-bottom:2px;">P</div>
-      <div style="font-size:12px;font-weight:700;color:#059669;text-transform:uppercase;margin-bottom:2px;">PROTECTION</div>
-      <div style="font-size:11px;color:#334155;line-height:1.3;">Ecrans : plomb, beton, parois epaisses</div>
-    </div>
-  </div>
+                  <p style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Gains</p>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:16px;">
+                    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px;text-align:left;">
+                      <div style="font-size:10px;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:1px;">Victoire normale</div>
+                      <p style="font-size:13px;color:#334155;">Paie <strong>1×</strong> la mise</p>
+                    </div>
+                    <div style="background:#fef3c7;border:1.5px solid #d97706;border-radius:8px;padding:10px;text-align:left;">
+                      <div style="font-size:10px;font-weight:700;color:#d97706;text-transform:uppercase;letter-spacing:1px;">Blackjack</div>
+                      <p style="font-size:13px;color:#334155;">Paie <strong>1,5×</strong> la mise</p>
+                    </div>
+                    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px;text-align:left;">
+                      <div style="font-size:10px;font-weight:700;color:#dc2626;text-transform:uppercase;letter-spacing:1px;">Défaite</div>
+                      <p style="font-size:13px;color:#334155;">On perd sa mise</p>
+                    </div>
+                    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px;text-align:left;">
+                      <div style="font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1px;">Égalité</div>
+                      <p style="font-size:13px;color:#334155;">On récupère sa mise</p>
+                    </div>
+                  </div>
 
-  <div style="background:#0f172a;color:#fff;border-radius:10px;padding:16px;margin-bottom:16px;text-align:center;">
-    <div style="font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:2px;margin-bottom:6px;">Loi en 1/r² — Attenuation geometrique</div>
-    <div style="font-size:20px;font-weight:600;font-family:'Times New Roman',serif;letter-spacing:1px;"><span style="color:#818cf8;">I</span>(<span style="color:#818cf8;">r</span>) <span style="color:#94a3b8;">=</span> <span style="color:#818cf8;">I</span><sub><span style="color:#34d399;">0</span></sub> <span style="color:#94a3b8;">/</span> <span style="color:#818cf8;">r</span><sup><span style="color:#34d399;">2</span></sup></div>
-    <div style="font-size:11px;color:#94a3b8;margin-top:6px;">Doubler la distance = diviser l'intensite par 4</div>
-  </div>
+                  <div style="background:#fef3c7;border-left:4px solid #d97706;padding:12px 14px;border-radius:0 8px 8px 0;margin-bottom:16px;">
+                    <p style="font-size:13px;color:#334155;"><strong>Le croupier est contraint :</strong> il doit tirer jusqu'à atteindre <strong>17 minimum</strong>. Il ne peut pas choisir de s'arrêter avant. C'est cette contrainte qui crée l'avantage mathématique analysable.</p>
+                  </div>
+                </div>`
+                }, {
+                    title: 'Probabilités & Formules',
+                    content: `
+                <div style="padding:20px 16px;max-width:100%;font-family:'Inter',sans-serif;color:#0f172a;font-size:15px;line-height:1.6;">
+                  <div style="background:#e0e7ff;border:2px solid #4f46e5;border-radius:12px;padding:16px;margin-bottom:16px;position:relative;">
+                    <div style="position:absolute;top:-10px;left:12px;background:#4f46e5;color:white;font-size:9px;font-weight:700;letter-spacing:1px;padding:2px 10px;border-radius:10px;">À APPRENDRE PAR CŒUR</div>
+                    <div style="margin-top:8px;">
+                      <p style="font-size:14px;font-weight:700;color:#4338ca;margin-bottom:6px;">Différence fondamentale</p>
+                      <p style="font-size:14px;line-height:1.6;color:#334155;"><strong>Roulette</strong> : chaque tour est <strong>indépendant</strong>, la probabilité est fixe.<br><strong>Blackjack</strong> : les cartes ne sont <strong>pas remises</strong> dans le sabot, la probabilité est <strong>évolutive</strong>.</p>
+                    </div>
+                  </div>
 
-  <p style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Equilibre benefice / risque</p>
-  <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
-    <div style="flex:1;text-align:center;padding:12px;background:#d1fae5;border:2px solid #059669;border-radius:8px;">
-      <div style="font-size:20px;font-weight:800;color:#059669;">BENEFICE</div>
-      <div style="font-size:11px;color:#334155;margin-top:2px;">Detecter ou soigner<br>le cancer</div>
-    </div>
-    <div style="font-size:24px;font-weight:800;color:#4f46e5;">&gt;</div>
-    <div style="flex:1;text-align:center;padding:12px;background:#fee2e2;border:2px solid #dc2626;border-radius:8px;">
-      <div style="font-size:20px;font-weight:800;color:#dc2626;">RISQUE</div>
-      <div style="font-size:11px;color:#334155;margin-top:2px;">Effets secondaires<br>Exposition</div>
-    </div>
-  </div>
+                  <p style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Formules du programme</p>
 
-  <div style="background:#e0e7ff;border:2px solid #4f46e5;border-radius:12px;padding:16px;margin-bottom:16px;text-align:center;">
-    <p style="font-size:12px;font-weight:700;color:#4338ca;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Phrase de conclusion</p>
-    <p style="font-size:15px;font-weight:700;color:#4338ca;line-height:1.5;">« La radioactivite est souvent percue comme un danger pur, mais en medecine, elle devient un outil tres precis — l'un des seuls phenomenes physiques capables a la fois de <strong>voir a l'interieur du corps</strong> et de <strong>soigner avec precision</strong>. »</p>
-  </div>
+                  <div style="background:#0f172a;color:#fff;border-radius:10px;padding:14px;margin-bottom:12px;text-align:center;">
+                    <div style="font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:2px;margin-bottom:4px;">Probabilité conditionnelle</div>
+                    <div style="font-size:18px;font-weight:600;font-family:'Times New Roman',serif;letter-spacing:1px;"><span style="color:#818cf8;">P</span><sub style="color:#818cf8;">B</sub><span style="color:#94a3b8;">(</span><span style="color:#818cf8;">A</span><span style="color:#94a3b8;">)</span> <span style="color:#94a3b8;">=</span> <span style="color:#818cf8;">P</span><span style="color:#94a3b8;">(</span><span style="color:#818cf8;">A</span> <span style="color:#94a3b8;">∩</span> <span style="color:#818cf8;">B</span><span style="color:#94a3b8;">)</span> <span style="color:#94a3b8;">/</span> <span style="color:#818cf8;">P</span><span style="color:#94a3b8;">(</span><span style="color:#818cf8;">B</span><span style="color:#94a3b8;">)</span></div>
+                    <div style="font-size:11px;color:#94a3b8;margin-top:4px;">Avec P(B) ≠ 0</div>
+                  </div>
 
-  <div style="background:#e0e7ff;border:2px solid #4f46e5;border-radius:12px;padding:16px;margin-bottom:16px;text-align:center;">
-    <p style="font-size:12px;font-weight:700;color:#4338ca;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Ouverture</p>
-    <p style="font-size:15px;font-weight:700;color:#4338ca;line-height:1.5;">« Jusqu'ou la physique peut-elle transformer un danger en remede ? »</p>
-  </div>
+                  <div style="background:#0f172a;color:#fff;border-radius:10px;padding:14px;margin-bottom:12px;text-align:center;">
+                    <div style="font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:2px;margin-bottom:4px;">Formule des probabilités composées</div>
+                    <div style="font-size:18px;font-weight:600;font-family:'Times New Roman',serif;letter-spacing:1px;"><span style="color:#818cf8;">P</span><span style="color:#94a3b8;">(</span><span style="color:#818cf8;">A</span> <span style="color:#94a3b8;">∩</span> <span style="color:#818cf8;">B</span><span style="color:#94a3b8;">)</span> <span style="color:#94a3b8;">=</span> <span style="color:#818cf8;">P</span><span style="color:#94a3b8;">(</span><span style="color:#818cf8;">A</span><span style="color:#94a3b8;">)</span> <span style="color:#94a3b8;">×</span> <span style="color:#818cf8;">P</span><sub style="color:#818cf8;">A</sub><span style="color:#94a3b8;">(</span><span style="color:#818cf8;">B</span><span style="color:#94a3b8;">)</span></div>
+                  </div>
 
-  <p style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Questions probables du jury</p>
-  <div style="background:#f8fafc;border-left:4px solid #4f46e5;padding:12px 14px;border-radius:0 8px 8px 0;margin-bottom:10px;">
-    <p style="font-size:13px;line-height:1.5;"><strong style="color:#4338ca;">« La TEP est-elle fiable ? »</strong></p>
-    <p style="font-size:13px;color:#334155;padding-left:10px;margin-top:4px;">→ Oui, mais c'est un <strong>outil d'aide au diagnostic</strong>. On confirme par biopsie.</p>
-  </div>
-  <div style="background:#f8fafc;border-left:4px solid #4f46e5;padding:12px 14px;border-radius:0 8px 8px 0;margin-bottom:10px;">
-    <p style="font-size:13px;line-height:1.5;"><strong style="color:#4338ca;">« Peut-on vraiment guerir avec la radioactivite ? »</strong></p>
-    <p style="font-size:13px;color:#334155;padding-left:10px;margin-top:4px;">→ Cela depend du cancer. Pour le myelome de ma mere, la radioactivite sert surtout a <strong>diagnostiquer</strong> (TEP au fluor-18) et a <strong>soulager</strong> (radio-isotopes osseux). Dans d'autres cas, comme la thyroide avec l'iode-131, la guerison est possible.</p>
-  </div>
-  <div style="background:#f8fafc;border-left:4px solid #4f46e5;padding:12px 14px;border-radius:0 8px 8px 0;margin-bottom:16px;">
-    <p style="font-size:13px;line-height:1.5;"><strong style="color:#4338ca;">« Difference imagerie / traitement ? »</strong></p>
-    <p style="font-size:13px;color:#334155;padding-left:10px;margin-top:4px;">→ Meme principe (rayonnement), mais <strong>objectif different</strong> : voir versus detruire.</p>
-  </div>
+                  <div style="background:#0f172a;color:#fff;border-radius:10px;padding:14px;margin-bottom:16px;text-align:center;">
+                    <div style="font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:2px;margin-bottom:4px;">Espérance mathématique</div>
+                    <div style="font-size:18px;font-weight:600;font-family:'Times New Roman',serif;letter-spacing:1px;"><span style="color:#818cf8;">E</span><span style="color:#94a3b8;">(</span><span style="color:#818cf8;">X</span><span style="color:#94a3b8;">)</span> <span style="color:#94a3b8;">=</span> <span style="color:#34d399;">Σ</span> <span style="color:#818cf8;">x</span><sub style="color:#818cf8;">i</sub> <span style="color:#94a3b8;">×</span> <span style="color:#818cf8;">P</span><span style="color:#94a3b8;">(</span><span style="color:#818cf8;">X</span> <span style="color:#94a3b8;">=</span> <span style="color:#818cf8;">x</span><sub style="color:#818cf8;">i</sub><span style="color:#94a3b8;">)</span></div>
+                    <div style="font-size:11px;color:#94a3b8;margin-top:4px;">Gain moyen sur un très grand nombre de parties</div>
+                  </div>
 
-  <p style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Conseils de presentation</p>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px;">
-    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:12px;">
-      <div style="font-size:11px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Voix</div>
-      <p style="font-size:12px;color:#334155;line-height:1.4;">Voix posee, debit lent. Pauses entre chaque idee.</p>
-    </div>
-    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:12px;">
-      <div style="font-size:11px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Regard</div>
-      <p style="font-size:12px;color:#334155;line-height:1.4;">Regarder le jury, pas la feuille. Posture debout, epaules ouvertes.</p>
-    </div>
-    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:12px;">
-      <div style="font-size:11px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Stress</div>
-      <p style="font-size:12px;color:#334155;line-height:1.4;">Stress fonctionnel : un peu = mieux. Simple plutot que complique.</p>
-    </div>
-    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:12px;">
-      <div style="font-size:11px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Structure</div>
-      <p style="font-size:12px;color:#334155;line-height:1.4;">Phrase boussole : intro, milieu, conclusion. Defendre ses arguments.</p>
-    </div>
-  </div>
+                  <div style="background:#d1fae5;border:2px solid #059669;border-radius:10px;padding:14px;margin-bottom:16px;position:relative;">
+                    <div style="position:absolute;top:-8px;left:12px;background:#059669;color:white;font-size:9px;font-weight:700;letter-spacing:1px;padding:1px 8px;border-radius:10px;">EXEMPLE CHIFFRÉ</div>
+                    <p style="font-size:14px;line-height:1.6;color:#0f172a;margin-top:6px;"><strong>Exemple :</strong> Vous avez <strong>16 points</strong> (As + 5, As vaut 11). Il reste <strong>50 cartes</strong>. Les cartes qui vous font brûler : 6,7,8,9,10,V,D,R → <strong>32/50 = 64%</strong> de brûler si vous tirez. Rester à 16 est risqué aussi : le croupier tire jusqu'à 17. Le calcul probabiliste aide à <strong>comparer les risques</strong>.</p>
+                  </div>
 
-  <div style="text-align:center;padding:16px;background:#e0e7ff;border-radius:10px;">
-    <div style="font-size:28px;font-weight:800;color:#4f46e5;">18 / 20</div>
-    <div style="font-size:12px;color:#64748b;margin-top:4px;">Objectif · Tu es pret</div>
-  </div>
-</div>`
-      }
-    ]
-  }
-};
+                  <div style="background:#f8fafc;border-left:4px solid #4f46e5;padding:12px 14px;border-radius:0 8px 8px 0;margin-bottom:12px;">
+                    <p style="font-size:13px;line-height:1.6;color:#334155;"><strong>Probabilité de tirer une carte de 10 :</strong> 10, V, D, R = 16 cartes sur 52</p>
+                    <p style="font-size:15px;font-weight:700;color:#4338ca;text-align:center;margin:4px 0;">P(10) = 16/52 = 4/13 ≈ <span class="highlight" style="background:#fef08a;padding:1px 4px;border-radius:3px;">30,8%</span></p>
+                    <p style="font-size:13px;line-height:1.6;color:#334155;"><strong>Probabilité d'un Blackjack :</strong> (As + 10) dans n'importe quel ordre</p>
+                    <p style="font-size:15px;font-weight:700;color:#4338ca;text-align:center;margin:4px 0;">P(Blackjack) = (4/52 × 16/51) × 2 = 128/2652 ≈ <span class="highlight" style="background:#fef08a;padding:1px 4px;border-radius:3px;">4,83%</span></p>
+                  </div>
 
-// ════════════════════════════════════════
-// LOGIQUE DE NAVIGATION
-// ════════════════════════════════════════
-let currentSubject = null;
-let currentPage = 0;
+                  <p style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Risque de brûler</p>
+                  <div style="margin-bottom:16px;">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                      <span style="font-size:12px;font-weight:600;color:#334155;width:70px;flex-shrink:0;">Main à 12</span>
+                      <div style="flex:1;height:8px;background:#e2e8f0;border-radius:4px;overflow:hidden;"><div style="height:100%;border-radius:4px;background:#4f46e5;width:31%;"></div></div>
+                      <span style="font-size:12px;font-weight:700;color:#4f46e5;width:40px;text-align:right;">31%</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                      <span style="font-size:12px;font-weight:600;color:#334155;width:70px;flex-shrink:0;">Main à 15</span>
+                      <div style="flex:1;height:8px;background:#e2e8f0;border-radius:4px;overflow:hidden;"><div style="height:100%;border-radius:4px;background:#4f46e5;width:58%;"></div></div>
+                      <span style="font-size:12px;font-weight:700;color:#4f46e5;width:40px;text-align:right;">58%</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                      <span style="font-size:12px;font-weight:600;color:#334155;width:70px;flex-shrink:0;">Main à 17</span>
+                      <div style="flex:1;height:8px;background:#e2e8f0;border-radius:4px;overflow:hidden;"><div style="height:100%;border-radius:4px;background:#dc2626;width:69%;"></div></div>
+                      <span style="font-size:12px;font-weight:700;color:#dc2626;width:40px;text-align:right;">69%</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:8px;">
+                      <span style="font-size:12px;font-weight:600;color:#334155;width:70px;flex-shrink:0;">Main à 20</span>
+                      <div style="flex:1;height:8px;background:#e2e8f0;border-radius:4px;overflow:hidden;"><div style="height:100%;border-radius:4px;background:#dc2626;width:92%;"></div></div>
+                      <span style="font-size:12px;font-weight:700;color:#dc2626;width:40px;text-align:right;">92%</span>
+                    </div>
+                  </div>
 
-function openSubject(subjectKey) {
-  currentSubject = subjects[subjectKey];
-  currentPage = 0;
+                  <div style="background:#f8fafc;border-left:4px solid #dc2626;padding:12px 14px;border-radius:0 8px 8px 0;">
+                    <p style="font-size:13px;font-weight:700;color:#dc2626;margin-bottom:4px;">Précision importante</p>
+                    <p style="font-size:13px;color:#334155;">Le comptage de cartes ne garantit <strong>pas de gagner</strong>. Il donne un <strong>léger avantage statistique</strong> sur des milliers de manches. À court terme, le hasard domine toujours.</p>
+                  </div>
+                </div>`
+                }, {
+                    title: 'Comptage Haut-Bas',
+                    content: `
+                <div style="padding:20px 16px;max-width:100%;font-family:'Inter',sans-serif;color:#0f172a;font-size:15px;line-height:1.6;">
+                  <div style="background:#e0e7ff;border:2px solid #4f46e5;border-radius:12px;padding:16px;margin-bottom:16px;position:relative;">
+                    <div style="position:absolute;top:-10px;left:12px;background:#4f46e5;color:white;font-size:9px;font-weight:700;letter-spacing:1px;padding:2px 10px;border-radius:10px;">À APPRENDRE PAR CŒUR</div>
+                    <div style="margin-top:8px;">
+                      <p style="font-size:14px;font-weight:700;color:#4338ca;margin-bottom:6px;">Principe</p>
+                      <p style="font-size:14px;line-height:1.6;color:#334155;">On compte les cartes sorties pour estimer si le reste du sabot est <strong>favorable au joueur</strong>. La symétrie du jeu (20 petites cartes, 20 grosses cartes, 12 neutres) permet cette estimation statistique.</p>
+                    </div>
+                  </div>
 
-  document.getElementById('hub').style.display = 'none';
-  document.getElementById('reader').style.display = 'flex';
-  document.getElementById('page-nav').classList.add('visible');
+                  <p style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Valeurs du comptage Haut-Bas (Hi-Lo)</p>
+                  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:16px;">
+                    <div style="background:#d1fae5;border:1.5px solid #059669;border-radius:8px;padding:10px;text-align:center;">
+                      <div style="font-size:14px;font-weight:800;color:#059669;">+1</div>
+                      <div style="font-size:16px;font-weight:700;color:#059669;margin:2px 0;">2 3 4 5 6</div>
+                      <div style="font-size:10px;color:#334155;">Petites cartes sorties → favorables au <strong>croupier</strong></div>
+                    </div>
+                    <div style="background:#fef3c7;border:1.5px solid #d97706;border-radius:8px;padding:10px;text-align:center;">
+                      <div style="font-size:14px;font-weight:800;color:#d97706;">0</div>
+                      <div style="font-size:16px;font-weight:700;color:#d97706;margin:2px 0;">7 8 9</div>
+                      <div style="font-size:10px;color:#334155;">Cartes neutres → ignorées</div>
+                    </div>
+                    <div style="background:#fee2e2;border:1.5px solid #dc2626;border-radius:8px;padding:10px;text-align:center;">
+                      <div style="font-size:14px;font-weight:800;color:#dc2626;">−1</div>
+                      <div style="font-size:16px;font-weight:700;color:#dc2626;margin:2px 0;">10 V D R A</div>
+                      <div style="font-size:10px;color:#334155;">Grosses cartes sorties → favorables au <strong>joueur</strong></div>
+                    </div>
+                  </div>
 
-  document.getElementById('reader-title').textContent = currentSubject.title;
-  document.title = currentSubject.title + ' — Grand Oral';
+                  <div style="background:#0f172a;color:#fff;border-radius:10px;padding:14px;margin-bottom:12px;text-align:center;">
+                    <div style="font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:2px;margin-bottom:4px;">Compteur courant (Running Count)</div>
+                    <div style="font-size:18px;font-weight:600;font-family:'Times New Roman',serif;letter-spacing:1px;"><span style="color:#818cf8;">CC</span> <span style="color:#94a3b8;">=</span> <span style="color:#34d399;">Σ</span> <span style="color:#818cf8;">valeurs</span> <span style="color:#94a3b8;">des</span> <span style="color:#818cf8;">cartes</span> <span style="color:#94a3b8;">sorties</span></div>
+                    <div style="font-size:11px;color:#94a3b8;margin-top:4px;">Exemple : 3, 5, Roi, 2, As, 6 → +1+1−1+1−1+1 = <strong style="color:#34d399;">+2</strong></div>
+                  </div>
 
-  renderPage();
-  buildDots();
-  updateNav();
-}
+                  <div style="background:#0f172a;color:#fff;border-radius:10px;padding:14px;margin-bottom:16px;text-align:center;">
+                    <div style="font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:2px;margin-bottom:4px;">Compte réel (Vrai Compte) — Formule clé</div>
+                    <div style="font-size:18px;font-weight:600;font-family:'Times New Roman',serif;letter-spacing:1px;"><span style="color:#818cf8;">CR</span> <span style="color:#94a3b8;">=</span> <span style="color:#818cf8;">CC</span> <span style="color:#94a3b8;">÷</span> <span style="color:#818cf8;">N</span><sub style="color:#818cf8;">restants</sub></div>
+                    <div style="font-size:11px;color:#94a3b8;margin-top:4px;">CR = Compte réel | CC = Compteur courant | N<sub>restants</sub> = nombre de jeux restants<br>Exemple : CC = +6, 2 jeux restants → CR = +6 ÷ 2 = <strong style="color:#34d399;">+3</strong></div>
+                  </div>
 
-function closeReader() {
-  document.getElementById('hub').style.display = 'flex';
-  document.getElementById('reader').style.display = 'none';
-  document.getElementById('page-nav').classList.remove('visible');
-  document.title = 'Grand Oral — Revision';
-  currentSubject = null;
-}
+                  <p style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Stratégie de mise selon le compte réel</p>
+                  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:16px;">
+                    <div style="background:#fee2e2;border:1.5px solid #dc2626;border-radius:8px;padding:10px;text-align:center;">
+                      <div style="font-size:16px;font-weight:800;color:#dc2626;">CR ≤ 0</div>
+                      <div style="font-size:11px;color:#334155;">Mise minimale</div>
+                    </div>
+                    <div style="background:#fef3c7;border:1.5px solid #d97706;border-radius:8px;padding:10px;text-align:center;">
+                      <div style="font-size:16px;font-weight:800;color:#d97706;">CR = +2</div>
+                      <div style="font-size:11px;color:#334155;">Augmenter la mise</div>
+                    </div>
+                    <div style="background:#d1fae5;border:1.5px solid #059669;border-radius:8px;padding:10px;text-align:center;">
+                      <div style="font-size:16px;font-weight:800;color:#059669;">CR ≥ +4</div>
+                      <div style="font-size:11px;color:#334155;">Mise maximale</div>
+                    </div>
+                  </div>
 
-function renderPage() {
-  const page = currentSubject.pages[currentPage];
-  document.getElementById('reader-content').innerHTML = page.content;
-  document.getElementById('reader-progress').textContent = (currentPage + 1) + ' / ' + currentSubject.pages.length;
-  document.getElementById('page-label').textContent = (currentPage + 1) + ' / ' + currentSubject.pages.length;
+                  <div style="background:#d1fae5;border-left:4px solid #059669;padding:12px 14px;border-radius:0 8px 8px 0;margin-bottom:12px;">
+                    <p style="font-size:13px;font-weight:700;color:#059669;margin-bottom:4px;">Pourquoi le comptage fonctionne :</p>
+                    <p style="font-size:13px;color:#334155;line-height:1.5;">1. Plus de grosses cartes restantes = plus de <strong>blackjacks</strong> (payés 1,5×)<br>2. Le croupier <strong>brûle plus souvent</strong> quand il doit tirer sur des grosses cartes<br>3. <strong>Doubler</strong> et <strong>séparer</strong> deviennent plus rentables</p>
+                  </div>
 
-  // Scroll to top
-  document.getElementById('reader-content').scrollTop = 0;
-}
+                  <div style="background:#fee2e2;border-left:4px solid #dc2626;padding:12px 14px;border-radius:0 8px 8px 0;">
+                    <p style="font-size:13px;font-weight:700;color:#dc2626;margin-bottom:4px;">Précision</p>
+                    <p style="font-size:13px;color:#334155;">Le comptage de cartes est <strong>légal</strong> mais les casinos peuvent <strong>refuser l'accès</strong> aux joueurs suspectés. C'est un exercice mathématique, pas une méthode infaillible pour gagner de l'argent.</p>
+                  </div>
+                </div>`
+                }, {
+                    title: 'Conclusion & Ouverture',
+                    content: `
+                <div style="padding:20px 16px;max-width:100%;font-family:'Inter',sans-serif;color:#0f172a;font-size:15px;line-height:1.6;">
+                  <div style="background:#e0e7ff;border:2px solid #4f46e5;border-radius:12px;padding:16px;margin-bottom:16px;text-align:center;">
+                    <p style="font-size:12px;font-weight:700;color:#4338ca;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Phrase de conclusion</p>
+                    <p style="font-size:15px;font-weight:700;color:#4338ca;line-height:1.5;">« Le blackjack est un jeu de hasard dans sa structure, mais les mathématiques en font aussi un jeu de stratégie — l'un des seuls jeux de casino où un joueur peut, <strong>sur le très long terme et avec une méthode rigoureuse</strong>, réduire voire inverser l'avantage de la banque. »</p>
+                  </div>
 
-function buildDots() {
-  const dotsContainer = document.getElementById('page-dots');
-  dotsContainer.innerHTML = '';
+                  <div style="background:#e0e7ff;border:2px solid #4f46e5;border-radius:12px;padding:16px;margin-bottom:16px;text-align:center;">
+                    <p style="font-size:12px;font-weight:700;color:#4338ca;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Ouverture</p>
+                    <p style="font-size:15px;font-weight:700;color:#4338ca;line-height:1.5;">« Jusqu'où les mathématiques peuvent-elles <strong>prévoir le hasard</strong> ? »</p>
+                    <p style="font-size:12px;color:#64748b;margin-top:4px;">Finance, assurances, intelligence artificielle — même question du risque versus bénéfice</p>
+                  </div>
 
-  for (let i = 0; i < currentSubject.pages.length; i++) {
-    const dot = document.createElement('button');
-    dot.className = 'page-nav-dot' + (i === currentPage ? ' active' : '');
-    dot.setAttribute('aria-label', 'Page ' + (i + 1));
-    dot.onclick = () => goToPage(i);
-    dotsContainer.appendChild(dot);
-  }
-}
+                  <p style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Questions probables du jury</p>
+                  <div style="background:#f8fafc;border-left:4px solid #4f46e5;padding:12px 14px;border-radius:0 8px 8px 0;margin-bottom:10px;">
+                    <p style="font-size:13px;line-height:1.5;"><strong style="color:#4338ca;">« Le comptage est-il efficace ? »</strong></p>
+                    <p style="font-size:13px;color:#334155;padding-left:10px;margin-top:4px;">→ Oui, mais sur des <strong>milliers de manches</strong>. À court terme, le hasard domine toujours.</p>
+                  </div>
+                  <div style="background:#f8fafc;border-left:4px solid #4f46e5;padding:12px 14px;border-radius:0 8px 8px 0;margin-bottom:10px;">
+                    <p style="font-size:13px;line-height:1.5;"><strong style="color:#4338ca;">« Peut-on vraiment gagner au casino ? »</strong></p>
+                    <p style="font-size:13px;color:#334155;padding-left:10px;margin-top:4px;">→ Mathématiquement, sur le long terme, oui. Mais les casinos se défendent avec des <strong>mélangeurs automatiques</strong> et l'<strong>exclusion</strong>.</p>
+                  </div>
+                  <div style="background:#f8fafc;border-left:4px solid #4f46e5;padding:12px 14px;border-radius:0 8px 8px 0;margin-bottom:10px;">
+                    <p style="font-size:13px;line-height:1.5;"><strong style="color:#4338ca;">« Différence avec la roulette ? »</strong></p>
+                    <p style="font-size:13px;color:#334155;padding-left:10px;margin-top:4px;">→ À la roulette, chaque tour est <strong>indépendant</strong>. Au blackjack, les cartes sorties <strong>changent les probabilités</strong>.</p>
+                  </div>
+                  <div style="background:#f8fafc;border-left:4px solid #4f46e5;padding:12px 14px;border-radius:0 8px 8px 0;margin-bottom:16px;">
+                    <p style="font-size:13px;line-height:1.5;"><strong style="color:#4338ca;">« C'est quoi l'espérance mathématique ? »</strong></p>
+                    <p style="font-size:13px;color:#334155;padding-left:10px;margin-top:4px;">→ C'est le <strong>gain moyen</strong> sur un très grand nombre de parties. Si E(X) > 0, on gagne à long terme.</p>
+                  </div>
 
-function updateNav() {
-  document.getElementById('btn-prev').disabled = currentPage === 0;
-  document.getElementById('btn-next').disabled = currentPage === currentSubject.pages.length - 1;
+                  <p style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Conseils de présentation</p>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;">
+                    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px;">
+                      <div style="font-size:10px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1px;">Voix</div>
+                      <p style="font-size:12px;color:#334155;">Voix posée, débit lent. Pauses entre chaque idée.</p>
+                    </div>
+                    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px;">
+                      <div style="font-size:10px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1px;">Regard</div>
+                      <p style="font-size:12px;color:#334155;">Regarder le jury, pas la feuille. Posture debout.</p>
+                    </div>
+                    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px;">
+                      <div style="font-size:10px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1px;">Stress</div>
+                      <p style="font-size:12px;color:#334155;">Stress fonctionnel : un peu = mieux. Simple plutôt que compliqué.</p>
+                    </div>
+                    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px;">
+                      <div style="font-size:10px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1px;">Structure</div>
+                      <p style="font-size:12px;color:#334155;">Phrase boussole : intro, milieu, conclusion. Défendre ses arguments.</p>
+                    </div>
+                  </div>
 
-  const dots = document.querySelectorAll('.page-nav-dot');
-  dots.forEach((dot, i) => {
-    dot.classList.toggle('active', i === currentPage);
-  });
-}
+                  <div style="text-align:center;padding:16px;background:#e0e7ff;border-radius:10px;">
+                    <div style="font-size:28px;font-weight:800;color:#4f46e5;">18 / 20</div>
+                    <div style="font-size:12px;color:#64748b;margin-top:4px;">Objectif · Tu es prêt</div>
+                  </div>
+                </div>`
+                }]
+            },
 
-function prevPage() {
-  if (currentPage > 0) {
-    currentPage--;
-    renderPage();
-    updateNav();
-  }
-}
+            physique: {
+                title: 'Physique-Chimie — Radioactivité en Médecine',
+                pages: [{
+                    title: 'Problématique & Accroche',
+                    content: `
+                <div style="padding:20px 16px;max-width:100%;font-family:'Inter',sans-serif;color:#0f172a;font-size:15px;line-height:1.6;">
+                  <div style="background:#e0e7ff;border:2px solid #4f46e5;border-radius:12px;padding:16px;margin-bottom:16px;position:relative;">
+                    <div style="position:absolute;top:-10px;left:12px;background:#4f46e5;color:white;font-size:9px;font-weight:700;letter-spacing:1px;padding:2px 10px;border-radius:10px;">À APPRENDRE PAR CŒUR</div>
+                    <div style="margin-top:8px;">
+                      <p style="font-size:13px;font-weight:700;color:#4338ca;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Problématique</p>
+                      <p style="font-size:15px;font-weight:700;color:#4338ca;line-height:1.5;">Comment les produits radioactifs traceurs révolutionnent-ils le diagnostic et le traitement des cancers en médecine moderne ?</p>
+                    </div>
+                  </div>
 
-function nextPage() {
-  if (currentPage < currentSubject.pages.length - 1) {
-    currentPage++;
-    renderPage();
-    updateNav();
-  }
-}
+                  <div style="background:#fdf2f8;border:2px solid #db2777;border-radius:12px;padding:16px;margin-bottom:16px;position:relative;">
+                    <div style="position:absolute;top:-10px;left:12px;background:#db2777;color:white;font-size:9px;font-weight:700;letter-spacing:1px;padding:2px 10px;border-radius:10px;">MON HISTOIRE</div>
+                    <p style="font-size:14px;line-height:1.6;color:#0f172a;margin-top:6px;">Ma mère est atteinte d'un <strong>myélome multiple</strong> — un cancer de la moelle osseuse. J'ai accompagné ses rendez-vous et discuté avec ses médecins. J'ai découvert que la <strong>TEP au fluor-18</strong> et les <strong>thérapies ciblées</strong> sont au cœur de son suivi.</p>
+                  </div>
 
-function goToPage(index) {
-  currentPage = index;
-  renderPage();
-  updateNav();
-}
+                  <div style="background:#e0e7ff;border:2px solid #4f46e5;border-radius:12px;padding:16px;margin-bottom:16px;text-align:center;">
+                    <p style="font-size:15px;font-weight:600;color:#4338ca;line-height:1.5;">« En <strong>1896</strong>, Henri Becquerel découvre que l'uranium émet des <strong>rayons invisibles</strong> capables de traverser le papier. Un siècle plus tard, ces mêmes rayons <strong>sauvent des millions de vies</strong>. »</p>
+                  </div>
 
-// Swipe support
-let touchStartX = 0;
-let touchEndX = 0;
+                  <div style="background:#e0e7ff;border:2px solid #4f46e5;border-radius:12px;padding:16px;margin-bottom:16px;text-align:center;">
+                    <p style="font-size:15px;font-weight:600;color:#4338ca;line-height:1.5;">« La radioactivité est souvent perçue comme un danger, mais en médecine, elle devient un outil précis pour <strong>voir</strong> et <strong>soigner</strong> les cancers. »</p>
+                    <p style="font-size:11px;color:#64748b;margin-top:6px;">Phrase boussole — répéter en introduction, milieu et conclusion</p>
+                  </div>
 
-const readerContent = document.getElementById('reader-content');
+                  <p style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Plan de l'oral (20 min)</p>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:16px;">
+                    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px;text-align:center;">
+                      <div style="font-size:18px;font-weight:800;color:#4f46e5;">1 min</div>
+                      <div style="font-size:11px;color:#64748b;line-height:1.3;">Accroche + Problématique</div>
+                    </div>
+                    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px;text-align:center;">
+                      <div style="font-size:18px;font-weight:800;color:#4f46e5;">3–4 min</div>
+                      <div style="font-size:11px;color:#64748b;line-height:1.3;">Bases de la radioactivité</div>
+                    </div>
+                    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px;text-align:center;">
+                      <div style="font-size:18px;font-weight:800;color:#4f46e5;">4–5 min</div>
+                      <div style="font-size:11px;color:#64748b;line-height:1.3;">Diagnostiquer : TEP</div>
+                    </div>
+                    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px;text-align:center;">
+                      <div style="font-size:18px;font-weight:800;color:#4f46e5;">5–6 min</div>
+                      <div style="font-size:11px;color:#64748b;line-height:1.3;">Traiter : thérapies ciblées</div>
+                    </div>
+                    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px;text-align:center;">
+                      <div style="font-size:18px;font-weight:800;color:#4f46e5;">2–3 min</div>
+                      <div style="font-size:11px;color:#64748b;line-height:1.3;">Limites & sécurité</div>
+                    </div>
+                    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px;text-align:center;">
+                      <div style="font-size:18px;font-weight:800;color:#4f46e5;">1–2 min</div>
+                      <div style="font-size:11px;color:#64748b;line-height:1.3;">Conclusion + Ouverture</div>
+                    </div>
+                  </div>
+                </div>`
+                }, {
+                    title: 'Les Bases',
+                    content: `
+                <div style="padding:20px 16px;max-width:100%;font-family:'Inter',sans-serif;color:#0f172a;font-size:15px;line-height:1.6;">
+                  <div style="background:#e0e7ff;border:2px solid #4f46e5;border-radius:12px;padding:16px;margin-bottom:16px;position:relative;">
+                    <div style="position:absolute;top:-10px;left:12px;background:#4f46e5;color:white;font-size:9px;font-weight:700;letter-spacing:1px;padding:2px 10px;border-radius:10px;">À APPRENDRE PAR CŒUR</div>
+                    <div style="margin-top:8px;">
+                      <p style="font-size:14px;font-weight:700;color:#4338ca;margin-bottom:6px;">Définition</p>
+                      <p style="font-size:14px;line-height:1.6;color:#334155;">La <strong>radioactivité</strong> est la <strong>transformation spontanée d'un noyau instable</strong> accompagnée de l'émission de rayonnements (alpha, bêta, gamma). C'est un <strong>phénomène naturel</strong>, pas une invention humaine.</p>
+                    </div>
+                  </div>
 
-readerContent.addEventListener('touchstart', e => {
-  touchStartX = e.changedTouches[0].screenX;
-}, { passive: true });
+                  <p style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Isotopes — même Z, N différent</p>
+                  <div style="background:#f8fafc;border-left:4px solid #4f46e5;padding:12px 14px;border-radius:0 8px 8px 0;margin-bottom:16px;">
+                    <p style="font-size:14px;line-height:1.6;color:#334155;">Deux isotopes d'un même élément ont le même <strong>nombre de protons Z</strong> mais un <strong>nombre de neutrons N différent</strong>. On choisit l'isotope selon l'objectif : <strong>voir</strong> (courte demi-vie, faible énergie) ou <strong>soigner</strong> (demi-vie plus longue, énergie plus élevée).</p>
+                  </div>
 
-readerContent.addEventListener('touchend', e => {
-  touchEndX = e.changedTouches[0].screenX;
-  handleSwipe();
-}, { passive: true });
+                  <p style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">La demi-vie (t₁/₂)</p>
+                  <div style="background:#0f172a;color:#fff;border-radius:10px;padding:14px;margin-bottom:12px;text-align:center;">
+                    <div style="font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:2px;margin-bottom:4px;">Loi de décroissance radioactive</div>
+                    <div style="font-size:18px;font-weight:600;font-family:'Times New Roman',serif;letter-spacing:1px;"><span style="color:#818cf8;">N</span><span style="color:#94a3b8;">(</span><span style="color:#818cf8;">t</span><span style="color:#94a3b8;">)</span> <span style="color:#94a3b8;">=</span> <span style="color:#818cf8;">N</span><sub style="color:#34d399;">0</sub> <span style="color:#94a3b8;">×</span> <span style="color:#818cf8;">e</span><sup style="color:#94a3b8;">−<span style="color:#818cf8;">λt</span></sup></div>
+                    <div style="font-size:11px;color:#94a3b8;margin-top:4px;">N(t) = nombre de noyaux à l'instant t | N₀ = nombre initial | λ = constante radioactive</div>
+                  </div>
 
-function handleSwipe() {
-  const threshold = 60;
-  if (touchEndX < touchStartX - threshold) {
-    nextPage();
-  }
-  if (touchEndX > touchStartX + threshold) {
-    prevPage();
-  }
-}
+                  <div style="background:#0f172a;color:#fff;border-radius:10px;padding:14px;margin-bottom:16px;text-align:center;">
+                    <div style="font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:2px;margin-bottom:4px;">Lien demi-vie et constante radioactive</div>
+                    <div style="font-size:18px;font-weight:600;font-family:'Times New Roman',serif;letter-spacing:1px;"><span style="color:#818cf8;">t</span><sub style="color:#34d399;">1/2</sub> <span style="color:#94a3b8;">=</span> <span style="color:#34d399;">ln(2)</span> <span style="color:#94a3b8;">/</span> <span style="color:#818cf8;">λ</span> <span style="color:#94a3b8;">≈</span> <span style="color:#34d399;">0,693</span> <span style="color:#94a3b8;">/</span> <span style="color:#818cf8;">λ</span></div>
+                  </div>
 
-// Keyboard support
-document.addEventListener('keydown', e => {
-  if (!currentSubject) return;
-  if (e.key === 'ArrowLeft') prevPage();
-  if (e.key === 'ArrowRight') nextPage();
-  if (e.key === 'Escape') closeReader();
-});
-</script>
+                  <p style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Quatre isotopes clés</p>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:16px;">
+                    <div style="background:#d1fae5;border:1.5px solid #059669;border-radius:8px;padding:10px;text-align:center;">
+                      <div style="font-size:10px;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:1px;">DIAGNOSTIC</div>
+                      <div style="font-size:16px;font-weight:800;color:#059669;">Technétium-99m</div>
+                      <div style="font-size:11px;color:#334155;">t₁/₂ = 6 h · Scintigraphie</div>
+                    </div>
+                    <div style="background:#d1fae5;border:1.5px solid #059669;border-radius:8px;padding:10px;text-align:center;">
+                      <div style="font-size:10px;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:1px;">DIAGNOSTIC</div>
+                      <div style="font-size:16px;font-weight:800;color:#059669;">Fluor-18 (FDG)</div>
+                      <div style="font-size:11px;color:#334155;">t₁/₂ = 110 min · TEP</div>
+                    </div>
+                    <div style="background:#fee2e2;border:1.5px solid #dc2626;border-radius:8px;padding:10px;text-align:center;">
+                      <div style="font-size:10px;font-weight:700;color:#dc2626;text-transform:uppercase;letter-spacing:1px;">THÉRAPIE</div>
+                      <div style="font-size:16px;font-weight:800;color:#dc2626;">Iode-131</div>
+                      <div style="font-size:11px;color:#334155;">t₁/₂ = 8 j · Thyroïde</div>
+                    </div>
+                    <div style="background:#fee2e2;border:1.5px solid #dc2626;border-radius:8px;padding:10px;text-align:center;">
+                      <div style="font-size:10px;font-weight:700;color:#dc2626;text-transform:uppercase;letter-spacing:1px;">THÉRAPIE</div>
+                      <div style="font-size:16px;font-weight:800;color:#dc2626;">Lutétium-177</div>
+                      <div style="font-size:11px;color:#334155;">t₁/₂ = 6,7 j · Tumeurs neuro-endocrines</div>
+                    </div>
+                  </div>
+
+                  <div style="background:#fef3c7;border-left:4px solid #d97706;padding:12px 14px;border-radius:0 8px 8px 0;">
+                    <p style="font-size:13px;color:#334155;"><strong>Logique :</strong> Diagnostic = demi-vie <strong>courte</strong> (le patient n'est pas radioactif longtemps). Thérapie = demi-vie <strong>plus longue</strong> (le rayonnement agit sur la tumeur).</p>
+                  </div>
+                </div>`
+                }, {
+                    title: 'Diagnostiquer : TEP',
+                    content: `
+                <div style="padding:20px 16px;max-width:100%;font-family:'Inter',sans-serif;color:#0f172a;font-size:15px;line-height:1.6;">
+                  <div style="background:#e0e7ff;border:2px solid #4f46e5;border-radius:12px;padding:16px;margin-bottom:16px;position:relative;">
+                    <div style="position:absolute;top:-10px;left:12px;background:#4f46e5;color:white;font-size:9px;font-weight:700;letter-spacing:1px;padding:2px 10px;border-radius:10px;">À APPRENDRE PAR CŒUR</div>
+                    <div style="margin-top:8px;">
+                      <p style="font-size:14px;font-weight:700;color:#4338ca;margin-bottom:6px;">Définition de la TEP</p>
+                      <p style="font-size:14px;line-height:1.6;color:#334155;">La <strong>TEP</strong> (Tomographie par Émission de Positrons) produit des <strong>images en trois dimensions</strong> en détectant les rayonnements émis par un <strong>traceur radioactif</strong> injecté au patient. On visualise l'<strong>activité métabolique</strong>, pas seulement la forme des organes.</p>
+                    </div>
+                  </div>
+
+                  <div style="background:#fdf2f8;border:2px solid #db2777;border-radius:12px;padding:16px;margin-bottom:16px;position:relative;">
+                    <div style="position:absolute;top:-10px;left:12px;background:#db2777;color:white;font-size:9px;font-weight:700;letter-spacing:1px;padding:2px 10px;border-radius:10px;">MON HISTOIRE</div>
+                    <p style="font-size:14px;line-height:1.6;color:#0f172a;margin-top:6px;">Chez ma mère, la <strong>TEP au fluor-18 (FDG)</strong> permet de suivre son <strong>myélome multiple</strong>. Les médecins injectent du glucose marqué au fluor-18. Les cellules cancéreuses de la moelle osseuse consomment plus de sucre que les cellules saines. Elles « brillent » sur l'image. Cela permet de voir si la maladie progresse, même avant que les lésions soient visibles sur une radio classique.</p>
+                  </div>
+
+                  <p style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Le principe en trois étapes</p>
+                  <div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-bottom:16px;">
+                    <div style="background:#e0e7ff;border:1.5px solid #4f46e5;border-radius:6px;padding:6px 10px;font-size:11px;font-weight:600;color:#4338ca;text-align:center;">1. Injecter<br><span style="font-size:9px;opacity:0.7;">glucose + F-18 = FDG</span></div>
+                    <div style="color:#64748b;align-self:center;font-size:14px;font-weight:700;">→</div>
+                    <div style="background:#ede9fe;border:1.5px solid #7c3aed;border-radius:6px;padding:6px 10px;font-size:11px;font-weight:600;color:#7c3aed;text-align:center;">2. Fixer<br><span style="font-size:9px;opacity:0.7;">cellules cancéreuses avalent le FDG</span></div>
+                    <div style="color:#64748b;align-self:center;font-size:14px;font-weight:700;">→</div>
+                    <div style="background:#d1fae5;border:1.5px solid #059669;border-radius:6px;padding:6px 10px;font-size:11px;font-weight:600;color:#059669;text-align:center;">3. Détecter<br><span style="font-size:9px;opacity:0.7;">la tumeur brille sur l'image 3D</span></div>
+                  </div>
+
+                  <div style="background:#e0e7ff;border:2px solid #4f46e5;border-radius:12px;padding:14px;margin-bottom:16px;">
+                    <p style="font-size:14px;line-height:1.6;color:#4338ca;margin-bottom:6px;">La cellule cancéreuse <strong>phosphoryle le FDG</strong> (comme elle fait avec le glucose normal)… mais le FDG est <strong>indigestible</strong> : il reste <strong>bloqué dans la cellule</strong>.</p>
+                    <p style="font-size:14px;line-height:1.6;color:#4338ca;">Plus la cellule est cancéreuse → plus elle consomme de glucose → plus elle <strong>« brille »</strong> sur l'image TEP.</p>
+                  </div>
+
+                  <div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-bottom:16px;">
+                    <div style="background:#e0e7ff;border:1.5px solid #4f46e5;border-radius:6px;padding:4px 8px;font-size:10px;font-weight:600;color:#4338ca;text-align:center;">Glucose</div>
+                    <div style="color:#64748b;align-self:center;font-size:14px;font-weight:700;">+</div>
+                    <div style="background:#fef3c7;border:1.5px solid #d97706;border-radius:6px;padding:4px 8px;font-size:10px;font-weight:600;color:#d97706;text-align:center;">Fluor-18</div>
+                    <div style="color:#64748b;align-self:center;font-size:14px;font-weight:700;">=</div>
+                    <div style="background:#e0e7ff;border:1.5px solid #4f46e5;border-radius:6px;padding:4px 8px;font-size:10px;font-weight:600;color:#4338ca;text-align:center;">FDG</div>
+                    <div style="color:#64748b;align-self:center;font-size:14px;font-weight:700;">→</div>
+                    <div style="background:#ede9fe;border:1.5px solid #7c3aed;border-radius:6px;padding:4px 8px;font-size:10px;font-weight:600;color:#7c3aed;text-align:center;">Cellule avale</div>
+                    <div style="color:#64748b;align-self:center;font-size:14px;font-weight:700;">→</div>
+                    <div style="background:#fee2e2;border:1.5px solid #dc2626;border-radius:6px;padding:4px 8px;font-size:10px;font-weight:600;color:#dc2626;text-align:center;">Bloqué</div>
+                    <div style="color:#64748b;align-self:center;font-size:14px;font-weight:700;">→</div>
+                    <div style="background:#d1fae5;border:1.5px solid #059669;border-radius:6px;padding:4px 8px;font-size:10px;font-weight:600;color:#059669;text-align:center;">Brille</div>
+                  </div>
+
+                  <div style="background:#f8fafc;border-left:4px solid #4f46e5;padding:12px 14px;border-radius:0 8px 8px 0;">
+                    <p style="font-size:13px;color:#334155;"><strong>Point clé :</strong> la TEP détecte l'<strong>activité métabolique</strong> avant même que la tumeur soit visible sur une radio classique. C'est un outil d'<strong>aide au diagnostic</strong> : on confirme par biopsie.</p>
+                  </div>
+                </div>`
+                }, {
+                    title: 'Traiter : Thérapies Ciblées',
+                    content: `
+                <div style="padding:20px 16px;max-width:100%;font-family:'Inter',sans-serif;color:#0f172a;font-size:15px;line-height:1.6;">
+                  <div style="background:#e0e7ff;border:2px solid #4f46e5;border-radius:12px;padding:16px;margin-bottom:16px;position:relative;">
+                    <div style="position:absolute;top:-10px;left:12px;background:#4f46e5;color:white;font-size:9px;font-weight:700;letter-spacing:1px;padding:2px 10px;border-radius:10px;">À APPRENDRE PAR CŒUR</div>
+                    <div style="margin-top:8px;">
+                      <p style="font-size:14px;font-weight:700;color:#4338ca;margin-bottom:6px;">Principe fondamental</p>
+                      <p style="font-size:14px;line-height:1.6;color:#334155;">Les <strong>rayonnements ionisants endommagent l'ADN</strong> des cellules. Les cellules cancéreuses se divisent <strong>plus rapidement</strong> → elles sont <strong>plus sensibles</strong> aux dégâts radio-induits. C'est la <strong>différence de radiosensibilité</strong>.</p>
+                    </div>
+                  </div>
+
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;">
+                    <div style="background:#e0e7ff;border:1.5px solid #4f46e5;border-radius:8px;padding:12px;text-align:left;">
+                      <div style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Externe</div>
+                      <p style="font-size:13px;line-height:1.5;color:#334155;"><strong>Rayons X</strong> ou <strong>protons</strong> dirigés depuis l'extérieur vers la tumeur. Dose calculée pour <strong>maximiser l'effet</strong> tout en <strong>protégeant les tissus sains</strong>.</p>
+                    </div>
+                    <div style="background:#ede9fe;border:1.5px solid #7c3aed;border-radius:8px;padding:12px;text-align:left;">
+                      <div style="font-size:12px;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Interne</div>
+                      <p style="font-size:13px;line-height:1.5;color:#334155;">Substance radioactive <strong>injectée</strong>. On utilise le <strong>fonctionnement naturel du corps</strong> pour cibler l'organe malade. C'est une <strong>thérapie ciblée</strong>.</p>
+                    </div>
+                  </div>
+
+                  <div style="background:#fdf2f8;border:2px solid #db2777;border-radius:12px;padding:16px;margin-bottom:16px;position:relative;">
+                    <div style="position:absolute;top:-10px;left:12px;background:#db2777;color:white;font-size:9px;font-weight:700;letter-spacing:1px;padding:2px 10px;border-radius:10px;">MON HISTOIRE</div>
+                    <p style="font-size:14px;line-height:1.6;color:#0f172a;margin-top:6px;">Pour le <strong>myélome multiple</strong> de ma mère, les médecins utilisent deux approches basées sur <strong>le même principe physique</strong> : des noyaux instables qui émettent des rayonnements. D'abord pour <strong>voir</strong>, puis pour <strong>soigner</strong>.</p>
+                  </div>
+
+                  <div style="background:#d1fae5;border-left:4px solid #059669;padding:12px 14px;border-radius:0 8px 8px 0;margin-bottom:12px;">
+                    <p style="font-size:13px;font-weight:700;color:#059669;margin-bottom:4px;">1. Voir : la TEP au fluor-18 (diagnostic)</p>
+                    <p style="font-size:13px;color:#334155;line-height:1.5;">On injecte du <strong>glucose marqué au fluor-18</strong>. Les cellules cancéreuses de la moelle osseuse consomment plus de sucre. Les médecins voient <strong>où</strong> est la maladie et <strong>si elle progresse</strong>.</p>
+                  </div>
+
+                  <div style="background:#ede9fe;border-left:4px solid #7c3aed;padding:12px 14px;border-radius:0 8px 8px 0;margin-bottom:12px;">
+                    <p style="font-size:13px;font-weight:700;color:#7c3aed;margin-bottom:4px;">2. Soigner : le samarium-153 (thérapie interne)</p>
+                    <p style="font-size:13px;color:#334155;line-height:1.5;">On injecte un <strong>radio-isotope osseux</strong> (samarium-153). Il se fixe sur le <strong>tissu osseux en activité</strong> — là où l'os se reconstruit anormalement à cause du cancer. Le rayonnement bêta détruit les cellules cancéreuses à proximité, sur quelques millimètres seulement.</p>
+                  </div>
+
+                  <p style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Pourquoi le samarium se fixe-t-il sur la tumeur ?</p>
+                  <div style="background:#f8fafc;border-left:4px solid #4f46e5;padding:12px 14px;border-radius:0 8px 8px 0;margin-bottom:16px;">
+                    <p style="font-size:14px;line-height:1.6;color:#334155;margin-bottom:6px;">Le cancer du myélome <strong>détruit l'os</strong> et force l'organisme à le <strong>reconstruire en permanence</strong>. Cette reconstruction osseuse anormale crée une <strong>activité métabolique intense</strong> à cet endroit précis.</p>
+                    <p style="font-size:14px;line-height:1.6;color:#334155;">Le samarium-153 est un <strong>analogue chimique du calcium</strong> — l'élément qui constitue l'os. Il se dépose naturellement là où l'os est en train de se former : <strong>sur les zones cancéreuses</strong>, pas sur l'os sain.</p>
+                  </div>
+
+                  <div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-bottom:16px;">
+                    <div style="background:#e0e7ff;border:1.5px solid #4f46e5;border-radius:6px;padding:4px 8px;font-size:10px;font-weight:600;color:#4338ca;text-align:center;">Myélome détruit l'os</div>
+                    <div style="color:#64748b;align-self:center;font-size:14px;font-weight:700;">→</div>
+                    <div style="background:#fef3c7;border:1.5px solid #d97706;border-radius:6px;padding:4px 8px;font-size:10px;font-weight:600;color:#d97706;text-align:center;">Os se reconstruit</div>
+                    <div style="color:#64748b;align-self:center;font-size:14px;font-weight:700;">→</div>
+                    <div style="background:#e0e7ff;border:1.5px solid #4f46e5;border-radius:6px;padding:4px 8px;font-size:10px;font-weight:600;color:#4338ca;text-align:center;">Activité intense</div>
+                    <div style="color:#64748b;align-self:center;font-size:14px;font-weight:700;">→</div>
+                    <div style="background:#fee2e2;border:1.5px solid #dc2626;border-radius:6px;padding:4px 8px;font-size:10px;font-weight:600;color:#dc2626;text-align:center;">Samarium-153 se fixe</div>
+                    <div style="color:#64748b;align-self:center;font-size:14px;font-weight:700;">→</div>
+                    <div style="background:#d1fae5;border:1.5px solid #059669;border-radius:6px;padding:4px 8px;font-size:10px;font-weight:600;color:#059669;text-align:center;">β détruit sur 2-3 mm</div>
+                  </div>
+
+                  <div style="background:#fef3c7;border-left:4px solid #d97706;padding:12px 14px;border-radius:0 8px 8px 0;margin-bottom:16px;">
+                    <p style="font-size:13px;color:#334155;"><strong>Le lien physique :</strong> c'est <strong>le même principe</strong> — des noyaux instables qui émettent des rayonnements. On change juste <strong>l'isotope</strong>, <strong>la dose</strong> et <strong>l'objectif</strong> : faible dose pour voir (fluor-18), dose thérapeutique pour détruire (samarium-153).</p>
+                  </div>
+
+                  <p style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Autres isotopes thérapeutiques</p>
+                  <ul style="list-style:none;padding:0;margin-bottom:16px;">
+                    <li style="padding:6px 0 6px 18px;position:relative;font-size:13px;line-height:1.5;border-bottom:1px solid #f1f5f9;"><span style="position:absolute;left:0;color:#4f46e5;font-weight:700;">›</span> <span style="display:inline-block;background:#7c3aed;color:white;font-weight:600;font-size:10px;padding:1px 6px;border-radius:4px;margin-right:4px;">Iode-131</span> — t₁/₂ = 8 j. Cancer de la thyroïde</li>
+                    <li style="padding:6px 0 6px 18px;position:relative;font-size:13px;line-height:1.5;border-bottom:1px solid #f1f5f9;"><span style="position:absolute;left:0;color:#4f46e5;font-weight:700;">›</span> <span style="display:inline-block;background:#7c3aed;color:white;font-weight:600;font-size:10px;padding:1px 6px;border-radius:4px;margin-right:4px;">Lutétium-177</span> — t₁/₂ = 6,7 j. Tumeurs neuro-endocrines</li>
+                    <li style="padding:6px 0 6px 18px;position:relative;font-size:13px;line-height:1.5;"><span style="position:absolute;left:0;color:#4f46e5;font-weight:700;">›</span> <span style="display:inline-block;background:#7c3aed;color:white;font-weight:600;font-size:10px;padding:1px 6px;border-radius:4px;margin-right:4px;">Yttrium-90</span> — t₁/₂ = 64 h. Radiothérapie interne sélective du foie</li>
+                  </ul>
+
+                  <div style="background:#e0e7ff;border:2px solid #4f46e5;border-radius:12px;padding:16px;text-align:center;">
+                    <p style="font-size:15px;font-weight:700;color:#4338ca;">Bien choisir : l'isotope + la dose + la méthode</p>
+                    <p style="font-size:12px;color:#64748b;margin-top:4px;">Formule du traitement personnalisé</p>
+                  </div>
+                </div>`
+                }, {
+                    title: 'Limites, Conclusion & Conseils',
+                    content: `
+                <div style="padding:20px 16px;max-width:100%;font-family:'Inter',sans-serif;color:#0f172a;font-size:15px;line-height:1.6;">
+                  <div style="background:#e0e7ff;border:2px solid #4f46e5;border-radius:12px;padding:16px;margin-bottom:16px;text-align:center;">
+                    <p style="font-size:16px;font-weight:700;color:#4338ca;">Dose la plus faible possible<br>tout en gardant l'efficacité thérapeutique</p>
+                    <p style="font-size:11px;color:#64748b;margin-top:4px;">Principe ALARA (As Low As Reasonably Achievable)</p>
+                  </div>
+
+                  <p style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Trois règles de radioprotection — T-D-P</p>
+                  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:16px;">
+                    <div style="background:#fee2e2;border:1.5px solid #dc2626;border-radius:8px;padding:10px;text-align:center;">
+                      <div style="font-size:26px;font-weight:800;color:#dc2626;">T</div>
+                      <div style="font-size:12px;font-weight:700;color:#dc2626;text-transform:uppercase;">TEMPS</div>
+                      <div style="font-size:11px;color:#334155;">Réduire l'exposition</div>
+                    </div>
+                    <div style="background:#fef3c7;border:1.5px solid #d97706;border-radius:8px;padding:10px;text-align:center;">
+                      <div style="font-size:26px;font-weight:800;color:#d97706;">D</div>
+                      <div style="font-size:12px;font-weight:700;color:#d97706;text-transform:uppercase;">DISTANCE</div>
+                      <div style="font-size:11px;color:#334155;">S'éloigner — I ∝ 1/r²</div>
+                    </div>
+                    <div style="background:#d1fae5;border:1.5px solid #059669;border-radius:8px;padding:10px;text-align:center;">
+                      <div style="font-size:26px;font-weight:800;color:#059669;">P</div>
+                      <div style="font-size:12px;font-weight:700;color:#059669;text-transform:uppercase;">PROTECTION</div>
+                      <div style="font-size:11px;color:#334155;">Écrans : plomb, béton</div>
+                    </div>
+                  </div>
+
+                  <div style="background:#0f172a;color:#fff;border-radius:10px;padding:14px;margin-bottom:16px;text-align:center;">
+                    <div style="font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:2px;margin-bottom:4px;">Loi en 1/r² — Atténuation géométrique</div>
+                    <div style="font-size:18px;font-weight:600;font-family:'Times New Roman',serif;letter-spacing:1px;"><span style="color:#818cf8;">I</span><span style="color:#94a3b8;">(</span><span style="color:#818cf8;">r</span><span style="color:#94a3b8;">)</span> <span style="color:#94a3b8;">=</span> <span style="color:#818cf8;">I</span><sub style="color:#34d399;">0</sub> <span style="color:#94a3b8;">/</span> <span style="color:#818cf8;">r</span><sup style="color:#34d399;">2</sup></div>
+                    <div style="font-size:11px;color:#94a3b8;margin-top:4px;">Doubler la distance = diviser l'intensité par 4</div>
+                  </div>
+
+                  <p style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Équilibre bénéfice / risque</p>
+                  <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+                    <div style="flex:1;text-align:center;padding:10px;background:#d1fae5;border:2px solid #059669;border-radius:8px;">
+                      <div style="font-size:18px;font-weight:800;color:#059669;">BÉNÉFICE</div>
+                      <div style="font-size:11px;color:#334155;">Détecter ou soigner le cancer</div>
+                    </div>
+                    <div style="font-size:24px;font-weight:800;color:#4f46e5;">&gt;</div>
+                    <div style="flex:1;text-align:center;padding:10px;background:#fee2e2;border:2px solid #dc2626;border-radius:8px;">
+                      <div style="font-size:18px;font-weight:800;color:#dc2626;">RISQUE</div>
+                      <div style="font-size:11px;color:#334155;">Effets secondaires · Exposition</div>
+                    </div>
+                  </div>
+
+                  <div style="background:#e0e7ff;border:2px solid #4f46e5;border-radius:12px;padding:16px;margin-bottom:16px;text-align:center;">
+                    <p style="font-size:12px;font-weight:700;color:#4338ca;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Phrase de conclusion</p>
+                    <p style="font-size:15px;font-weight:700;color:#4338ca;line-height:1.5;">« La radioactivité est souvent perçue comme un danger pur, mais en médecine, elle devient un outil très précis — l'un des seuls phénomènes physiques capables à la fois de <strong>voir à l'intérieur du corps</strong> et de <strong>soigner avec précision</strong>. »</p>
+                  </div>
+
+                  <div style="background:#e0e7ff;border:2px solid #4f46e5;border-radius:12px;padding:16px;margin-bottom:16px;text-align:center;">
+                    <p style="font-size:12px;font-weight:700;color:#4338ca;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Ouverture</p>
+                    <p style="font-size:15px;font-weight:700;color:#4338ca;line-height:1.5;">« Jusqu'où la physique peut-elle <strong>transformer un danger en remède</strong> ? »</p>
+                  </div>
+
+                  <p style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Questions probables du jury</p>
+                  <div style="background:#f8fafc;border-left:4px solid #4f46e5;padding:10px 12px;border-radius:0 8px 8px 0;margin-bottom:8px;">
+                    <p style="font-size:13px;line-height:1.5;"><strong style="color:#4338ca;">« La TEP est-elle fiable ? »</strong></p>
+                    <p style="font-size:13px;color:#334155;padding-left:10px;">→ Oui, mais c'est un <strong>outil d'aide au diagnostic</strong>. On confirme par biopsie.</p>
+                  </div>
+                  <div style="background:#f8fafc;border-left:4px solid #4f46e5;padding:10px 12px;border-radius:0 8px 8px 0;margin-bottom:8px;">
+                    <p style="font-size:13px;line-height:1.5;"><strong style="color:#4338ca;">« Peut-on vraiment guérir avec la radioactivité ? »</strong></p>
+                    <p style="font-size:13px;color:#334155;padding-left:10px;">→ Cela dépend du cancer. Pour le myélome, la radioactivité sert surtout à <strong>diagnostiquer</strong> et <strong>soulager</strong>.</p>
+                  </div>
+                  <div style="background:#f8fafc;border-left:4px solid #4f46e5;padding:10px 12px;border-radius:0 8px 8px 0;margin-bottom:16px;">
+                    <p style="font-size:13px;line-height:1.5;"><strong style="color:#4338ca;">« Différence imagerie / traitement ? »</strong></p>
+                    <p style="font-size:13px;color:#334155;padding-left:10px;">→ Même principe (rayonnement), mais <strong>objectif différent</strong> : voir versus détruire.</p>
+                  </div>
+
+                  <p style="font-size:12px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Conseils de présentation</p>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;">
+                    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px;">
+                      <div style="font-size:10px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1px;">Voix</div>
+                      <p style="font-size:12px;color:#334155;">Voix posée, débit lent.</p>
+                    </div>
+                    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px;">
+                      <div style="font-size:10px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1px;">Regard</div>
+                      <p style="font-size:12px;color:#334155;">Regarder le jury, posture debout.</p>
+                    </div>
+                    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px;">
+                      <div style="font-size:10px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1px;">Stress</div>
+                      <p style="font-size:12px;color:#334155;">Un peu de stress = mieux. Simple plutôt que compliqué.</p>
+                    </div>
+                    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px;">
+                      <div style="font-size:10px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:1px;">Structure</div>
+                      <p style="font-size:12px;color:#334155;">Phrase boussole : intro, milieu, conclusion.</p>
+                    </div>
+                  </div>
+
+                  <div style="text-align:center;padding:16px;background:#e0e7ff;border-radius:10px;">
+                    <div style="font-size:28px;font-weight:800;color:#4f46e5;">18 / 20</div>
+                    <div style="font-size:12px;color:#64748b;margin-top:4px;">Objectif · Tu es prêt</div>
+                  </div>
+                </div>`
+                }]
+            }
+        };
+
+        // ════════════════════════════════════════
+        // LOGIQUE DE NAVIGATION (Reader)
+        // ════════════════════════════════════════
+        let currentSubject = null;
+        let currentPage = 0;
+
+        function openSubject(subjectKey) {
+            currentSubject = subjects[subjectKey];
+            currentPage = 0;
+
+            document.getElementById('hub').style.display = 'none';
+            document.getElementById('reader').style.display = 'flex';
+            document.getElementById('page-nav').classList.add('visible');
+
+            document.getElementById('reader-title').textContent = currentSubject.title;
+            document.title = currentSubject.title + ' — Grand Oral';
+
+            renderPage();
+            buildDots();
+            updateNav();
+        }
+
+        function openQuestions() {
+            // Redirection vers la page des flashcards
+            window.location.href = './questions.html';
+        }
+
+        function closeReader() {
+            document.getElementById('hub').style.display = 'flex';
+            document.getElementById('reader').style.display = 'none';
+            document.getElementById('page-nav').classList.remove('visible');
+            document.title = 'Grand Oral — Révision';
+            currentSubject = null;
+        }
+
+        function renderPage() {
+            const page = currentSubject.pages[currentPage];
+            document.getElementById('reader-content').innerHTML = page.content;
+            document.getElementById('reader-progress').textContent = (currentPage + 1) + ' / ' + currentSubject.pages.length;
+            document.getElementById('page-label').textContent = (currentPage + 1) + ' / ' + currentSubject.pages.length;
+            document.getElementById('reader-content').scrollTop = 0;
+        }
+
+        function buildDots() {
+            const dotsContainer = document.getElementById('page-dots');
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < currentSubject.pages.length; i++) {
+                const dot = document.createElement('button');
+                dot.className = 'page-nav-dot' + (i === currentPage ? ' active' : '');
+                dot.setAttribute('aria-label', 'Page ' + (i + 1));
+                dot.onclick = () => goToPage(i);
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        function updateNav() {
+            document.getElementById('btn-prev').disabled = currentPage === 0;
+            document.getElementById('btn-next').disabled = currentPage === currentSubject.pages.length - 1;
+            document.querySelectorAll('.page-nav-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentPage);
+            });
+        }
+
+        function prevPage() {
+            if (currentPage > 0) { currentPage--;
+                renderPage();
+                updateNav(); }
+        }
+
+        function nextPage() {
+            if (currentPage < currentSubject.pages.length - 1) { currentPage++;
+                renderPage();
+                updateNav(); }
+        }
+
+        function goToPage(index) {
+            currentPage = index;
+            renderPage();
+            updateNav();
+        }
+
+        // ===== SWIPE SUPPORT =====
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const readerContent = document.getElementById('reader-content');
+
+        readerContent.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        readerContent.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            const threshold = 60;
+            if (touchEndX < touchStartX - threshold) nextPage();
+            if (touchEndX > touchStartX + threshold) prevPage();
+        }, { passive: true });
+
+        // ===== KEYBOARD SUPPORT =====
+        document.addEventListener('keydown', e => {
+            if (!currentSubject) return;
+            if (e.key === 'ArrowLeft') prevPage();
+            if (e.key === 'ArrowRight') nextPage();
+            if (e.key === 'Escape') closeReader();
+        });
+    </script>
+
 </body>
 </html>
