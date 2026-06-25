@@ -1,0 +1,1833 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Grand Oral — Questions Jury (Flashcards)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ===== VARIABLES ===== */
+        :root {
+            --nuit: #0f172a;
+            --ardoise: #334155;
+            --acier: #64748b;
+            --brouillard: #94a3b8;
+            --perle: #f8fafc;
+            --blanc: #ffffff;
+            --indigo: #4f46e5;
+            --indigo-f: #e0e7ff;
+            --indigo-c: #4338ca;
+            --emeraude: #059669;
+            --emeraude-f: #d1fae5;
+            --emeraude-c: #065f46;
+            --rubis: #dc2626;
+            --rubis-f: #fee2e2;
+            --rubis-c: #991b1b;
+            --ambre: #d97706;
+            --ambre-f: #fef3c7;
+            --ambre-c: #92400e;
+            --violet: #7c3aed;
+            --violet-f: #ede9fe;
+            --rose: #db2777;
+            --rose-f: #fdf2f8;
+            --rose-c: #9d174d;
+            --cyan: #06b6d4;
+            --cyan-f: #cffafe;
+            --cyan-c: #155e75;
+        }
+
+        /* ===== RESET ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #e2e8f0;
+            color: var(--nuit);
+            font-size: 15px;
+            line-height: 1.6;
+            min-height: 100dvh;
+            overflow-x: hidden;
+        }
+
+        .app {
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100dvh;
+            background: var(--blanc);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: var(--nuit);
+            padding: 16px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.3);
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--blanc);
+            letter-spacing: -0.5px;
+        }
+
+        .header-sub {
+            font-size: 11px;
+            color: var(--brouillard);
+            font-weight: 500;
+        }
+
+        .progress-pill {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--blanc);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .progress-pill .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--emeraude);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.4;
+            }
+        }
+
+        /* ===== TABS ===== */
+        .tabs {
+            display: flex;
+            gap: 2px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 3px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px 8px;
+            border: none;
+            background: transparent;
+            color: var(--brouillard);
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .tab-btn.active {
+            background: var(--indigo);
+            color: var(--blanc);
+            box-shadow: 0 2px 12px rgba(79, 70, 229, 0.4);
+        }
+
+        .tab-btn .icon {
+            font-size: 14px;
+        }
+
+        /* ===== TAB CONTENT ===== */
+        .tab-content {
+            display: none;
+            flex: 1;
+            padding: 16px 16px 100px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== SUBJECT HEADER ===== */
+        .subj-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 20px 16px;
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subj-header.math {
+            background: var(--indigo-f);
+            border: 2px solid var(--indigo);
+        }
+
+        .subj-header.phys {
+            background: var(--rose-f);
+            border: 2px solid var(--rose);
+        }
+
+        .subj-header .subj-icon {
+            font-size: 36px;
+            margin-bottom: 8px;
+        }
+
+        .subj-header .subj-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--nuit);
+            position: relative;
+            z-index: 1;
+        }
+
+        .subj-header .subj-desc {
+            font-size: 12px;
+            color: var(--acier);
+            margin-top: 4px;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== STATS BAR ===== */
+        .stats-bar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .stat-chip {
+            flex: 1;
+            text-align: center;
+            padding: 12px 8px;
+            border-radius: 12px;
+            background: var(--perle);
+            border: 1.5px solid #e2e8f0;
+        }
+
+        .stat-chip .stat-num {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--indigo);
+            line-height: 1;
+        }
+
+        .stat-chip .stat-lbl {
+            font-size: 10px;
+            color: var(--acier);
+            margin-top: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ===== FILTERS ===== */
+        .filter-bar {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 16px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .filter-bar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-chip {
+            flex-shrink: 0;
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1.5px solid #e2e8f0;
+            background: var(--blanc);
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--acier);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-chip.active {
+            background: var(--nuit);
+            color: var(--blanc);
+            border-color: var(--nuit);
+        }
+
+        /* ===== FLASHCARD ===== */
+        .card {
+            background: var(--blanc);
+            border: 1.5px solid #e2e8f0;
+            border-radius: 16px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.08);
+            border-color: #cbd5e1;
+        }
+
+        .card-header {
+            padding: 16px 16px 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .card-num {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .card-num.math {
+            background: var(--indigo-f);
+            color: var(--indigo);
+        }
+
+        .card-num.phys {
+            background: var(--rose-f);
+            color: var(--rose);
+        }
+
+        .card-q {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--nuit);
+            line-height: 1.5;
+            flex: 1;
+        }
+
+        .card-tag {
+            display: inline-block;
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 2px 8px;
+            border-radius: 6px;
+            margin-bottom: 6px;
+        }
+
+        .card-tag.math {
+            background: var(--indigo-f);
+            color: var(--indigo);
+        }
+
+        .card-tag.phys {
+            background: var(--rose-f);
+            color: var(--rose);
+        }
+
+        .card-tag.green {
+            background: var(--emeraude-f);
+            color: var(--emeraude-c);
+        }
+
+        .card-tag.ambre {
+            background: var(--ambre-f);
+            color: var(--ambre-c);
+        }
+
+        .card-tag.rubis {
+            background: var(--rubis-f);
+            color: var(--rubis-c);
+        }
+
+        .card-tag.violet {
+            background: var(--violet-f);
+            color: #5b21b6;
+        }
+
+        .card-tag.cyan {
+            background: var(--cyan-f);
+            color: var(--cyan-c);
+        }
+
+        .diff-badge {
+            font-size: 9px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .diff-facile {
+            background: var(--emeraude-f);
+            color: var(--emeraude-c);
+        }
+
+        .diff-moyen {
+            background: var(--ambre-f);
+            color: var(--ambre-c);
+        }
+
+        .diff-difficile {
+            background: var(--rubis-f);
+            color: var(--rubis-c);
+        }
+
+        .card-body {
+            padding: 0 16px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s ease;
+        }
+
+        .card-body.open {
+            max-height: 800px;
+            padding: 0 16px 16px;
+        }
+
+        .card-answer {
+            background: var(--perle);
+            border-radius: 12px;
+            padding: 14px;
+            font-size: 13.5px;
+            line-height: 1.7;
+            color: var(--ardoise);
+            border-left: 3px solid var(--indigo);
+        }
+
+        .card-answer strong {
+            color: var(--indigo-c);
+            font-weight: 700;
+        }
+
+        .card-answer ul {
+            margin: 8px 0;
+            padding-left: 16px;
+        }
+
+        .card-answer li {
+            margin-bottom: 4px;
+        }
+
+        .card-answer .highlight {
+            background: #fef08a;
+            padding: 1px 4px;
+            border-radius: 3px;
+            font-weight: 600;
+            color: var(--nuit);
+        }
+
+        .card-answer .formula {
+            display: block;
+            background: var(--nuit);
+            color: var(--blanc);
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-family: 'Times New Roman', serif;
+            font-size: 16px;
+            text-align: center;
+            margin: 8px 0;
+            letter-spacing: 0.5px;
+        }
+
+        .card-answer .formula .var {
+            color: #818cf8;
+        }
+
+        .card-answer .formula .num {
+            color: #34d399;
+        }
+
+        .card-answer .formula .eq {
+            color: #94a3b8;
+        }
+
+        .card-btn {
+            width: 100%;
+            padding: 12px 16px;
+            border: none;
+            background: var(--perle);
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--indigo);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .card-btn:active {
+            background: #e2e8f0;
+        }
+
+        .card-btn .chevron {
+            transition: transform 0.3s ease;
+            font-size: 12px;
+        }
+
+        .card-btn.open .chevron {
+            transform: rotate(180deg);
+        }
+
+        .card-btn.phys-btn {
+            color: var(--rose);
+        }
+
+        /* ===== CARD CHECK ===== */
+        .card-check {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid #e2e8f0;
+            background: var(--blanc);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            z-index: 10;
+            font-weight: 700;
+            color: #94a3b8;
+        }
+
+        .card-check.checked {
+            background: var(--emeraude);
+            border-color: var(--emeraude);
+            color: var(--blanc);
+        }
+
+        .card.checked {
+            opacity: 0.7;
+            border-color: var(--emeraude);
+        }
+
+        .card.checked .card-num.math {
+            background: var(--emeraude-f);
+            color: var(--emeraude);
+        }
+
+        .card.checked .card-num.phys {
+            background: var(--emeraude-f);
+            color: var(--emeraude);
+        }
+
+        /* ===== QUICK ACTIONS ===== */
+        .quick-actions {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .qa-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1.5px solid #e2e8f0;
+            background: var(--blanc);
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--nuit);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .qa-btn:active {
+            transform: scale(0.97);
+        }
+
+        .qa-btn .qa-icon {
+            font-size: 20px;
+        }
+
+        /* ===== SCROLL HINT ===== */
+        .scroll-hint {
+            text-align: center;
+            padding: 8px;
+            font-size: 11px;
+            color: var(--brouillard);
+            font-weight: 500;
+            animation: bounce 2s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(3px);
+            }
+        }
+
+        /* ===== TOAST ===== */
+        .toast {
+            position: fixed;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: var(--nuit);
+            color: var(--blanc);
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 200;
+            white-space: nowrap;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 480px) {
+            .header {
+                padding: 12px 16px;
+            }
+            .header-title {
+                font-size: 16px;
+            }
+            .tab-btn {
+                font-size: 12px;
+                padding: 8px 6px;
+            }
+            .tab-content {
+                padding: 12px 12px 90px;
+            }
+            .card-q {
+                font-size: 13px;
+            }
+            .card-answer {
+                font-size: 12.5px;
+                padding: 12px;
+            }
+            .card-answer .formula {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+            .subj-header .subj-title {
+                font-size: 18px;
+            }
+            .stat-chip .stat-num {
+                font-size: 18px;
+            }
+            .qa-btn {
+                padding: 10px;
+                font-size: 11px;
+            }
+            .qa-btn .qa-icon {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .header-title {
+                font-size: 14px;
+            }
+            .tab-btn {
+                font-size: 10px;
+                padding: 6px 4px;
+            }
+            .card-header {
+                padding: 12px 12px 10px;
+                gap: 8px;
+            }
+            .card-num {
+                width: 28px;
+                height: 28px;
+                font-size: 11px;
+            }
+            .card-q {
+                font-size: 12px;
+            }
+            .card-check {
+                width: 24px;
+                height: 24px;
+                font-size: 12px;
+                top: 10px;
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app">
+
+        <!-- ===== HEADER ===== -->
+        <div class="header">
+            <div class="header-top">
+                <div>
+                    <div class="header-title">🎓 Grand Oral Flashcards</div>
+                    <div class="header-sub">Questions jury type bac — 24 questions</div>
+                </div>
+                <div class="progress-pill">
+                    <span class="dot"></span>
+                    <span id="progress-text">0/24</span>
+                </div>
+            </div>
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('math')" id="tab-math">
+                    <span class="icon">🃏</span> Blackjack
+                </button>
+                <button class="tab-btn" onclick="switchTab('phys')" id="tab-phys">
+                    <span class="icon">⚛️</span> Radioactivité
+                </button>
+            </div>
+        </div>
+
+        <!-- ===== MATH TAB ===== -->
+        <div class="tab-content active" id="content-math">
+
+            <div class="subj-header math">
+                <div class="subj-icon">🃏</div>
+                <div class="subj-title">Probabilités &amp; Blackjack</div>
+                <div class="subj-desc">12 questions jury type — Mathématiques</div>
+            </div>
+
+            <div class="stats-bar">
+                <div class="stat-chip">
+                    <div class="stat-num" id="math-total">12</div>
+                    <div class="stat-lbl">Questions</div>
+                </div>
+                <div class="stat-chip">
+                    <div class="stat-num" id="math-done" style="color:var(--emeraude)">0</div>
+                    <div class="stat-lbl">Maîtrisées</div>
+                </div>
+                <div class="stat-chip">
+                    <div class="stat-num" id="math-pct" style="color:var(--indigo)">0%</div>
+                    <div class="stat-lbl">Progression</div>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <button class="qa-btn" onclick="openAll('math')">
+                    <span class="qa-icon">📖</span>
+                    <span>Tout ouvrir</span>
+                </button>
+                <button class="qa-btn" onclick="closeAll('math')">
+                    <span class="qa-icon">🙈</span>
+                    <span>Tout cacher</span>
+                </button>
+                <button class="qa-btn" onclick="resetChecks('math')">
+                    <span class="qa-icon">🔄</span>
+                    <span>Réinitialiser</span>
+                </button>
+            </div>
+
+            <div class="filter-bar" id="filter-math">
+                <button class="filter-chip active" onclick="filterCards('math','all',this)">Toutes</button>
+                <button class="filter-chip" onclick="filterCards('math','facile',this)">Faciles</button>
+                <button class="filter-chip" onclick="filterCards('math','moyen',this)">Moyennes</button>
+                <button class="filter-chip" onclick="filterCards('math','difficile',this)">Difficiles</button>
+            </div>
+
+            <!-- CARD M1 -->
+            <div class="card" data-subject="math" data-diff="facile" data-id="m1">
+                <div class="card-check" onclick="toggleCheck(this, event)">✓</div>
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-num math">1</div>
+                    <div>
+                        <div style="display:flex;gap:6px;margin-bottom:4px;flex-wrap:wrap;">
+                            <span class="card-tag math">Définition</span>
+                            <span class="diff-badge diff-facile">Facile</span>
+                        </div>
+                        <div class="card-q">Quelle est la différence fondamentale entre la roulette et le blackjack du point de vue des probabilités ?</div>
+                    </div>
+                </div>
+                <div class="card-body" id="body-m1">
+                    <div class="card-answer">
+                        <strong>À la roulette</strong>, chaque tour est <strong>indépendant</strong> : la probabilité est fixe (1/37 pour un numéro). Au <strong>blackjack</strong>, les cartes jouées <strong>ne sont pas remises</strong> dans le sabot : les probabilités <strong>évoluent</strong> à chaque carte distribuée. C'est un processus <strong>sans remise</strong>, ce qui rend le jeu mathématiquement analysable.<br><br>
+                        <span class="formula"><span class="var">P</span><span class="eq">(</span><span class="var">roulette</span><span class="eq">)</span> <span class="eq">=</span> <span class="num">fixe</span> <span class="eq">|</span> <span class="var">P</span><span class="eq">(</span><span class="var">blackjack</span><span class="eq">)</span> <span class="eq">=</span> <span class="var">f</span><span class="eq">(</span><span class="var">historique</span><span class="eq">)</span></span>
+                        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span style="font-size:11px;background:var(--indigo-f);color:var(--indigo-c);padding:2px 8px;border-radius:12px;font-weight:600;">Indépendance</span>
+                            <span style="font-size:11px;background:var(--emeraude-f);color:var(--emeraude-c);padding:2px 8px;border-radius:12px;font-weight:600;">Sans remise</span>
+                            <span style="font-size:11px;background:var(--ambre-f);color:var(--ambre-c);padding:2px 8px;border-radius:12px;font-weight:600;">Probabilité évolutive</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="card-btn" onclick="toggleCardBtn(this)">
+                    <span>👁️ Afficher la réponse</span>
+                    <span class="chevron">▼</span>
+                </button>
+            </div>
+
+            <!-- CARD M2 -->
+            <div class="card" data-subject="math" data-diff="moyen" data-id="m2">
+                <div class="card-check" onclick="toggleCheck(this, event)">✓</div>
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-num math">2</div>
+                    <div>
+                        <div style="display:flex;gap:6px;margin-bottom:4px;flex-wrap:wrap;">
+                            <span class="card-tag math">Formule</span>
+                            <span class="diff-badge diff-moyen">Moyen</span>
+                        </div>
+                        <div class="card-q">Définissez l'espérance mathématique et expliquez son rôle dans le blackjack.</div>
+                    </div>
+                </div>
+                <div class="card-body" id="body-m2">
+                    <div class="card-answer">
+                        L'<strong>espérance mathématique</strong> E(X) représente le <strong>gain moyen</strong> sur un très grand nombre de parties. Formule du programme :<br><br>
+                        <span class="formula"><span class="var">E</span><span class="eq">(</span><span class="var">X</span><span class="eq">)</span> <span class="eq">=</span> <span class="var">Σ</span> <span class="var">x</span><sub><span class="var">i</span></sub> <span class="eq">×</span> <span class="var">P</span><span class="eq">(</span><span class="var">X</span><span class="eq">=</span><span class="var">x</span><sub><span class="var">i</span></sub><span class="eq">)</span></span>
+                        <br><br>
+                        <strong>Application au blackjack :</strong><br>
+                        • <strong>E(X) &gt; 0</strong> → avantage joueur (gagne à long terme)<br>
+                        • <strong>E(X) &lt; 0</strong> → avantage casino (perd à long terme)<br>
+                        • <strong>E(X) = 0</strong> → jeu équitable<br><br>
+                        Sans stratégie : E(X) ≈ <span class="highlight">-2% à -5%</span><br>
+                        Avec stratégie de base : E(X) ≈ <span class="highlight">-0,5%</span><br>
+                        Avec comptage : E(X) ≈ <span class="highlight">+0,5% à +1,5%</span>
+                        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span style="font-size:11px;background:var(--indigo-f);color:var(--indigo-c);padding:2px 8px;border-radius:12px;font-weight:600;">Formule du programme</span>
+                            <span style="font-size:11px;background:var(--emeraude-f);color:var(--emeraude-c);padding:2px 8px;border-radius:12px;font-weight:600;">Gain moyen</span>
+                            <span style="font-size:11px;background:var(--ambre-f);color:var(--ambre-c);padding:2px 8px;border-radius:12px;font-weight:600;">Long terme</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="card-btn" onclick="toggleCardBtn(this)">
+                    <span>👁️ Afficher la réponse</span>
+                    <span class="chevron">▼</span>
+                </button>
+            </div>
+
+            <!-- CARD M3 -->
+            <div class="card" data-subject="math" data-diff="moyen" data-id="m3">
+                <div class="card-check" onclick="toggleCheck(this, event)">✓</div>
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-num math">3</div>
+                    <div>
+                        <div style="display:flex;gap:6px;margin-bottom:4px;flex-wrap:wrap;">
+                            <span class="card-tag math">Formule</span>
+                            <span class="diff-badge diff-moyen">Moyen</span>
+                        </div>
+                        <div class="card-q">Qu'est-ce qu'une probabilité conditionnelle ? Donnez la formule et un exemple concret au blackjack.</div>
+                    </div>
+                </div>
+                <div class="card-body" id="body-m3">
+                    <div class="card-answer">
+                        La <strong>probabilité conditionnelle</strong> P<sub>B</sub>(A) est la probabilité que A se réalise <strong>sachant que B s'est déjà réalisé</strong>.<br><br>
+                        <span class="formula"><span class="var">P</span><sub><span class="var">B</span></sub><span class="eq">(</span><span class="var">A</span><span class="eq">)</span> <span class="eq">=</span> <span class="var">P</span><span class="eq">(</span><span class="var">A</span><span class="eq">∩</span><span class="var">B</span><span class="eq">)</span> <span class="eq">/</span> <span class="var">P</span><span class="eq">(</span><span class="var">B</span><span class="eq">)</span></span>
+                        <br><br>
+                        <strong>Exemple concret :</strong> Vous avez 16 points et décidez de tirer. Sachant que 3 Rois sont déjà sortis (B), la probabilité de tirer un 10 (A) change :<br><br>
+                        • Initialement : P(10) = 16/52 ≈ 30,8%<br>
+                        • Après 3 Rois sortis : P(10|3R) = <strong>13/49 ≈ 26,5%</strong><br><br>
+                        Chaque carte sortie modifie les probabilités futures. C'est le cœur du comptage de cartes.
+                        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span style="font-size:11px;background:var(--indigo-f);color:var(--indigo-c);padding:2px 8px;border-radius:12px;font-weight:600;">P_B(A) = P(A∩B)/P(B)</span>
+                            <span style="font-size:11px;background:var(--emeraude-f);color:var(--emeraude-c);padding:2px 8px;border-radius:12px;font-weight:600;">Sachant que</span>
+                            <span style="font-size:11px;background:var(--ambre-f);color:var(--ambre-c);padding:2px 8px;border-radius:12px;font-weight:600;">Exemple chiffré</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="card-btn" onclick="toggleCardBtn(this)">
+                    <span>👁️ Afficher la réponse</span>
+                    <span class="chevron">▼</span>
+                </button>
+            </div>
+
+            <!-- CARD M4 -->
+            <div class="card" data-subject="math" data-diff="moyen" data-id="m4">
+                <div class="card-check" onclick="toggleCheck(this, event)">✓</div>
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-num math">4</div>
+                    <div>
+                        <div style="display:flex;gap:6px;margin-bottom:4px;flex-wrap:wrap;">
+                            <span class="card-tag math">Calcul</span>
+                            <span class="diff-badge diff-moyen">Moyen</span>
+                        </div>
+                        <div class="card-q">Calculez la probabilité d'obtenir un blackjack (As + 10) avec les deux premières cartes.</div>
+                    </div>
+                </div>
+                <div class="card-body" id="body-m4">
+                    <div class="card-answer">
+                        Un blackjack = <strong>As + carte de valeur 10</strong> (10, V, D, R). Deux ordres possibles.<br><br>
+                        <span class="formula"><span class="var">P</span><span class="eq">(</span><span class="var">Blackjack</span><span class="eq">)</span> <span class="eq">=</span> <span class="num">2</span> <span class="eq">×</span> <span class="var">P</span><span class="eq">(</span><span class="var">As</span><span class="eq">)</span> <span class="eq">×</span> <span class="var">P</span><sub><span class="var">As</span></sub><span class="eq">(</span><span class="var">10</span><span class="eq">)</span></span>
+                        <br><br>
+                        • P(As en 1ère) = 4/52, puis P(10 | As) = 16/51<br>
+                        • P(10 en 1ère) = 16/52, puis P(As | 10) = 4/51<br><br>
+                        <strong>P(Blackjack) = (4/52 × 16/51) × 2 = 128/2652 ≈ 4,83%</strong><br><br>
+                        Soit environ <span class="highlight">1 blackjack toutes les 21 mains</span>. Le casino paie 1,5× la mise, ce qui compense partiellement l'avantage de la banque.
+                        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span style="font-size:11px;background:var(--indigo-f);color:var(--indigo-c);padding:2px 8px;border-radius:12px;font-weight:600;">≈ 4,83%</span>
+                            <span style="font-size:11px;background:var(--emeraude-f);color:var(--emeraude-c);padding:2px 8px;border-radius:12px;font-weight:600;">Probabilités composées</span>
+                            <span style="font-size:11px;background:var(--ambre-f);color:var(--ambre-c);padding:2px 8px;border-radius:12px;font-weight:600;">Sans remise</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="card-btn" onclick="toggleCardBtn(this)">
+                    <span>👁️ Afficher la réponse</span>
+                    <span class="chevron">▼</span>
+                </button>
+            </div>
+
+            <!-- CARD M5 -->
+            <div class="card" data-subject="math" data-diff="facile" data-id="m5">
+                <div class="card-check" onclick="toggleCheck(this, event)">✓</div>
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-num math">5</div>
+                    <div>
+                        <div style="display:flex;gap:6px;margin-bottom:4px;flex-wrap:wrap;">
+                            <span class="card-tag math">Stratégie</span>
+                            <span class="diff-badge diff-facile">Facile</span>
+                        </div>
+                        <div class="card-q">Quelle est la « stratégie de base » au blackjack et quel est son effet sur l'avantage du casino ?</div>
+                    </div>
+                </div>
+                <div class="card-body" id="body-m5">
+                    <div class="card-answer">
+                        La <strong>stratégie de base</strong> est un ensemble de règles probabilistes optimisées par ordinateur indiquant pour chaque main du joueur et chaque carte visible du croupier s'il faut <strong>tirer</strong>, <strong>rester</strong>, <strong>doubler</strong> ou <strong>séparer</strong>.<br><br>
+                        <strong>Effet sur l'avantage :</strong><br>
+                        • Sans stratégie : <span class="highlight">2% à 5%</span> pour le casino<br>
+                        • Avec stratégie de base : <span class="highlight">≈ 0,5%</span> pour le casino<br><br>
+                        C'est une stratégie <strong>probabiliste</strong>, pas une méthode infaillible : on minimise les pertes, on ne gagne pas à coup sûr. Chaque décision est basée sur le calcul du risque de brûler vs le risque de laisser le croupier gagner.
+                        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span style="font-size:11px;background:var(--indigo-f);color:var(--indigo-c);padding:2px 8px;border-radius:12px;font-weight:600;">Stratégie optimale</span>
+                            <span style="font-size:11px;background:var(--emeraude-f);color:var(--emeraude-c);padding:2px 8px;border-radius:12px;font-weight:600;">-0,5% house edge</span>
+                            <span style="font-size:11px;background:var(--ambre-f);color:var(--ambre-c);padding:2px 8px;border-radius:12px;font-weight:600;">Minimiser les pertes</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="card-btn" onclick="toggleCardBtn(this)">
+                    <span>👁️ Afficher la réponse</span>
+                    <span class="chevron">▼</span>
+                </button>
+            </div>
+
+            <!-- CARD M6 -->
+            <div class="card" data-subject="math" data-diff="difficile" data-id="m6">
+                <div class="card-check" onclick="toggleCheck(this, event)">✓</div>
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-num math">6</div>
+                    <div>
+                        <div style="display:flex;gap:6px;margin-bottom:4px;flex-wrap:wrap;">
+                            <span class="card-tag math">Comptage</span>
+                            <span class="diff-badge diff-difficile">Difficile</span>
+                        </div>
+                        <div class="card-q">Expliquez le principe du comptage Haut-Bas (Hi-Lo) et la différence entre compteur courant et compte réel.</div>
+                    </div>
+                </div>
+                <div class="card-body" id="body-m6">
+                    <div class="card-answer">
+                        Le <strong>comptage Haut-Bas</strong> attribue une valeur à chaque carte sortie pour estimer si le sabot restant est favorable au joueur.<br><br>
+                        <strong>Valeurs Hi-Lo :</strong><br>
+                        • <strong>2-6 → +1</strong> (petites cartes sorties = sabot favorable)<br>
+                        • <strong>7-9 → 0</strong> (neutres)<br>
+                        • <strong>10, V, D, R, A → -1</strong> (grosses cartes sorties = sabot défavorable)<br><br>
+                        <strong>Compteur courant (CC)</strong> = somme brute des valeurs.<br>
+                        <strong>Compte réel (CR)</strong> = CC ÷ nombre de jeux restants.<br><br>
+                        <span class="formula"><span class="var">CR</span> <span class="eq">=</span> <span class="var">CC</span> <span class="eq">÷</span> <span class="var">N</span><sub><span class="var">restants</span></sub></span>
+                        <br><br>
+                        Le CR <strong>normalise</strong> le compte : +3 avec 1 jeu ou avec 6 jeux ont la même signification. C'est le CR qui guide les mises.
+                        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span style="font-size:11px;background:var(--indigo-f);color:var(--indigo-c);padding:2px 8px;border-radius:12px;font-weight:600;">+1 / 0 / −1</span>
+                            <span style="font-size:11px;background:var(--emeraude-f);color:var(--emeraude-c);padding:2px 8px;border-radius:12px;font-weight:600;">CR = CC ÷ N</span>
+                            <span style="font-size:11px;background:var(--ambre-f);color:var(--ambre-c);padding:2px 8px;border-radius:12px;font-weight:600;">Normalisation</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="card-btn" onclick="toggleCardBtn(this)">
+                    <span>👁️ Afficher la réponse</span>
+                    <span class="chevron">▼</span>
+                </button>
+            </div>
+
+            <!-- CARD M7 -->
+            <div class="card" data-subject="math" data-diff="moyen" data-id="m7">
+                <div class="card-check" onclick="toggleCheck(this, event)">✓</div>
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-num math">7</div>
+                    <div>
+                        <div style="display:flex;gap:6px;margin-bottom:4px;flex-wrap:wrap;">
+                            <span class="card-tag math">Analyse</span>
+                            <span class="diff-badge diff-moyen">Moyen</span>
+                        </div>
+                        <div class="card-q">Pourquoi un sabot riche en grosses cartes (10, V, D, R, A) est-il favorable au joueur ?</div>
+                    </div>
+                </div>
+                <div class="card-body" id="body-m7">
+                    <div class="card-answer">
+                        Trois raisons mathématiques :<br><br>
+                        <strong>1. Plus de blackjacks</strong> → payés 1,5× la mise (3:2). Le joueur gagne plus sur les meilleures mains.<br><br>
+                        <strong>2. Le croupier brûle plus souvent</strong> → il doit tirer jusqu'à 17 minimum. Avec des grosses cartes restantes, il dépasse 21 plus fréquemment.<br><br>
+                        <strong>3. Doubler et séparer deviennent plus rentables</strong> → le joueur peut miser plus quand le sabot est favorable, ce que le croupier ne peut pas faire.<br><br>
+                        Résultat : le joueur mise <strong>peu quand le sabot est défavorable</strong> (CR ≤ 0) et <strong>beaucoup quand il est favorable</strong> (CR ≥ +4).
+                        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span style="font-size:11px;background:var(--indigo-f);color:var(--indigo-c);padding:2px 8px;border-radius:12px;font-weight:600;">Blackjacks payés 3:2</span>
+                            <span style="font-size:11px;background:var(--emeraude-f);color:var(--emeraude-c);padding:2px 8px;border-radius:12px;font-weight:600;">Croupier contraint</span>
+                            <span style="font-size:11px;background:var(--ambre-f);color:var(--ambre-c);padding:2px 8px;border-radius:12px;font-weight:600;">Mise variable</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="card-btn" onclick="toggleCardBtn(this)">
+                    <span>👁️ Afficher la réponse</span>
+                    <span class="chevron">▼</span>
+                </button>
+            </div>
+
+            <!-- CARD M8 -->
+            <div class="card" data-subject="math" data-diff="moyen" data-id="m8">
+                <div class="card-check" onclick="toggleCheck(this, event)">✓</div>
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-num math">8</div>
+                    <div>
+                        <div style="display:flex;gap:6px;margin-bottom:4px;flex-wrap:wrap;">
+                            <span class="card-tag math">Calcul</span>
+                            <span class="diff-badge diff-moyen">Moyen</span>
+                        </div>
+                        <div class="card-q">Quelle est la probabilité de « brûler » (dépasser 21) si on tire avec une main à 15 ? À 17 ?</div>
+                    </div>
+                </div>
+                <div class="card-body" id="body-m8">
+                    <div class="card-answer">
+                        On brûle si la carte tirée fait dépasser 21. Avec un sabot de 52 cartes (simplifié) :<br><br>
+                        • <strong>Main à 15</strong> : on brûle avec 7, 8, 9, 10, V, D, R, A → <strong>32 cartes sur 50 ≈ 64%</strong><br>
+                        • <strong>Main à 17</strong> : on brûle avec 5, 6, 7, 8, 9, 10, V, D, R, A → <strong>36 cartes sur 50 ≈ 72%</strong><br>
+                        • <strong>Main à 20</strong> : on brûle avec As (11) ou 2-10 → <strong>48 cartes sur 52 ≈ 92%</strong><br><br>
+                        C'est pourquoi rester à 17+ est statistiquement la bonne décision. Le croupier, contraint de tirer jusqu'à 17, est désavantagé quand le sabot est riche en grosses cartes.
+                        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span style="font-size:11px;background:var(--indigo-f);color:var(--indigo-c);padding:2px 8px;border-radius:12px;font-weight:600;">15 → 64%</span>
+                            <span style="font-size:11px;background:var(--emeraude-f);color:var(--emeraude-c);padding:2px 8px;border-radius:12px;font-weight:600;">17 → 72%</span>
+                            <span style="font-size:11px;background:var(--rubis-f);color:var(--rubis-c);padding:2px 8px;border-radius:12px;font-weight:600;">20 → 92%</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="card-btn" onclick="toggleCardBtn(this)">
+                    <span>👁️ Afficher la réponse</span>
+                    <span class="chevron">▼</span>
+                </button>
+            </div>
+
+            <!-- CARD M9 -->
+            <div class="card" data-subject="math" data-diff="facile" data-id="m9">
+                <div class="card-check" onclick="toggleCheck(this, event)">✓</div>
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-num math">9</div>
+                    <div>
+                        <div style="display:flex;gap:6px;margin-bottom:4px;flex-wrap:wrap;">
+                            <span class="card-tag math">Histoire</span>
+                            <span class="diff-badge diff-facile">Facile</span>
+                        </div>
+                        <div class="card-q">Qui est Edward Thorp et quel est son apport au blackjack ?</div>
+                    </div>
+                </div>
+                <div class="card-body" id="body-m9">
+                    <div class="card-answer">
+                        <strong>Edward Thorp</strong>, mathématicien et professeur au MIT, publie <em>Battre le Croupier</em> en <strong>1962</strong>.<br><br>
+                        Il démontre mathématiquement qu'on peut obtenir un <strong>avantage statistique sur le casino</strong> au blackjack grâce au comptage de cartes. Son travail prouve que le blackjack n'est pas un pur jeu de hasard mais un <strong>jeu de stratégie probabiliste</strong>.<br><br>
+                        Conséquence : les casinos ont modifié leurs règles (plus de jeux dans le sabot, mélangeurs automatiques) pour contrer cette stratégie.
+                        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span style="font-size:11px;background:var(--indigo-f);color:var(--indigo-c);padding:2px 8px;border-radius:12px;font-weight:600;">1962</span>
+                            <span style="font-size:11px;background:var(--emeraude-f);color:var(--emeraude-c);padding:2px 8px;border-radius:12px;font-weight:600;">Battre le Croupier</span>
+                            <span style="font-size:11px;background:var(--ambre-f);color:var(--ambre-c);padding:2px 8px;border-radius:12px;font-weight:600;">Avantage statistique</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="card-btn" onclick="toggleCardBtn(this)">
+                    <span>👁️ Afficher la réponse</span>
+                    <span class="chevron">▼</span>
+                </button>
+            </div>
+
+            <!-- CARD M10 -->
+            <div class="card" data-subject="math" data-diff="difficile" data-id="m10">
+                <div class="card-check" onclick="toggleCheck(this, event)">✓</div>
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-num math">10</div>
+                    <div>
+                        <div style="display:flex;gap:6px;margin-bottom:4px;flex-wrap:wrap;">
+                            <span class="card-tag math">Formule</span>
+                            <span class="diff-badge diff-difficile">Difficile</span>
+                        </div>
+                        <div class="card-q">Démontrez que le comptage de cartes ne garantit pas de gagner à chaque partie.</div>
+                    </div>
+                </div>
+                <div class="card-body" id="body-m10">
+                    <div class="card-answer">
+                        Le comptage donne un <strong>avantage statistique</strong>, pas une certitude. Raisonnons :<br><br>
+                        • L'avantage avec comptage est de <strong>+0,5% à +1,5%</strong> — très faible.<br>
+                        • Sur <strong>100 parties</strong>, la variance (l'écart-type) est beaucoup plus grande que l'espérance.<br>
+                        • Il faut des <strong>milliers de manches</strong> pour que la loi des grands nombres fasse converger le gain moyen vers l'espérance positive.<br><br>
+                        <strong>Analogie :</strong> c'est comme lancer une pièce légèrement truquée (51% face). Sur 10 lancers, on peut perdre. Sur 10 000, on gagne quasi-certainement. Le comptage est une <strong>marathon</strong>, pas un sprint.
+                        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span style="font-size:11px;background:var(--indigo-f);color:var(--indigo-c);padding:2px 8px;border-radius:12px;font-weight:600;">Avantage faible</span>
+                            <span style="font-size:11px;background:var(--emeraude-f);color:var(--emeraude-c);padding:2px 8px;border-radius:12px;font-weight:600;">Loi des grands nombres</span>
+                            <span style="font-size:11px;background:var(--ambre-f);color:var(--ambre-c);padding:2px 8px;border-radius:12px;font-weight:600;">Variance &gt; Espérance</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="card-btn" onclick="toggleCardBtn(this)">
+                    <span>👁️ Afficher la réponse</span>
+                    <span class="chevron">▼</span>
+                </button>
+            </div>
+
+            <!-- CARD M11 -->
+            <div class="card" data-subject="math" data-diff="moyen" data-id="m11">
+                <div class="card-check" onclick="toggleCheck(this, event)">✓</div>
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-num math">11</div>
+                    <div>
+                        <div style="display:flex;gap:6px;margin-bottom:4px;flex-wrap:wrap;">
+                            <span class="card-tag math">Éthique</span>
+                            <span class="diff-badge diff-moyen">Moyen</span>
+                        </div>
+                        <div class="card-q">Le comptage de cartes est-il légal ? Pourquoi les casinos peuvent-ils vous exclure ?</div>
+                    </div>
+                </div>
+                <div class="card-body" id="body-m11">
+                    <div class="card-answer">
+                        Le comptage de cartes est <strong>légal</strong> : c'est un exercice mental utilisant des informations publiques (cartes visibles sur la table). Ce n'est pas de la triche (pas de dispositif externe).<br><br>
+                        Cependant, les casinos sont des <strong>établissements privés</strong> : ils peuvent refuser l'accès à quiconque sans justification. Ils utilisent des <strong>caméras</strong>, des <strong>analyseurs de comportement</strong> et partagent des listes de joueurs suspects.<br><br>
+                        <strong>Contre-mesures :</strong> mélangeurs automatiques (remise continue = pas d'historique), sabot de 6-8 jeux (réduit l'effet du comptage), exclusion des joueurs.
+                        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span style="font-size:11px;background:var(--indigo-f);color:var(--indigo-c);padding:2px 8px;border-radius:12px;font-weight:600;">Légal</span>
+                            <span style="font-size:11px;background:var(--emeraude-f);color:var(--emeraude-c);padding:2px 8px;border-radius:12px;font-weight:600;">Exercice mental</span>
+                            <span style="font-size:11px;background:var(--rubis-f);color:var(--rubis-c);padding:2px 8px;border-radius:12px;font-weight:600;">Exclusion possible</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="card-btn" onclick="toggleCardBtn(this)">
+                    <span>👁️ Afficher la réponse</span>
+                    <span class="chevron">▼</span>
+                </button>
+            </div>
+
+            <!-- CARD M12 -->
+            <div class="card" data-subject="math" data-diff="difficile" data-id="m12">
+                <div class="card-check" onclick="toggleCheck(this, event)">✓</div>
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-num math">12</div>
+                    <div>
+                        <div style="display:flex;gap:6px;margin-bottom:4px;flex-wrap:wrap;">
+                            <span class="card-tag math">Ouverture</span>
+                            <span class="diff-badge diff-difficile">Difficile</span>
+                        </div>
+                        <div class="card-q">Quelle ouverture pourriez-vous proposer pour prolonger votre réflexion au-delà du blackjack ?</div>
+                    </div>
+                </div>
+                <div class="card-body" id="body-m12">
+                    <div class="card-answer">
+                        <strong>Ouverture :</strong> « Jusqu'où les mathématiques peuvent-elles <strong>prévoir le hasard</strong> ? »<br><br>
+                        Cette question s'applique à plusieurs domaines :<br><br>
+                        • <strong>Finance</strong> : modèles probabilistes pour évaluer le risque (Value at Risk, Black-Scholes)<br>
+                        • <strong>Assurances</strong> : calcul des primes basé sur les probabilités de sinistres<br>
+                        • <strong>Intelligence artificielle</strong> : algorithmes d'apprentissage bayésiens<br>
+                        • <strong>Médecine</strong> : probabilités dans les tests diagnostiques (faux positifs, faux négatifs)<br><br>
+                        La question fondamentale est : <em>quelle part du hasard peut-on modéliser, et où commence l'incertitude irréductible ?</em>
+                        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span style="font-size:11px;background:var(--indigo-f);color:var(--indigo-c);padding:2px 8px;border-radius:12px;font-weight:600;">Finance</span>
+                            <span style="font-size:11px;background:var(--emeraude-f);color:var(--emeraude-c);padding:2px 8px;border-radius:12px;font-weight:600;">Assurances</span>
+                            <span style="font-size:11px;background:var(--ambre-f);color:var(--ambre-c);padding:2px 8px;border-radius:12px;font-weight:600;">IA</span>
+                            <span style="font-size:11px;background:var(--violet-f);color:#5b21b6;padding:2px 8px;border-radius:12px;font-weight:600;">Médecine</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="card-btn" onclick="toggleCardBtn(this)">
+                    <span>👁️ Afficher la réponse</span>
+                    <span class="chevron">▼</span>
+                </button>
+            </div>
+
+            <div class="scroll-hint">↓ Scroll pour voir plus</div>
+        </div>
+
+        <!-- ===== PHYS TAB ===== -->
+        <div class="tab-content" id="content-phys">
+
+            <div class="subj-header phys">
+                <div class="subj-icon">⚛️</div>
+                <div class="subj-title">Radioactivité en Médecine</div>
+                <div class="subj-desc">12 questions jury type — Physique-Chimie</div>
+            </div>
+
+            <div class="stats-bar">
+                <div class="stat-chip">
+                    <div class="stat-num" id="phys-total">12</div>
+                    <div class="stat-lbl">Questions</div>
+                </div>
+                <div class="stat-chip">
+                    <div class="stat-num" id="phys-done" style="color:var(--emeraude)">0</div>
+                    <div class="stat-lbl">Maîtrisées</div>
+                </div>
+                <div class="stat-chip">
+                    <div class="stat-num" id="phys-pct" style="color:var(--rose)">0%</div>
+                    <div class="stat-lbl">Progression</div>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <button class="qa-btn" onclick="openAll('phys')">
+                    <span class="qa-icon">📖</span>
+                    <span>Tout ouvrir</span>
+                </button>
+                <button class="qa-btn" onclick="closeAll('phys')">
+                    <span class="qa-icon">🙈</span>
+                    <span>Tout cacher</span>
+                </button>
+                <button class="qa-btn" onclick="resetChecks('phys')">
+                    <span class="qa-icon">🔄</span>
+                    <span>Réinitialiser</span>
+                </button>
+            </div>
+
+            <div class="filter-bar" id="filter-phys">
+                <button class="filter-chip active" onclick="filterCards('phys','all',this)">Toutes</button>
+                <button class="filter-chip" onclick="filterCards('phys','facile',this)">Faciles</button>
+                <button class="filter-chip" onclick="filterCards('phys','moyen',this)">Moyennes</button>
+                <button class="filter-chip" onclick="filterCards('phys','difficile',this)">Difficiles</button>
+            </div>
+
+            <!-- CARD P1 -->
+            <div class="card" data-subject="phys" data-diff="facile" data-id="p1">
+                <div class="card-check" onclick="toggleCheck(this, event)">✓</div>
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-num phys">1</div>
+                    <div>
+                        <div style="display:flex;gap:6px;margin-bottom:4px;flex-wrap:wrap;">
+                            <span class="card-tag phys">Définition</span>
+                            <span class="diff-badge diff-facile">Facile</span>
+                        </div>
+                        <div class="card-q">Qu'est-ce que la radioactivité et en quoi est-ce un phénomène naturel ?</div>
+                    </div>
+                </div>
+                <div class="card-body" id="body-p1">
+                    <div class="card-answer" style="border-left-color:var(--rose)">
+                        La <strong>radioactivité</strong> est la <strong>transformation spontanée d'un noyau instable</strong> accompagnée de l'émission de rayonnements (α, β, γ).<br><br>
+                        C'est un <strong>phénomène naturel</strong> : l'uranium, le radium, le potassium-40 existent dans la nature et se désintègrent depuis des milliards d'années. La radioactivité n'est <strong>pas une invention humaine</strong> — on l'a découverte (Becquerel, 1896) et maîtrisée pour des applications médicales.<br><br>
+                        <strong>Types de rayonnements :</strong><br>
+                        • <strong>α</strong> : noyau d'hélium (2p+2n), peu pénétrant<br>
+                        • <strong>β</strong> : électron, pénétrant moyennement<br>
+                        • <strong>γ</strong> : photon, très pénétrant
+                        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span style="font-size:11px;background:var(--rose-f);color:var(--rose-c);padding:2px 8px;border-radius:12px;font-weight:600;">Noyau instable</span>
+                            <span style="font-size:11px;background:var(--emeraude-f);color:var(--emeraude-c);padding:2px 8px;border-radius:12px;font-weight:600;">Phénomène naturel</span>
+                            <span style="font-size:11px;background:var(--cyan-f);color:var(--cyan-c);padding:2px 8px;border-radius:12px;font-weight:600;">α β γ</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="card-btn phys-btn" onclick="toggleCardBtn(this)">
+                    <span>👁️ Afficher la réponse</span>
+                    <span class="chevron">▼</span>
+                </button>
+            </div>
+
+            <!-- CARD P2 -->
+            <div class="card" data-subject="phys" data-diff="moyen" data-id="p2">
+                <div class="card-check" onclick="toggleCheck(this, event)">✓</div>
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-num phys">2</div>
+                    <div>
+                        <div style="display:flex;gap:6px;margin-bottom:4px;flex-wrap:wrap;">
+                            <span class="card-tag phys">Formule</span>
+                            <span class="diff-badge diff-moyen">Moyen</span>
+                        </div>
+                        <div class="card-q">Qu'est-ce que la demi-vie ? Donnez la formule de la loi de décroissance radioactive.</div>
+                    </div>
+                </div>
+                <div class="card-body" id="body-p2">
+                    <div class="card-answer" style="border-left-color:var(--rose)">
+                        La <strong>demi-vie t₁/₂</strong> est le temps au bout duquel la moitié des noyaux radioactifs initiaux se sont désintégrés.<br><br>
+                        <span class="formula"><span class="var">N</span><span class="eq">(</span><span class="var">t</span><span class="eq">)</span> <span class="eq">=</span> <span class="var">N</span><sub><span class="num">0</span></sub> <span class="eq">×</span> <span class="var">e</span><sup><span class="eq">−</span><span class="var">λt</span></sup></span>
+                        <br><br>
+                        <strong>Lien avec la demi-vie :</strong><br>
+                        <span class="formula"><span class="var">t</span><sub><span class="num">1/2</span></sub> <span class="eq">=</span> <span class="var">ln</span><span class="eq">(</span><span class="num">2</span><span class="eq">)</span> <span class="eq">/</span> <span class="var">λ</span> <span class="eq">≈</span> <span class="num">0,693</span> <span class="eq">/</span> <span class="var">λ</span></span>
+                        <br><br>
+                        <strong>En médecine</strong>, on choisit l'isotope selon l'objectif :<br>
+                        • <strong>Diagnostic</strong> → demi-vie <strong>courte</strong> (fluor-18 : 110 min, technétium-99m : 6h)<br>
+                        • <strong>Thérapie</strong> → demi-vie <strong>plus longue</strong> (iode-131 : 8 jours, lutétium-177 : 6,7 jours)
+                        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span style="font-size:11px;background:var(--rose-f);color:var(--rose-c);padding:2px 8px;border-radius:12px;font-weight:600;">N(t) = N₀e^(−λt)</span>
+                            <span style="font-size:11px;background:var(--emeraude-f);color:var(--emeraude-c);padding:2px 8px;border-radius:12px;font-weight:600;">t₁/₂ = ln(2)/λ</span>
+                            <span style="font-size:11px;background:var(--ambre-f);color:var(--ambre-c);padding:2px 8px;border-radius:12px;font-weight:600;">Choix selon usage</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="card-btn phys-btn" onclick="toggleCardBtn(this)">
+                    <span>👁️ Afficher la réponse</span>
+                    <span class="chevron">▼</span>
+                </button>
+            </div>
+
+            <!-- CARD P3 -->
+            <div class="card" data-subject="phys" data-diff="moyen" data-id="p3">
+                <div class="card-check" onclick="toggleCheck(this, event)">✓</div>
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-num phys">3</div>
+                    <div>
+                        <div style="display:flex;gap:6px;margin-bottom:4px;flex-wrap:wrap;">
+                            <span class="card-tag phys">Définition</span>
+                            <span class="diff-badge diff-moyen">Moyen</span>
+                        </div>
+                        <div class="card-q">Qu'est-ce qu'un isotope ? Pourquoi utilise-t-on des isotopes radioactifs en médecine ?</div>
+                    </div>
+                </div>
+                <div class="card-body" id="body-p3">
+                    <div class="card-answer" style="border-left-color:var(--rose)">
+                        Deux isotopes d'un même élément ont le même <strong>nombre de protons Z</strong> mais un <strong>nombre de neutrons N différent</strong>.<br><br>
+                        <strong>Pourquoi en médecine ?</strong><br>
+                        • <strong>Même comportement chimique</strong> : l'organisme ne fait pas la différence entre l'isotope stable et l'isotope radioactif. Le fluor-18 se comporte comme du fluor stable.<br>
+                        • <strong>Traçabilité</strong> : on peut suivre où va l'isotope dans le corps grâce aux rayonnements émis.<br>
+                        • <strong>Demi-vie adaptée</strong> : assez longue pour l'examen, assez courte pour ne pas irradier le patient trop longtemps.<br><br>
+                        <strong>Exemple :</strong> le fluor-18 (Z=9) et le fluor-19 stable ont le même comportement chimique, mais seul le F-18 émet des positrons détectables.
+                        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span style="font-size:11px;background:var(--rose-f);color:var(--rose-c);padding:2px 8px;border-radius:12px;font-weight:600;">Même Z, N différent</span>
+                            <span style="font-size:11px;background:var(--emeraude-f);color:var(--emeraude-c);padding:2px 8px;border-radius:12px;font-weight:600;">Même chimie</span>
+                            <span style="font-size:11px;background:var(--ambre-f);color:var(--ambre-c);padding:2px 8px;border-radius:12px;font-weight:600;">Traçabilité</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="card-btn phys-btn" onclick="toggleCardBtn(this)">
+                    <span>👁️ Afficher la réponse</span>
+                    <span class="chevron">▼</span>
+                </button>
+            </div>
+
+            <!-- CARD P4 -->
+            <div class="card" data-subject="phys" data-diff="moyen" data-id="p4">
+                <div class="card-check" onclick="toggleCheck(this, event)">✓</div>
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-num phys">4</div>
+                    <div>
+                        <div style="display:flex;gap:6px;margin-bottom:4px;flex-wrap:wrap;">
+                            <span class="card-tag phys">Imagerie</span>
+                            <span class="diff-badge diff-moyen">Moyen</span>
+                        </div>
+                        <div class="card-q">Qu'est-ce qu'une TEP (Tomographie par Émission de Positrons) et quel est son principe ?</div>
+                    </div>
+                </div>
+                <div class="card-body" id="body-p4">
+                    <div class="card-answer" style="border-left-color:var(--rose)">
+                        La <strong>TEP</strong> produit des <strong>images 3D</strong> en détectant les rayonnements émis par un <strong>traceur radioactif</strong> injecté au patient. On visualise l'<strong>activité métabolique</strong>, pas seulement la forme des organes.<br><br>
+                        <strong>Principe en 3 étapes :</strong><br>
+                        1. <strong>Injection</strong> : glucose marqué au fluor-18 (FDG)<br>
+                        2. <strong>Fixation</strong> : les cellules cancéreuses consomment plus de glucose (effet Warburg)<br>
+                        3. <strong>Détection</strong> : la tumeur « brille » sur l'image 3D<br><br>
+                        <strong>Le piège métabolique :</strong> la cellule phosphoryle le FDG comme du glucose normal, mais le FDG-6-phosphate est <strong>indigestible</strong> — il reste piégé dans la cellule. Plus la cellule est cancéreuse → plus elle « brille ».
+                        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span style="font-size:11px;background:var(--rose-f);color:var(--rose-c);padding:2px 8px;border-radius:12px;font-weight:600;">Images 3D</span>
+                            <span style="font-size:11px;background:var(--emeraude-f);color:var(--emeraude-c);padding:2px 8px;border-radius:12px;font-weight:600;">FDG = glucose + F-18</span>
+                            <span style="font-size:11px;background:var(--ambre-f);color:var(--ambre-c);padding:2px 8px;border-radius:12px;font-weight:600;">Effet Warburg</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="card-btn phys-btn" onclick="toggleCardBtn(this)">
+                    <span>👁️ Afficher la réponse</span>
+                    <span class="chevron">▼</span>
+                </button>
+            </div>
+
+            <!-- CARD P5 -->
+            <div class="card" data-subject="phys" data-diff="difficile" data-id="p5">
+                <div class="card-check" onclick="toggleCheck(this, event)">✓</div>
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-num phys">5</div>
+                    <div>
+                        <div style="display:flex;gap:6px;margin-bottom:4px;flex-wrap:wrap;">
+                            <span class="card-tag phys">Imagerie</span>
+                            <span class="diff-badge diff-difficile">Difficile</span>
+                        </div>
+                        <div class="card-q">Pourquoi les cellules cancéreuses « brillent » plus que les cellules saines sur une TEP au fluor-18 ?</div>
+                    </div>
+                </div>
+                <div class="card-body" id="body-p5">
+                    <div class="card-answer" style="border-left-color:var(--rose)">
+                        Les cellules cancéreuses ont un <strong>métabolisme accéléré</strong> (effet Warburg) : elles consomment beaucoup de glucose pour se diviser rapidement.<br><br>
+                        <strong>Mécanisme du piège :</strong><br>
+                        1. Le FDG entre dans la cellule comme du glucose normal<br>
+                        2. L'<strong>hexokinase</strong> le phosphoryle en FDG-6-phosphate<br>
+                        3. Le FDG-6-phosphate est <strong>indigestible</strong> : il ne peut pas être métabolisé par la glycolyse<br>
+                        4. Il reste <strong>bloqué dans la cellule</strong><br><br>
+                        Résultat : plus la cellule est cancéreuse → plus elle consomme de glucose → plus elle accumule de FDG → plus elle <strong>« brille »</strong> sur l'image TEP. C'est un <strong>marqueur métabolique</strong>, pas structurel.
+                        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span style="font-size:11px;background:var(--rose-f);color:var(--rose-c);padding:2px 8px;border-radius:12px;font-weight:600;">Effet Warburg</span>
+                            <span style="font-size:11px;background:var(--emeraude-f);color:var(--emeraude-c);padding:2px 8px;border-radius:12px;font-weight:600;">FDG piégé</span>
+                            <span style="font-size:11px;background:var(--ambre-f);color:var(--ambre-c);padding:2px 8px;border-radius:12px;font-weight:600;">Marqueur métabolique</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="card-btn phys-btn" onclick="toggleCardBtn(this)">
+                    <span>👁️ Afficher la réponse</span>
+                    <span class="chevron">▼</span>
+                </button>
+            </div>
+
+            <!-- CARD P6 -->
+            <div class="card" data-subject="phys" data-diff="moyen" data-id="p6">
+                <div class="card-check" onclick="toggleCheck(this, event)">✓</div>
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-num phys">6</div>
+                    <div>
+                        <div style="display:flex;gap:6px;margin-bottom:4px;flex-wrap:wrap;">
+                            <span class="card-tag phys">Comparaison</span>
+                            <span class="diff-badge diff-moyen">Moyen</span>
+                        </div>
+                        <div class="card-q">Quelle est la différence entre un isotope de diagnostic et un isotope thérapeutique ?</div>
+                    </div>
+                </div>
+                <div class="card-body" id="body-p6">
+                    <div class="card-answer" style="border-left-color:var(--rose)">
+                        <strong>Diagnostic</strong> : on veut <strong>voir</strong> sans irradier le patient.<br>
+                        • Demi-vie <strong>courte</strong> (fluor-18 : 110 min, technétium-99m : 6h)<br>
+                        • Énergie <strong>faible</strong> (γ pour la TEP, pas de β destructeur)<br>
+                        • Dose <strong>faible</strong><br><br>
+                        <strong>Thérapie</strong> : on veut <strong>détruire</strong> les cellules cancéreuses.<br>
+                        • Demi-vie <strong>plus longue</strong> (iode-131 : 8 j, lutétium-177 : 6,7 j)<br>
+                        • Énergie <strong>plus élevée</strong> (β pour détruire l'ADN à courte distance)<br>
+                        • Dose <strong>thérapeutique</strong><br><br>
+                        <strong>Même principe physique</strong> (noyaux instables), mais objectif différent : voir vs détruire.
+                        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span style="font-size:11px;background:var(--rose-f);color:var(--rose-c);padding:2px 8px;border-radius:12px;font-weight:600;">Voir = γ, courte t₁/₂</span>
+                            <span style="font-size:11px;background:var(--emeraude-f);color:var(--emeraude-c);padding:2px 8px;border-radius:12px;font-weight:600;">Détruire = β, longue t₁/₂</span>
+                            <span style="font-size:11px;background:var(--ambre-f);color:var(--ambre-c);padding:2px 8px;border-radius:12px;font-weight:600;">Même principe</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="card-btn phys-btn" onclick="toggleCardBtn(this)">
+                    <span>👁️ Afficher la réponse</span>
+                    <span class="chevron">▼</span>
+                </button>
+            </div>
+
+            <!-- CARD P7 -->
+            <div class="card" data-subject="phys" data-diff="moyen" data-id="p7">
+                <div class="card-check" onclick="toggleCheck(this, event)">✓</div>
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-num phys">7</div>
+                    <div>
+                        <div style="display:flex;gap:6px;margin-bottom:4px;flex-wrap:wrap;">
+                            <span class="card-tag phys">Thérapie</span>
+                            <span class="diff-badge diff-moyen">Moyen</span>
+                        </div>
+                        <div class="card-q">Expliquez le principe de la radiothérapie externe vs la radiothérapie interne (thérapie ciblée).</div>
+                    </div>
+                </div>
+                <div class="card-body" id="body-p7">
+                    <div class="card-answer" style="border-left-color:var(--rose)">
+                        <strong>Radiothérapie externe :</strong><br>
+                        • Rayons X ou protons dirigés depuis l'extérieur vers la tumeur<br>
+                        • La dose est calculée pour <strong>maximiser l'effet sur la tumeur</strong> tout en <strong>protégeant les tissus sains</strong><br>
+                        • Avantage : contrôle précis de la dose<br>
+                        • Inconvénient : traverse les tissus sains avant d'atteindre la cible<br><br>
+                        <strong>Radiothérapie interne (thérapie ciblée) :</strong><br>
+                        • Substance radioactive <strong>injectée</strong> dans le corps<br>
+                        • Utilise le <strong>fonctionnement naturel du corps</strong> pour cibler l'organe malade<br>
+                        • Exemple : iode-131 → thyroïde, samarium-153 → os en reconstruction<br>
+                        • Avantage : <strong>précision cellulaire</strong>, rayonnement local (2-3 mm)<br>
+                        • Inconvénient : dose difficile à contrôler une fois injectée
+                        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span style="font-size:11px;background:var(--rose-f);color:var(--rose-c);padding:2px 8px;border-radius:12px;font-weight:600;">Externe = X/protons</span>
+                            <span style="font-size:11px;background:var(--emeraude-f);color:var(--emeraude-c);padding:2px 8px;border-radius:12px;font-weight:600;">Interne = injecté</span>
+                            <span style="font-size:11px;background:var(--ambre-f);color:var(--ambre-c);padding:2px 8px;border-radius:12px;font-weight:600;">Ciblage naturel</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="card-btn phys-btn" onclick="toggleCardBtn(this)">
+                    <span>👁️ Afficher la réponse</span>
+                    <span class="chevron">▼</span>
+                </button>
+            </div>
+
+            <!-- CARD P8 -->
+            <div class="card" data-subject="phys" data-diff="difficile" data-id="p8">
+                <div class="card-check" onclick="toggleCheck(this, event)">✓</div>
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-num phys">8</div>
+                    <div>
+                        <div style="display:flex;gap:6px;margin-bottom:4px;flex-wrap:wrap;">
+                            <span class="card-tag phys">Thérapie</span>
+                            <span class="diff-badge diff-difficile">Difficile</span>
+                        </div>
+                        <div class="card-q">Pourquoi le samarium-153 se fixe-t-il spécifiquement sur les zones osseuses atteintes par le myélome ?</div>
+                    </div>
+                </div>
+                <div class="card-body" id="body-p8">
+                    <div class="card-answer" style="border-left-color:var(--rose)">
+                        <strong>Le myélome détruit l'os</strong> et force l'organisme à le reconstruire en permanence. Cette reconstruction osseuse anormale crée une <strong>activité métabolique intense</strong> à cet endroit précis.<br><br>
+                        Le <strong>samarium-153 est un analogue chimique du calcium</strong> — l'élément qui constitue l'os. Il se dépose naturellement là où l'os est en train de se former : <strong>sur les zones cancéreuses</strong>, pas sur l'os sain.<br><br>
+                        Une fois fixé, il émet des <strong>rayonnements β</strong> qui détruisent les cellules cancéreuses sur <strong>2-3 mm</strong> seulement. C'est une <strong>thérapie ciblée</strong> : le rayonnement agit localement sans irradier tout le corps.<br><br>
+                        Schéma : Myélome → destruction osseuse → reconstruction anormale → activité osseuse intense → samarium-153 (analogue Ca) se fixe → β détruit sur 2-3 mm.
+                        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span style="font-size:11px;background:var(--rose-f);color:var(--rose-c);padding:2px 8px;border-radius:12px;font-weight:600;">Analogue du calcium</span>
+                            <span style="font-size:11px;background:var(--emeraude-f);color:var(--emeraude-c);padding:2px 8px;border-radius:12px;font-weight:600;">Os en reconstruction</span>
+                            <span style="font-size:11px;background:var(--ambre-f);color:var(--ambre-c);padding:2px 8px;border-radius:12px;font-weight:600;">β sur 2-3 mm</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="card-btn phys-btn" onclick="toggleCardBtn(this)">
+                    <span>👁️ Afficher la réponse</span>
+                    <span class="chevron">▼</span>
+                </button>
+            </div>
+
+            <!-- CARD P9 -->
+            <div class="card" data-subject="phys" data-diff="moyen" data-id="p9">
+                <div class="card-check" onclick="toggleCheck(this, event)">✓</div>
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-num phys">9</div>
+                    <div>
+                        <div style="display:flex;gap:6px;margin-bottom:4px;flex-wrap:wrap;">
+                            <span class="card-tag phys">Radioprotection</span>
+                            <span class="diff-badge diff-moyen">Moyen</span>
+                        </div>
+                        <div class="card-q">Quelles sont les trois règles de radioprotection (T-D-P) et la loi en 1/r² ?</div>
+                    </div>
+                </div>
+                <div class="card-body" id="body-p9">
+                    <div class="card-answer" style="border-left-color:var(--rose)">
+                        <strong>T-D-P :</strong><br>
+                        • <strong>T</strong>emps : réduire l'exposition au maximum<br>
+                        • <strong>D</strong>istance : s'éloigner — l'intensité diminue avec le carré de la distance<br>
+                        • <strong>P</strong>rotection : écrans (plomb, béton, parois épaisses)<br><br>
+                        <span class="formula"><span class="var">I</span><span class="eq">(</span><span class="var">r</span><span class="eq">)</span> <span class="eq">=</span> <span class="var">I</span><sub><span class="num">0</span></sub> <span class="eq">/</span> <span class="var">r</span><sup><span class="num">2</span></sup></span>
+                        <br><br>
+                        <strong>En médecine nucléaire</strong>, on applique le principe <strong>ALARA</strong> (As Low As Reasonably Achievable) : dose la plus faible possible tout en gardant l'efficacité thérapeutique.<br><br>
+                        Le patient reçoit une dose calculée, mais le personnel médical s'éloigne (distance) et utilise des écrans (protection) pendant l'examen.
+                        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span style="font-size:11px;background:var(--rose-f);color:var(--rose-c);padding:2px 8px;border-radius:12px;font-weight:600;">T-D-P</span>
+                            <span style="font-size:11px;background:var(--emeraude-f);color:var(--emeraude-c);padding:2px 8px;border-radius:12px;font-weight:600;">I = I₀/r²</span>
+                            <span style="font-size:11px;background:var(--ambre-f);color:var(--ambre-c);padding:2px 8px;border-radius:12px;font-weight:600;">ALARA</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="card-btn phys-btn" onclick="toggleCardBtn(this)">
+                    <span>👁️ Afficher la réponse</span>
+                    <span class="chevron">▼</span>
+                </button>
+            </div>
+
+            <!-- CARD P10 -->
+            <div class="card" data-subject="phys" data-diff="moyen" data-id="p10">
+                <div class="card-check" onclick="toggleCheck(this, event)">✓</div>
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-num phys">10</div>
+                    <div>
+                        <div style="display:flex;gap:6px;margin-bottom:4px;flex-wrap:wrap;">
+                            <span class="card-tag phys">Limites</span>
+                            <span class="diff-badge diff-moyen">Moyen</span>
+                        </div>
+                        <div class="card-q">La TEP est-elle fiable à 100 % ? Quelles sont ses limites ?</div>
+                    </div>
+                </div>
+                <div class="card-body" id="body-p10">
+                    <div class="card-answer" style="border-left-color:var(--rose)">
+                        <strong>Non</strong>, la TEP n'est pas fiable à 100%. C'est un <strong>outil d'aide au diagnostic</strong>, pas une preuve absolue.<br><br>
+                        <strong>Limites :</strong><br>
+                        • <strong>Faux positifs</strong> : inflammation, infection, exercice physique intense → cellules consomment aussi du glucose<br>
+                        • <strong>Faux négatifs</strong> : certaines tumeurs peu métaboliques (certaines formes de cancer)<br>
+                        • <strong>Résolution limitée</strong> : tumeurs &lt; 4-5 mm difficiles à détecter<br>
+                        • <strong>Irradiation</strong> : le patient reçoit une dose de rayonnement (faible mais réelle)<br><br>
+                        <strong>Confirmation :</strong> on confirme toujours par <strong>biopsie</strong> (analyse tissulaire). La TEP guide le médecin mais ne remplace pas l'examen anatomopathologique.
+                        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span style="font-size:11px;background:var(--rose-f);color:var(--rose-c);padding:2px 8px;border-radius:12px;font-weight:600;">Faux positifs</span>
+                            <span style="font-size:11px;background:var(--emeraude-f);color:var(--emeraude-c);padding:2px 8px;border-radius:12px;font-weight:600;">Faux négatifs</span>
+                            <span style="font-size:11px;background:var(--ambre-f);color:var(--ambre-c);padding:2px 8px;border-radius:12px;font-weight:600;">Biopsie = confirmation</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="card-btn phys-btn" onclick="toggleCardBtn(this)">
+                    <span>👁️ Afficher la réponse</span>
+                    <span class="chevron">▼</span>
+                </button>
+            </div>
+
+            <!-- CARD P11 -->
+            <div class="card" data-subject="phys" data-diff="difficile" data-id="p11">
+                <div class="card-check" onclick="toggleCheck(this, event)">✓</div>
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-num phys">11</div>
+                    <div>
+                        <div style="display:flex;gap:6px;margin-bottom:4px;flex-wrap:wrap;">
+                            <span class="card-tag phys">Synthèse</span>
+                            <span class="diff-badge diff-difficile">Difficile</span>
+                        </div>
+                        <div class="card-q">Comment expliquer le lien physique entre le diagnostic (TEP au fluor-18) et le traitement (samarium-153) du myélome ?</div>
+                    </div>
+                </div>
+                <div class="card-body" id="body-p11">
+                    <div class="card-answer" style="border-left-color:var(--rose)">
+                        <strong>C'est le même principe physique</strong> : des noyaux instables qui émettent des rayonnements. On change juste <strong>l'isotope</strong>, <strong>la dose</strong> et <strong>l'objectif</strong>.<br><br>
+                        <strong>1. Voir (TEP au fluor-18) :</strong><br>
+                        • Isotope : fluor-18 (t₁/₂ = 110 min)<br>
+                        • Dose : <strong>faible</strong> (tracer)<br>
+                        • Rayonnement : <strong>positrons → γ</strong> (détection)<br>
+                        • Objectif : visualiser l'activité métabolique<br><br>
+                        <strong>2. Soigner (samarium-153) :</strong><br>
+                        • Isotope : samarium-153 (t₁/₂ = 46h)<br>
+                        • Dose : <strong>thérapeutique</strong><br>
+                        • Rayonnement : <strong>β</strong> (détruit l'ADN sur 2-3 mm)<br>
+                        • Objectif : détruire les cellules cancéreuses osseuses<br><br>
+                        <strong>Le lien :</strong> le diagnostic guide le traitement. La TEP montre où est la maladie, la thérapie ciblée agit précisément à cet endroit.
+                        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span style="font-size:11px;background:var(--rose-f);color:var(--rose-c);padding:2px 8px;border-radius:12px;font-weight:600;">Même principe</span>
+                            <span style="font-size:11px;background:var(--emeraude-f);color:var(--emeraude-c);padding:2px 8px;border-radius:12px;font-weight:600;">Isotope + dose + objectif</span>
+                            <span style="font-size:11px;background:var(--ambre-f);color:var(--ambre-c);padding:2px 8px;border-radius:12px;font-weight:600;">Diag guide thérapie</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="card-btn phys-btn" onclick="toggleCardBtn(this)">
+                    <span>👁️ Afficher la réponse</span>
+                    <span class="chevron">▼</span>
+                </button>
+            </div>
+
+            <!-- CARD P12 -->
+            <div class="card" data-subject="phys" data-diff="difficile" data-id="p12">
+                <div class="card-check" onclick="toggleCheck(this, event)">✓</div>
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-num phys">12</div>
+                    <div>
+                        <div style="display:flex;gap:6px;margin-bottom:4px;flex-wrap:wrap;">
+                            <span class="card-tag phys">Ouverture</span>
+                            <span class="diff-badge diff-difficile">Difficile</span>
+                        </div>
+                        <div class="card-q">Quelle ouverture pourriez-vous proposer pour prolonger votre réflexion au-delà de la radioactivité ?</div>
+                    </div>
+                </div>
+                <div class="card-body" id="body-p12">
+                    <div class="card-answer" style="border-left-color:var(--rose)">
+                        <strong>Ouverture :</strong> « Jusqu'où la physique peut-elle <strong>transformer un danger en remède</strong> ? »<br><br>
+                        Cette question s'applique à plusieurs domaines :<br><br>
+                        • <strong>Chimiothérapie</strong> : utiliser des poisons (cisplatine, taxanes) pour tuer les cellules cancéreuses<br>
+                        • <strong>Immunothérapie</strong> : réveiller le système immunitaire (parfois dangereux si suractivation)<br>
+                        • <strong>Antibiotiques</strong> : utiliser des toxines fongiques/bactériennes contre d'autres infections<br>
+                        • <strong>Laser</strong> : lumière intense utilisée en chirurgie (dangereux mais précis)<br><br>
+                        Le <strong>paradoxe fondamental</strong> est : comment utiliser un phénomène dangereux de manière <strong>contrôlée et précise</strong> ? La médecine nucléaire en est l'exemple le plus abouti : on contrôle la dose, la durée, la localisation et le type de rayonnement.
+                        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span style="font-size:11px;background:var(--rose-f);color:var(--rose-c);padding:2px 8px;border-radius:12px;font-weight:600;">Danger → Remède</span>
+                            <span style="font-size:11px;background:var(--emeraude-f);color:var(--emeraude-c);padding:2px 8px;border-radius:12px;font-weight:600;">Chimiothérapie</span>
+                            <span style="font-size:11px;background:var(--ambre-f);color:var(--ambre-c);padding:2px 8px;border-radius:12px;font-weight:600;">Immunothérapie</span>
+                            <span style="font-size:11px;background:var(--cyan-f);color:var(--cyan-c);padding:2px 8px;border-radius:12px;font-weight:600;">Contrôle précis</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="card-btn phys-btn" onclick="toggleCardBtn(this)">
+                    <span>👁️ Afficher la réponse</span>
+                    <span class="chevron">▼</span>
+                </button>
+            </div>
+
+            <div class="scroll-hint">↓ Scroll pour voir plus</div>
+        </div>
+
+        <!-- ===== TOAST ===== -->
+        <div class="toast" id="toast">Action effectuée</div>
+
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // ===== STATE =====
+        const checkedCards = new Set();
+
+        // ===== TAB SWITCHING =====
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById('tab-' + tab).classList.add('active');
+            document.getElementById('content-' + tab).classList.add('active');
+            updateProgress();
+        }
+
+        // ===== CARD TOGGLE =====
+        function toggleCard(header) {
+            const card = header.closest('.card');
+            const id = card.dataset.id;
+            const body = document.getElementById('body-' + id);
+            const btn = card.querySelector('.card-btn');
+
+            if (body.classList.contains('open')) {
+                body.classList.remove('open');
+                btn.classList.remove('open');
+                btn.querySelector('span').textContent = '👁️ Afficher la réponse';
+            } else {
+                body.classList.add('open');
+                btn.classList.add('open');
+                btn.querySelector('span').textContent = '🙈 Masquer la réponse';
+                setTimeout(() => {
+                    body.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 100);
+            }
+        }
+
+        function toggleCardBtn(btn) {
+            const card = btn.closest('.card');
+            const id = card.dataset.id;
+            const body = document.getElementById('body-' + id);
+
+            if (body.classList.contains('open')) {
+                body.classList.remove('open');
+                btn.classList.remove('open');
+                btn.querySelector('span').textContent = '👁️ Afficher la réponse';
+            } else {
+                body.classList.add('open');
+                btn.classList.add('open');
+                btn.querySelector('span').textContent = '🙈 Masquer la réponse';
+                setTimeout(() => {
+                    body.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 100);
+            }
+        }
+
+        // ===== CHECK TOGGLE =====
+        function toggleCheck(el, e) {
+            e.stopPropagation();
+            const card = el.closest('.card');
+            const id = card.dataset.id;
+
+            if (checkedCards.has(id)) {
+                checkedCards.delete(id);
+                el.classList.remove('checked');
+                el.textContent = '✓';
+                card.classList.remove('checked');
+            } else {
+                checkedCards.add(id);
+                el.classList.add('checked');
+                el.textContent = '✓';
+                card.classList.add('checked');
+                showToast('✅ Question maîtrisée !');
+            }
+            updateProgress();
+        }
+
+        // ===== BULK ACTIONS =====
+        function openAll(subject) {
+            document.querySelectorAll('[data-subject="' + subject + '"]').forEach(card => {
+                const id = card.dataset.id;
+                const body = document.getElementById('body-' + id);
+                const btn = card.querySelector('.card-btn');
+                body.classList.add('open');
+                btn.classList.add('open');
+                btn.querySelector('span').textContent = '🙈 Masquer la réponse';
+            });
+            showToast('📖 Toutes les réponses affichées');
+        }
+
+        function closeAll(subject) {
+            document.querySelectorAll('[data-subject="' + subject + '"]').forEach(card => {
+                const id = card.dataset.id;
+                const body = document.getElementById('body-' + id);
+                const btn = card.querySelector('.card-btn');
+                body.classList.remove('open');
+                btn.classList.remove('open');
+                btn.querySelector('span').textContent = '👁️ Afficher la réponse';
+            });
+            showToast('🙈 Toutes les réponses masquées');
+        }
+
+        function resetChecks(subject) {
+            document.querySelectorAll('[data-subject="' + subject + '"]').forEach(card => {
+                const id = card.dataset.id;
+                checkedCards.delete(id);
+                const check = card.querySelector('.card-check');
+                check.classList.remove('checked');
+                card.classList.remove('checked');
+            });
+            updateProgress();
+            showToast('🔄 Progression réinitialisée');
+        }
+
+        // ===== FILTERING =====
+        function filterCards(subject, diff, btn) {
+            const container = document.getElementById('content-' + subject);
+            const chips = container.querySelectorAll('.filter-chip');
+            chips.forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+
+            document.querySelectorAll('[data-subject="' + subject + '"]').forEach(card => {
+                if (diff === 'all' || card.dataset.diff === diff) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // ===== PROGRESS =====
+        function updateProgress() {
+            const mathChecked = [...checkedCards].filter(id => id.startsWith('m')).length;
+            const physChecked = [...checkedCards].filter(id => id.startsWith('p')).length;
+            const totalChecked = checkedCards.size;
+
+            document.getElementById('math-done').textContent = mathChecked;
+            document.getElementById('math-pct').textContent = Math.round(mathChecked / 12 * 100) + '%';
+            document.getElementById('phys-done').textContent = physChecked;
+            document.getElementById('phys-pct').textContent = Math.round(physChecked / 12 * 100) + '%';
+            document.getElementById('progress-text').textContent = totalChecked + '/24';
+        }
+
+        // ===== TOAST =====
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        // ===== INIT =====
+        updateProgress();
+    </script>
+
+</body>
+</html>
